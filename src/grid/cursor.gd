@@ -1,6 +1,5 @@
 ## Player-controlled cursor. Allows them to navigate the game grid, select units, and move them.
 ## Supports both keyboard and mouse (or touch) input.
-@tool
 class_name Cursor
 extends Node2D
 
@@ -12,7 +11,10 @@ signal moved(new_cell)
 ## Grid resource, giving the node access to the grid size, and more.
 @export var grid: Resource
 ## Time before the cursor can move again in seconds.
-@export var ui_cooldown := 0.1
+@export var ui_cooldown := 0.02
+
+var move_held = false
+var controller = false
 
 ## Coordinates of the current cell the cursor is hovering.
 var cell := Vector2.ZERO:
@@ -32,6 +34,8 @@ var cell := Vector2.ZERO:
 		emit_signal("moved", cell)
 		_timer.start()
 
+var active = true
+
 @onready var _timer: Timer = $Timer
 
 
@@ -42,29 +46,59 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Navigating cells with the mouse.
-	if event is InputEventMouseMotion:
+	if !controller && event is InputEventMouseMotion:
 		cell = grid.calculate_grid_coordinates(event.position)
 	# Trying to select something in a cell.
-	elif event.is_action_pressed("click") or event.is_action_pressed("ui_accept"):
+	elif event.is_action_pressed("click"):
 		emit_signal("accept_pressed", cell)
 		get_viewport().set_input_as_handled()
 
-	var should_move := event.is_pressed() 
-	if event.is_echo():
-		should_move = should_move and _timer.is_stopped()
 
-	if not should_move:
-		return
+func _process(delta):
+	if controller:
+		handle_button_input()
 
-	# Moves the cursor by one grid cell.
-	if event.is_action("ui_right"):
-		cell += Vector2.RIGHT
-	elif event.is_action("ui_up"):
-		cell += Vector2.UP
-	elif event.is_action("ui_left"):
+
+func handle_button_input():
+	if Input.is_action_just_pressed("navigate_left"):
 		cell += Vector2.LEFT
-	elif event.is_action("ui_down"):
+		_timer.start(0.5)
+		move_held = true
+	elif Input.is_action_just_pressed("navigate_right"):
+		cell += Vector2.RIGHT
+		_timer.start(0.5)
+		move_held = true
+	elif Input.is_action_just_pressed("navigate_up"):
+		cell += Vector2.UP
+		_timer.start(0.5)
+		move_held = true
+	elif Input.is_action_just_pressed("navigate_down"):
 		cell += Vector2.DOWN
+		_timer.start(0.5)
+		move_held = true
+	
+	if not active || !_timer.is_stopped():
+		return
+	
+	# Alternate input handling for cursor moving
+	if Input.is_action_pressed("navigate_left"):
+		cell += Vector2.LEFT
+		if move_held:
+			_timer.start(ui_cooldown)
+	elif Input.is_action_pressed("navigate_right"):
+		cell += Vector2.RIGHT
+		if move_held:
+			_timer.start(ui_cooldown)
+	elif Input.is_action_pressed("navigate_up"):
+		cell += Vector2.UP
+		if move_held:
+			_timer.start(ui_cooldown)
+	elif Input.is_action_pressed("navigate_down"):
+		cell += Vector2.DOWN
+		if move_held:
+			_timer.start(ui_cooldown)
+	else:
+		move_held = false
 
 
 func _draw() -> void:

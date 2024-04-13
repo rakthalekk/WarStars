@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbqa5xt1jyr85"]
+
+[ext_resource type="Script" path="res://src/weapons/weapon_database.gd" id="1_ug3or"]
+[ext_resource type="Script" path="res://src/weapons/weapon_data.gd" id="2_wpyj0"]
+[ext_resource type="PackedScene" uid="uid://b7fc4tcndbaow" path="res://src/equipment_generator.tscn" id="3_bxivp"]
+[ext_resource type="PackedScene" uid="uid://bnxqouecsspay" path="res://src/weapon.tscn" id="4_8puuc"]
+
+[node name="WeaponDatabase" type="Node2D"]
+script = ExtResource("1_ug3or")
+
+[node name="Laser" type="Node2D" parent="."]
+script = ExtResource("2_wpyj0")
+base_damage = 99
+
+[node name="Equipment_Generator" parent="." node_paths=PackedStringArray("base_melee", "base_pistol", "base_shotgun", "base_rifle", "base_weapons") instance=ExtResource("3_bxivp")]
+base_melee = NodePath("Melee")
+base_pistol = NodePath("Pistol")
+base_shotgun = NodePath("Shotgun")
+base_rifle = NodePath("Rifle")
+base_weapons = [NodePath("Melee"), NodePath("Pistol"), NodePath("Shotgun"), NodePath("Rifle")]
+
+[node name="Melee" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
+
+[node name="Pistol" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
+
+[node name="Shotgun" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
+
+[node name="Rifle" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]

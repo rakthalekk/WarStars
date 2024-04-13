@@ -1,12 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://bjm36plh0kgfo"]
+[gd_scene load_steps=13 format=3 uid="uid://c08w2xnjck2wa"]
 
-[ext_resource type="Script" path="res://src/unit.gd" id="1_inr72"]
-[ext_resource type="Resource" uid="uid://ba7p87gewwk8k" path="res://src/grid/grid.tres" id="2_vw7vr"]
-[ext_resource type="Texture2D" uid="uid://cwdfpaxroeukk" path="res://assets/PlayerUnits/UnitArmor.png" id="3_ykkuo"]
-[ext_resource type="Texture2D" uid="uid://bw3qkfwwv04o8" path="res://assets/icon.svg" id="4_ckmhb"]
-[ext_resource type="Texture2D" uid="uid://d23l0w58myipf" path="res://assets/PlayerUnits/UnitHandspng.png" id="4_ld17m"]
-[ext_resource type="Texture2D" uid="uid://dnnfj5hx7vi5r" path="res://assets/PlayerUnits/UnitHeadType7.png" id="5_tupqf"]
-[ext_resource type="Texture2D" uid="uid://d2cm55eypthll" path="res://assets/PlayerUnits/UnitHelmetType1.png" id="6_qoriy"]
+[ext_resource type="Texture2D" uid="uid://cwdfpaxroeukk" path="res://assets/PlayerUnits/UnitArmor.png" id="1_emlgu"]
+[ext_resource type="Script" path="res://src/player_unit.gd" id="1_o7chy"]
+[ext_resource type="Texture2D" uid="uid://d23l0w58myipf" path="res://assets/PlayerUnits/UnitHandspng.png" id="2_h5pv2"]
+[ext_resource type="Resource" uid="uid://ba7p87gewwk8k" path="res://src/grid/grid.tres" id="2_oxfat"]
+[ext_resource type="Texture2D" uid="uid://dnnfj5hx7vi5r" path="res://assets/PlayerUnits/UnitHeadType7.png" id="3_163a3"]
+[ext_resource type="Texture2D" uid="uid://d2cm55eypthll" path="res://assets/PlayerUnits/UnitHelmetType1.png" id="4_h178y"]
+[ext_resource type="Texture2D" uid="uid://bw3qkfwwv04o8" path="res://assets/icon.svg" id="5_egpnx"]
 
 [sub_resource type="Animation" id="Animation_65a1p"]
 length = 0.001
@@ -164,36 +164,37 @@ _data = {
 "inactive": SubResource("Animation_r28jt")
 }
 
-[node name="Unit" type="Path2D"]
-script = ExtResource("1_inr72")
-grid = ExtResource("2_vw7vr")
-move_speed = 150.0
+[node name="PlayerUnit" type="Path2D"]
+script = ExtResource("1_o7chy")
+grid = ExtResource("2_oxfat")
+move_speed = 300.0
 weapon_names = Array[String](["Laser"])
+team = null
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 rotates = false
 loop = false
 
 [node name="Body" type="Sprite2D" parent="PathFollow2D"]
-texture = ExtResource("3_ykkuo")
+texture = ExtResource("1_emlgu")
 hframes = 2
 
 [node name="Hands" type="Sprite2D" parent="PathFollow2D"]
-texture = ExtResource("4_ld17m")
+texture = ExtResource("2_h5pv2")
 hframes = 2
 
 [node name="Head" type="Sprite2D" parent="PathFollow2D"]
-texture = ExtResource("5_tupqf")
+texture = ExtResource("3_163a3")
 
 [node name="Helmet" type="Sprite2D" parent="PathFollow2D"]
 visible = false
-texture = ExtResource("6_qoriy")
+texture = ExtResource("4_h178y")
 
 [node name="Highlight" type="Sprite2D" parent="."]
 visible = false
 modulate = Color(1, 0.8, 0, 0.85098)
 scale = Vector2(0.143, 0.143)
-texture = ExtResource("4_ckmhb")
+texture = ExtResource("5_egpnx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
