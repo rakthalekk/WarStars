@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://bvxj0pfbkkljm"]
 
 [ext_resource type="PackedScene" uid="uid://dr28wheto1jnr" path="res://src/grid/map.tscn" id="1_0bs38"]
-[ext_resource type="PackedScene" uid="uid://bjm36plh0kgfo" path="res://src/unit.tscn" id="2_0vku1"]
 [ext_resource type="Script" path="res://src/grid/game_board.gd" id="2_2gqiw"]
 [ext_resource type="Resource" uid="uid://ba7p87gewwk8k" path="res://src/grid/grid.tres" id="3_o275t"]
 [ext_resource type="PackedScene" uid="uid://djst6xt2q1nff" path="res://src/grid/cursor.tscn" id="3_yqmtd"]
 [ext_resource type="PackedScene" uid="uid://cprleh6fpmxcm" path="res://src/grid/unit_path.tscn" id="5_sgnn1"]
 [ext_resource type="PackedScene" uid="uid://c37p1jxss1cx" path="res://src/grid/unit_overlay.tscn" id="6_tiuqn"]
+[ext_resource type="PackedScene" uid="uid://c08w2xnjck2wa" path="res://src/player_unit.tscn" id="7_p5jcs"]
 
 [node name="Main" type="Node2D"]
 
@@ -18,9 +18,6 @@ y_sort_enabled = true
 script = ExtResource("2_2gqiw")
 grid = ExtResource("3_o275t")
 
-[node name="Unit" parent="GameBoard" instance=ExtResource("2_0vku1")]
-position = Vector2(88, 40)
-
 [node name="Cursor" parent="GameBoard" instance=ExtResource("3_yqmtd")]
 position = Vector2(8, 8)
 
@@ -28,7 +25,10 @@ position = Vector2(8, 8)
 
 [node name="UnitOverlay" parent="GameBoard" instance=ExtResource("6_tiuqn")]
 
-[node name="Unit2" parent="GameBoard" instance=ExtResource("2_0vku1")]
+[node name="PlayerUnit" parent="GameBoard" instance=ExtResource("7_p5jcs")]
+position = Vector2(88, 40)
+
+[node name="PlayerUnit2" parent="GameBoard" instance=ExtResource("7_p5jcs")]
 position = Vector2(216, 88)
 
 [node name="ActionWindow" type="Control" parent="GameBoard"]

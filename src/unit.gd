@@ -17,12 +17,10 @@ signal die(unit: Unit)
 @export var move_speed := 600.0
 ## The unit's health stat
 @export var health := 8
+## The unit's tier
+@export var tier := 1
 
 @export var weapon_names: Array[String]
-
-enum TEAM {PLAYER, OPPONENT}
-
-@export var team = TEAM.PLAYER
 
 ## Coordinates of the current cell the cursor moved to.
 var cell := Vector2.ZERO:
@@ -45,10 +43,14 @@ var _highlighted := false:
 		_highlighted = value
 		$Highlight.visible = value
 
+var acted := false:
+	set(value):
+		acted = value
+		if acted:
+			$AnimationPlayer.play("inactive")
+
 var weapons: Array[WeaponData]
 var active_weapon: WeaponData
-
-var hex_colors = [Color("8cff9b"), Color("ffaa6e"), Color("c37289"), Color("ffe091"), Color("ffa5d5")]
 
 @onready var _path_follow: PathFollow2D = $PathFollow2D
 
@@ -56,8 +58,6 @@ var hex_colors = [Color("8cff9b"), Color("ffaa6e"), Color("c37289"), Color("ffe0
 func _ready() -> void:
 	set_process(false)
 	_path_follow.rotates = false
-	
-	select_sprites()
 
 	cell = grid.calculate_grid_coordinates(position)
 	position = grid.calculate_map_position(cell)
@@ -71,20 +71,6 @@ func _ready() -> void:
 	# moving the unit.
 	if not Engine.is_editor_hint():
 		curve = Curve2D.new()
-
-
-func select_sprites():
-	var rand = randi_range(1, 7)
-	$PathFollow2D/Head.texture = load("res://assets/PlayerUnits/UnitHeadType" + str(rand) +  ".png")
-	if rand == 1:
-		$PathFollow2D/Helmet.show()
-	elif rand == 5:
-		$PathFollow2D/Head.hframes = 2
-		$AnimationPlayer.play("head5_idle")
-	
-	var color = hex_colors.pick_random()
-	$PathFollow2D/Head.modulate = color
-	$PathFollow2D/Hands.modulate = color
 
 
 func _process(delta: float) -> void:

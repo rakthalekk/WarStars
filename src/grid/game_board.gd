@@ -125,8 +125,12 @@ func _move_active_unit(new_cell: Vector2) -> void:
 func _select_unit(cell: Vector2) -> void:
 	if not _units.has(cell):
 		return
+	
+	var unit = _units[cell] as Unit
+	if unit.acted:
+		return
 
-	_active_unit = _units[cell]
+	_active_unit = unit
 	_active_unit.is_selected = true
 	_walkable_cells = get_walkable_cells(_active_unit)
 	_unit_overlay.draw(_walkable_cells)
@@ -216,10 +220,16 @@ func _on_cancel_pressed():
 	_units.erase(_active_unit.cell)
 	_units[_origin_cell] = _active_unit
 	_active_unit.set_grid_position(_origin_cell)
-	end_action()
+	
+	_deselect_active_unit()
+	_clear_active_unit()
+	$ActionWindow.hide()
+	_unit_overlay.clear()
+	highlight_targets(false)
 
 
 func end_action():
+	_active_unit.acted = true
 	_deselect_active_unit()
 	_clear_active_unit()
 	$ActionWindow.hide()
