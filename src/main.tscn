@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bvxj0pfbkkljm"]
+[gd_scene load_steps=15 format=3 uid="uid://bvxj0pfbkkljm"]
 
 [ext_resource type="PackedScene" uid="uid://dr28wheto1jnr" path="res://src/grid/map.tscn" id="1_0bs38"]
 [ext_resource type="Script" path="res://src/grid/game_board.gd" id="2_2gqiw"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://c37p1jxss1cx" path="res://src/grid/unit_overlay.tscn" id="6_tiuqn"]
 [ext_resource type="PackedScene" uid="uid://c08w2xnjck2wa" path="res://src/player_unit.tscn" id="7_p5jcs"]
 [ext_resource type="PackedScene" uid="uid://bw4we7dunt2hg" path="res://src/enemy_unit.tscn" id="8_lj8hj"]
+[ext_resource type="Texture2D" uid="uid://ra0pi0wergc" path="res://assets/CombatUI/CombatUI.png" id="9_q67u5"]
+[ext_resource type="Texture2D" uid="uid://p6dw5cwdantu" path="res://assets/CombatUI/CombatUI-UnitInfo.png" id="10_wn885"]
 
 [sub_resource type="Animation" id="Animation_ibn7n"]
 resource_name = "player_turn_start"
@@ -126,6 +128,52 @@ position = Vector2(136, 88)
 [node name="EnemyUnit2" parent="GameBoard" instance=ExtResource("8_lj8hj")]
 position = Vector2(184, 136)
 
+[node name="TurnChange" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 104.0
+offset_top = 72.0
+offset_right = 314.0
+offset_bottom = 117.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 32
+text = "PLAYER TURN"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_y4s3e")
+}
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="Screens" type="TextureRect" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("9_q67u5")
+
+[node name="UnitInfo" type="TextureRect" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("10_wn885")
+
 [node name="ActionWindow" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -150,29 +198,6 @@ text = "Wait"
 [node name="Cancel" type="Button" parent="ActionWindow/VBoxContainer"]
 layout_mode = 2
 text = "Cancel"
-
-[node name="TurnChange" type="Label" parent="."]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 152.0
-offset_top = 104.0
-offset_right = 258.0
-offset_bottom = 127.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 6
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 32
-text = "PLAYER TURN"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_y4s3e")
-}
 
 [connection signal="accept_pressed" from="GameBoard/Cursor" to="GameBoard" method="_on_Cursor_accept_pressed"]
 [connection signal="moved" from="GameBoard/Cursor" to="GameBoard" method="_on_Cursor_moved"]
