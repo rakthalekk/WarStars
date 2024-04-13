@@ -1,0 +1,128 @@
+[gd_scene load_steps=11 format=3 uid="uid://bw4we7dunt2hg"]
+
+[ext_resource type="Texture2D" uid="uid://4wjht4y46wmd" path="res://assets/EnemyUnits/Tier1Enemy.png" id="1_g2rn2"]
+[ext_resource type="Script" path="res://src/enemy_unit.gd" id="1_sa3nq"]
+[ext_resource type="Resource" uid="uid://ba7p87gewwk8k" path="res://src/grid/grid.tres" id="2_ulecl"]
+[ext_resource type="Texture2D" uid="uid://bw3qkfwwv04o8" path="res://assets/icon.svg" id="4_53d58"]
+[ext_resource type="Texture2D" uid="uid://celycusapsiae" path="res://assets/CombatUI/8-HealthBar_Border.png" id="5_ss2cx"]
+[ext_resource type="Texture2D" uid="uid://bj1idskr6gk4y" path="res://assets/CombatUI/8-HealthBar_Health.png" id="6_ka32g"]
+
+[sub_resource type="Animation" id="Animation_ckxec"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PathFollow2D/Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ualpo"]
+resource_name = "idle"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_grwtd"]
+resource_name = "inactive"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PathFollow2D/Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.435294, 0.435294, 0.435294, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kfcly"]
+_data = {
+"RESET": SubResource("Animation_ckxec"),
+"idle": SubResource("Animation_ualpo"),
+"inactive": SubResource("Animation_grwtd")
+}
+
+[node name="EnemyUnit" type="Path2D"]
+script = ExtResource("1_sa3nq")
+grid = ExtResource("2_ulecl")
+move_speed = 300.0
+weapon_names = Array[String](["Laser"])
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+rotates = false
+loop = false
+
+[node name="Sprite" type="Sprite2D" parent="PathFollow2D"]
+position = Vector2(0, -8)
+texture = ExtResource("1_g2rn2")
+hframes = 2
+
+[node name="Highlight" type="Sprite2D" parent="PathFollow2D"]
+visible = false
+modulate = Color(1, 0.8, 0, 0.85098)
+scale = Vector2(0.143, 0.143)
+texture = ExtResource("4_53d58")
+
+[node name="HealthBar" type="Sprite2D" parent="PathFollow2D"]
+position = Vector2(0, 5)
+texture = ExtResource("5_ss2cx")
+
+[node name="Health" type="TextureProgressBar" parent="PathFollow2D/HealthBar"]
+offset_left = -5.0
+offset_top = -2.0
+offset_right = 35.0
+offset_bottom = 38.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+value = 50.0
+texture_progress = ExtResource("6_ka32g")
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kfcly")
+}
+autoplay = "idle"

@@ -13,6 +13,21 @@ const DIRECTIONS = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 var _units := {}
 var _active_unit: Unit
 var _walkable_cells := []
+var _origin_cell = Vector2.ZERO
+
+var player_units = []
+var enemy_units = []
+
+var unit_moved := false
+var attack_targets: Array[Unit]
+
+var attacking = false
+
+var player_turn = false
+
+@onready var action_window = get_parent().get_node("ActionWindow")
+@onready var attack_button = action_window.get_node("VBoxContainer/Attack")
+@onready var animation_player = get_parent().get_node("AnimationPlayer")
 
 @onready var _unit_overlay: UnitOverlay = $UnitOverlay
 @onready var _unit_path: UnitPath = $UnitPath
@@ -20,12 +35,17 @@ var _walkable_cells := []
 
 func _ready() -> void:
 	_reinitialize()
+	change_turn()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if _active_unit and event.is_action_pressed("ui_cancel"):
-		_deselect_active_unit()
-		_clear_active_unit()
+func _process(delta):
+	if _active_unit and (Input.is_action_just_pressed("ui_cancel") || Input.is_action_just_pressed("right_click")):
+		if attacking:
+			highlight_targets(false)
+			action_window.show()
+			attacking = false
+		elif !_active_unit._is_walking:
+			_on_cancel_pressed()
 
 
 func _get_configuration_warning() -> String:
@@ -47,6 +67,7 @@ func get_walkable_cells(unit: Unit) -> Array:
 
 ## Clears, and refills the `_units` dictionary with game objects that are on the board.
 func _reinitialize() -> void:
+	action_window.hide()
 	_units.clear()
 
 	for child in get_children():
@@ -54,10 +75,16 @@ func _reinitialize() -> void:
 		if not unit:
 			continue
 		_units[unit.cell] = unit
+		unit.connect("die", remove_unit)
+		
+		if unit is PlayerUnit:
+			player_units.append(unit)
+		elif unit is EnemyUnit:
+			enemy_units.append(unit)
 
 
 ## Returns an array with all the coordinates of walkable cells based on the `max_distance`.
-func _flood_fill(cell: Vector2, max_distance: int) -> Array:
+func _flood_fill(cell: Vector2, max_distance: int, attack_range = false) -> Array:
 	var array := []
 	var stack := [cell]
 	while not stack.size() == 0:
@@ -75,7 +102,7 @@ func _flood_fill(cell: Vector2, max_distance: int) -> Array:
 		array.append(current)
 		for direction in DIRECTIONS:
 			var coordinates: Vector2 = current + direction
-			if is_occupied(coordinates):
+			if !attack_range && is_occupied(coordinates):
 				continue
 			if coordinates in array:
 				continue
@@ -90,15 +117,37 @@ func _flood_fill(cell: Vector2, max_distance: int) -> Array:
 
 ## Updates the _units dictionary with the target position for the unit and asks the _active_unit to walk to it.
 func _move_active_unit(new_cell: Vector2) -> void:
+	_origin_cell = _active_unit.cell
+	
+	if new_cell == _active_unit.cell:
+		set_unit_moved(true)
+		_popup_action_window(_active_unit.position)
+	
 	if is_occupied(new_cell) or not new_cell in _walkable_cells:
 		return
+	
 	# warning-ignore:return_value_discarded
 	_units.erase(_active_unit.cell)
 	_units[new_cell] = _active_unit
-	_deselect_active_unit()
+	set_unit_moved(true)
 	_active_unit.walk_along(_unit_path.current_path)
 	await _active_unit.walk_finished
-	_clear_active_unit()
+	_popup_action_window(_active_unit.position)
+
+
+func _move_enemy_unit(new_cell: Vector2, unit: EnemyUnit) -> void:
+	if new_cell == unit.cell:
+		set_unit_moved(true)
+	
+	if is_occupied(new_cell) or not new_cell in _walkable_cells:
+		return
+	
+	# warning-ignore:return_value_discarded
+	_units.erase(unit.cell)
+	_units[new_cell] = unit
+	set_unit_moved(true)
+	unit.walk_along(_unit_path.current_path)
+	await unit.walk_finished
 
 
 ## Selects the unit in the `cell` if there's one there.
@@ -106,19 +155,29 @@ func _move_active_unit(new_cell: Vector2) -> void:
 func _select_unit(cell: Vector2) -> void:
 	if not _units.has(cell):
 		return
+	
+	var unit = _units[cell]
+	if unit.acted or not unit is PlayerUnit:
+		return
 
-	_active_unit = _units[cell]
+	_active_unit = unit
 	_active_unit.is_selected = true
 	_walkable_cells = get_walkable_cells(_active_unit)
 	_unit_overlay.draw(_walkable_cells)
 	_unit_path.initialize(_walkable_cells)
+	_origin_cell = _active_unit.cell
 
 
 ## Deselects the active unit, clearing the cells overlay and interactive path drawing.
 func _deselect_active_unit() -> void:
 	_active_unit.is_selected = false
-	_unit_overlay.clear()
-	_unit_path.stop()
+	set_unit_moved(false)
+
+
+func set_unit_moved(moved) -> void:
+	unit_moved = moved
+	if moved:
+		_unit_path.stop()
 
 
 ## Clears the reference to the _active_unit and the corresponding walkable cells.
@@ -127,15 +186,170 @@ func _clear_active_unit() -> void:
 	_walkable_cells.clear()
 
 
+func _popup_action_window(pos: Vector2):
+	find_attack_targets()
+	
+	if attack_targets.size() > 0:
+		attack_button.show()
+	else:
+		attack_button.hide()
+	
+	action_window.position = pos + Vector2(20, -40)
+	action_window.visible = true
+
+
+func find_attack_targets():
+	var range = _active_unit.active_weapon.range
+	var cells = _flood_fill(_active_unit.cell, range, true)
+	
+	attack_targets.clear()
+	
+	for cell in cells:
+		if _units.has(cell):
+			var unit = _units[cell]
+			if unit is EnemyUnit:
+				attack_targets.append(unit)
+
+
+func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
+	if _units.has(cell):
+		var unit = _units[cell]
+		if initiator is PlayerUnit && unit is EnemyUnit:
+			unit.damage(initiator.active_weapon.base_damage)
+			attacking = false
+			end_action()
+		elif initiator is EnemyUnit && unit is PlayerUnit:
+			unit.damage(initiator.active_weapon.base_damage)
+
+
+func remove_unit(unit: Unit):
+	_units.erase(unit.cell)
+	
+	if unit in player_units:
+		player_units.erase(unit)
+	elif unit in enemy_units:
+		enemy_units.erase(unit)
+	
+	unit.queue_free()
+
+
 ## Selects or moves a unit based on where the cursor is.
 func _on_Cursor_accept_pressed(cell: Vector2) -> void:
-	if not _active_unit:
+	if !player_turn:
+		return
+	
+	if attacking:
+		_attack_unit(cell)
+	elif not _active_unit:
 		_select_unit(cell)
-	elif _active_unit.is_selected:
+	elif _active_unit.is_selected && !unit_moved:
 		_move_active_unit(cell)
+	elif _active_unit.cell == cell:
+		_on_wait_pressed()
 
 
 ## Updates the interactive path's drawing if there's an active and selected unit.
 func _on_Cursor_moved(new_cell: Vector2) -> void:
-	if _active_unit and _active_unit.is_selected:
+	if !player_turn:
+		return
+	
+	if _active_unit and _active_unit.is_selected and !unit_moved:
 		_unit_path.draw(_active_unit.cell, new_cell)
+
+
+func _on_wait_pressed():
+	end_action()
+
+
+func _on_cancel_pressed():
+	_units.erase(_active_unit.cell)
+	_units[_origin_cell] = _active_unit
+	_active_unit.set_grid_position(_origin_cell)
+	_unit_path.hide()
+	
+	_deselect_active_unit()
+	_clear_active_unit()
+	action_window.hide()
+	_unit_overlay.clear()
+	highlight_targets(false)
+
+
+func end_action():
+	_active_unit.acted = true
+	_deselect_active_unit()
+	_clear_active_unit()
+	action_window.hide()
+	_unit_overlay.clear()
+	highlight_targets(false)
+	
+	check_end_turn()
+
+
+func check_end_turn():
+	if player_turn:
+		check_acted(player_units)
+	else:
+		check_acted(enemy_units)
+
+
+func check_acted(units):
+	var any_active = false
+	for fella in units:
+		if !fella.acted:
+			any_active = true
+			break
+	
+	if !any_active:
+		change_turn()
+
+
+func change_turn():
+	player_turn = !player_turn
+	print('not your turn abymore buddy!!!')
+	attacking = false
+	unit_moved = false
+	
+	for unit in _units.values():
+		unit.acted = false
+	
+	if player_turn:
+		animation_player.play("player_turn_start")
+	else:
+		animation_player.play("enemy_turn_start")
+		await animation_player.animation_finished
+		enemy_turn()
+
+
+func enemy_turn():
+	for enemy in enemy_units:
+		_walkable_cells = get_walkable_cells(enemy)
+		_unit_path.initialize(_walkable_cells)
+		await check_enemy_range(enemy)
+	
+	change_turn()
+
+
+func check_enemy_range(enemy: EnemyUnit):
+	var movement_options = _flood_fill(enemy.cell, enemy.move_range)
+	for destination in movement_options:
+		var possible_targets = _flood_fill(destination, enemy.active_weapon.range, true)
+		for target in possible_targets:
+			if _units.has(target):
+				if _units[target] is PlayerUnit:
+					_unit_path.update_path(enemy.cell, destination)
+					
+					# destination and target
+					await _move_enemy_unit(destination, enemy)
+					_attack_unit(target, enemy)
+					return
+
+
+func highlight_targets(highlight):
+	for target in attack_targets:
+		target._highlighted = highlight
+
+
+func _on_attack_pressed():
+	attacking = true
+	highlight_targets(true)
+	action_window.hide()
