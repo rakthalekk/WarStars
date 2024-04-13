@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjm36plh0kgfo"]
+
+[ext_resource type="Script" path="res://src/unit.gd" id="1_inr72"]
+[ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="2_0fi0v"]
+[ext_resource type="Resource" uid="uid://ba7p87gewwk8k" path="res://src/grid/grid.tres" id="2_vw7vr"]
+
+[node name="Unit" type="Path2D"]
+script = ExtResource("1_inr72")
+grid = ExtResource("2_vw7vr")
+move_speed = 150.0
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+rotates = false
+loop = false
+
+[node name="Sprite" type="Sprite2D" parent="PathFollow2D"]
+scale = Vector2(0.143, 0.143)
+texture = ExtResource("2_0fi0v")
