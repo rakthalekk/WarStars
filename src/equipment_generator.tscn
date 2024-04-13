@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7fc4tcndbaow"]
+
+[ext_resource type="Script" path="res://src/EquipmentGenerator.gd" id="1_0j4wc"]
+
+[node name="Equipment_Generator" type="Node2D" node_paths=PackedStringArray("base_weapons")]
+script = ExtResource("1_0j4wc")
+base_weapons = []
+tier_3_chance = null
+tier_2_chance = null
+tier_1_chance = null
