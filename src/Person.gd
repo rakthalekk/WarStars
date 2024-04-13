@@ -55,7 +55,7 @@ func equip(slot : int, equipment : Equipment):
 			# Check that it's a weapon, otherwise return
 			if equipment.equip_type == Equipment.Equip_Type.WEAPON:
 				weapon2 = equipment
-			#else: return
+			else: return
 		2:
 			# Check that it's not a weapon, otherwise return
 			if not equipment.equip_type == Equipment.Equip_Type.WEAPON:
@@ -66,5 +66,5 @@ func equip(slot : int, equipment : Equipment):
 			if not equipment.equip_type == Equipment.Equip_Type.WEAPON:
 				equip2 = equipment
 			else: return
-	# Call equipment's stat change function
+	equipment.apply_stat_changes(self)
 	price += equipment.tier * weapon_price_base

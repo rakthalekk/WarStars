@@ -27,14 +27,23 @@ func generate_unit() -> Person:
 	elif rank_roll < rank_2_chance:
 		rank = 2
 	unit.raise_tier_to(rank)
+	
+	var one_below_tier : int
+	if unit.tier == 1:
+		one_below_tier = 1
+	else:
+		one_below_tier = unit.tier - 1
 	# Generate equipment
 	var weapon1 = generator.spawn_random_weapon_at_tier(unit.tier)
 	unit.equip(0, weapon1)
-	var weapon2 = generator.spawn_random_weapon_up_to_tier(unit.tier - 1)
+	var weapon2 = generator.spawn_random_weapon_up_to_tier(one_below_tier)
 	unit.equip(1, weapon2)
 	
-	var gear1 = generator.spawn_random_gear_up_to_tier(unit.tier)
-	unit.equip(2, gear1)
-	var gear2 = generator.spawn_random_gear_up_to_tier(unit.tier - 1)
-	unit.equip(3, gear2)
+	var gear_roll = randi_range(0, 2)
+	if gear_roll > 0:
+		var gear1 = generator.spawn_random_gear_up_to_tier(unit.tier)
+		unit.equip(2, gear1)
+	if gear_roll > 1:
+		var gear2 = generator.spawn_random_gear_up_to_tier(one_below_tier)
+		unit.equip(3, gear2)
 	return unit
