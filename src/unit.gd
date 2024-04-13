@@ -16,11 +16,15 @@ signal die(unit: Unit)
 ## The unit's move speed when it's moving along a path.
 @export var move_speed := 600.0
 ## The unit's health stat
-@export var health := 8
+@export var max_health := 8
 ## The unit's tier
 @export var tier := 1
 
 @export var weapon_names: Array[String]
+
+var health: int
+
+var idle_anim = "idle"
 
 ## Coordinates of the current cell the cursor moved to.
 var cell := Vector2.ZERO:
@@ -41,18 +45,21 @@ var _is_walking := false:
 var _highlighted := false:
 	set(value):
 		_highlighted = value
-		$Highlight.visible = value
+		$PathFollow2D/Highlight.visible = value
 
 var acted := false:
 	set(value):
 		acted = value
 		if acted:
 			$AnimationPlayer.play("inactive")
+		else:
+			$AnimationPlayer.play(idle_anim)
 
 var weapons: Array[WeaponData]
 var active_weapon: WeaponData
 
 @onready var _path_follow: PathFollow2D = $PathFollow2D
+@onready var health_bar = $PathFollow2D/HealthBar/Health as TextureProgressBar
 
 
 func _ready() -> void:
@@ -61,6 +68,9 @@ func _ready() -> void:
 
 	cell = grid.calculate_grid_coordinates(position)
 	position = grid.calculate_map_position(cell)
+	
+	health = max_health
+	health_bar.max_value = max_health
 	
 	for weapon_name in weapon_names:
 		weapons.append(WeaponDatabase._get_weapon_by_name(weapon_name))
@@ -105,5 +115,6 @@ func walk_along(path: PackedVector2Array) -> void:
 
 func damage(dmg: int):
 	health = max(0, health - dmg)
+	health_bar.value = health
 	if health == 0:
 		emit_signal("die", self)
