@@ -1,8 +1,7 @@
 class_name Black_Market
 extends Fleet_Structure
 
-@export var items_to_purchase: Array[Equipment]
-@export var item_prices: Array[int]
+@export var items_to_purchase: Array[Gear]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,19 +15,14 @@ func _process(delta):
 
 func refresh():
 	items_to_purchase.clear()
-	item_prices.clear()
 	for i in capacity:
 		scout_item()
 		
 
 
 func scout_item():
-	var new_item
-	#generate new person: people_generator.generate()
+	var new_item = WeaponDatabase.get_generator().spawn_random_gear()
 	items_to_purchase.append(new_item)
-	#add their price to the price list
-	var new_price
-	item_prices.append(new_price)
 	
 
 func can_purchase(id: int)-> bool:
@@ -36,7 +30,7 @@ func can_purchase(id: int)-> bool:
 		return false
 	if(items_to_purchase[id] == null):
 		return false
-	if(manager.get_current_money() < item_prices[id]):
+	if(manager.get_current_money() < items_to_purchase[id].get_cost()):
 		return false
 	if(manager.at_max_items()):
 		return false
@@ -48,9 +42,7 @@ func purchase(id: int) -> bool:
 		return false
 	
 	manager.add_new_item(items_to_purchase[id])
-	manager.spend_money(item_prices[id])
+	manager.spend_money(items_to_purchase[id].get_cost())
 	items_to_purchase.remove_at(id)
 	items_to_purchase.insert(id, null)
-	item_prices.remove_at(id)
-	item_prices.insert(id, null)
 	return true
