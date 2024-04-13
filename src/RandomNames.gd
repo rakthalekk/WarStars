@@ -10,8 +10,6 @@ func _ready():
 		alienList.append(file.get_line())
 	file.close()
 	alienList.remove_at(alienList.size() - 1)
-	print(get_random_name())
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
