@@ -4,6 +4,7 @@ extends Equipment
 enum Specialty_Type{NONE, BURN, STUN, ACID, PLASMA}
 enum Upgrade_Type{SPECIALTY, DAMAGE, RANGE, HEAT}
 
+@export var weapon_type: Equipment_Generator.Weapon_Type = Equipment_Generator.Weapon_Type.NONE
 @export var is_melee: bool
 @export var heat_gain: int
 @export var heat_max: int = 6
