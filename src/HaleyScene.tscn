@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d010vbje4lcr1"]
+
+[ext_resource type="Script" path="res://src/RandomNames.gd" id="1_p135l"]
+
+[node name="HaleyScene" type="Node2D"]
+script = ExtResource("1_p135l")
