@@ -65,6 +65,7 @@ func _reinitialize() -> void:
 		if not unit:
 			continue
 		_units[unit.cell] = unit
+		unit.connect("die", remove_unit)
 
 
 ## Returns an array with all the coordinates of walkable cells based on the `max_distance`.
@@ -180,7 +181,13 @@ func _attack_unit(cell: Vector2) -> void:
 		var unit = _units[cell] as Unit
 		if unit != _active_unit:
 			unit.damage(_active_unit.active_weapon.base_damage)
+			attacking = false
 			end_action()
+
+
+func remove_unit(unit: Unit):
+	_units.erase(unit.cell)
+	unit.queue_free()
 
 
 ## Selects or moves a unit based on where the cursor is.

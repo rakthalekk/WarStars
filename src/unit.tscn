@@ -1,9 +1,116 @@
-[gd_scene load_steps=5 format=3 uid="uid://bjm36plh0kgfo"]
+[gd_scene load_steps=12 format=3 uid="uid://bjm36plh0kgfo"]
 
 [ext_resource type="Script" path="res://src/unit.gd" id="1_inr72"]
-[ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="2_0fi0v"]
 [ext_resource type="Resource" uid="uid://ba7p87gewwk8k" path="res://src/grid/grid.tres" id="2_vw7vr"]
+[ext_resource type="Texture2D" uid="uid://cwdfpaxroeukk" path="res://assets/PlayerUnits/UnitArmor.png" id="3_ykkuo"]
 [ext_resource type="Texture2D" uid="uid://bw3qkfwwv04o8" path="res://assets/icon.svg" id="4_ckmhb"]
+[ext_resource type="Texture2D" uid="uid://d23l0w58myipf" path="res://assets/PlayerUnits/UnitHandspng.png" id="4_ld17m"]
+[ext_resource type="Texture2D" uid="uid://dnnfj5hx7vi5r" path="res://assets/PlayerUnits/UnitHeadType7.png" id="5_tupqf"]
+[ext_resource type="Texture2D" uid="uid://d2cm55eypthll" path="res://assets/PlayerUnits/UnitHelmetType1.png" id="6_qoriy"]
+
+[sub_resource type="Animation" id="Animation_65a1p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PathFollow2D/Head:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PathFollow2D/Head:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_3uy03"]
+resource_name = "idle"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_77axj"]
+resource_name = "head5_idle"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PathFollow2D/Head:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PathFollow2D/Head:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tus72"]
+_data = {
+"RESET": SubResource("Animation_65a1p"),
+"head5_idle": SubResource("Animation_77axj"),
+"idle": SubResource("Animation_3uy03")
+}
 
 [node name="Unit" type="Path2D"]
 script = ExtResource("1_inr72")
@@ -15,12 +122,29 @@ weapon_names = Array[String](["Laser"])
 rotates = false
 loop = false
 
-[node name="Sprite" type="Sprite2D" parent="PathFollow2D"]
-scale = Vector2(0.143, 0.143)
-texture = ExtResource("2_0fi0v")
+[node name="Body" type="Sprite2D" parent="PathFollow2D"]
+texture = ExtResource("3_ykkuo")
+hframes = 2
+
+[node name="Hands" type="Sprite2D" parent="PathFollow2D"]
+texture = ExtResource("4_ld17m")
+hframes = 2
+
+[node name="Head" type="Sprite2D" parent="PathFollow2D"]
+texture = ExtResource("5_tupqf")
+
+[node name="Helmet" type="Sprite2D" parent="PathFollow2D"]
+visible = false
+texture = ExtResource("6_qoriy")
 
 [node name="Highlight" type="Sprite2D" parent="."]
 visible = false
 modulate = Color(1, 0.8, 0, 0.85098)
 scale = Vector2(0.143, 0.143)
 texture = ExtResource("4_ckmhb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tus72")
+}
+autoplay = "idle"

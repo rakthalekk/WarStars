@@ -7,6 +7,8 @@ extends Path2D
 ## Emitted when the unit reached the end of a path along which it was walking.
 signal walk_finished
 
+signal die(unit: Unit)
+
 ## Shared resource of type Grid, used to calculate map coordinates.
 @export var grid: Resource
 ## Distance to which the unit can walk in cells.
@@ -17,22 +19,6 @@ signal walk_finished
 @export var health := 8
 
 @export var weapon_names: Array[String]
-
-## Texture representing the unit.
-@export var skin: Texture:
-	set(value):
-		skin = value
-		if not _sprite:
-			# This will resume execution after this node's _ready()
-			await ready
-		_sprite.texture = value
-## Offset to apply to the `skin` sprite in pixels.
-@export var skin_offset := Vector2.ZERO:
-	set(value):
-		skin_offset = value
-		if not _sprite:
-			await ready
-		_sprite.position = value
 
 enum TEAM {PLAYER, OPPONENT}
 
@@ -62,13 +48,16 @@ var _highlighted := false:
 var weapons: Array[WeaponData]
 var active_weapon: WeaponData
 
-@onready var _sprite: Sprite2D = $PathFollow2D/Sprite
+var hex_colors = [Color("8cff9b"), Color("ffaa6e"), Color("c37289"), Color("ffe091"), Color("ffa5d5")]
+
 @onready var _path_follow: PathFollow2D = $PathFollow2D
 
 
 func _ready() -> void:
 	set_process(false)
 	_path_follow.rotates = false
+	
+	select_sprites()
 
 	cell = grid.calculate_grid_coordinates(position)
 	position = grid.calculate_map_position(cell)
@@ -82,6 +71,20 @@ func _ready() -> void:
 	# moving the unit.
 	if not Engine.is_editor_hint():
 		curve = Curve2D.new()
+
+
+func select_sprites():
+	var rand = randi_range(1, 7)
+	$PathFollow2D/Head.texture = load("res://assets/PlayerUnits/UnitHeadType" + str(rand) +  ".png")
+	if rand == 1:
+		$PathFollow2D/Helmet.show()
+	elif rand == 5:
+		$PathFollow2D/Head.hframes = 2
+		$AnimationPlayer.play("head5_idle")
+	
+	var color = hex_colors.pick_random()
+	$PathFollow2D/Head.modulate = color
+	$PathFollow2D/Hands.modulate = color
 
 
 func _process(delta: float) -> void:
@@ -117,4 +120,4 @@ func walk_along(path: PackedVector2Array) -> void:
 func damage(dmg: int):
 	health = max(0, health - dmg)
 	if health == 0:
-		queue_free()
+		emit_signal("die", self)
