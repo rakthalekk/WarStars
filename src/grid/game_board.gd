@@ -13,6 +13,7 @@ const DIRECTIONS = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 var _units := {}
 var _active_unit: Unit
 var _walkable_cells := []
+var _origin_cell = Vector2.ZERO
 
 @onready var _unit_overlay: UnitOverlay = $UnitOverlay
 @onready var _unit_path: UnitPath = $UnitPath
@@ -47,6 +48,7 @@ func get_walkable_cells(unit: Unit) -> Array:
 
 ## Clears, and refills the `_units` dictionary with game objects that are on the board.
 func _reinitialize() -> void:
+	$ActionWindow.hide()
 	_units.clear()
 
 	for child in get_children():
@@ -92,13 +94,16 @@ func _flood_fill(cell: Vector2, max_distance: int) -> Array:
 func _move_active_unit(new_cell: Vector2) -> void:
 	if is_occupied(new_cell) or not new_cell in _walkable_cells:
 		return
+	
+	_origin_cell = _active_unit.cell
+	
 	# warning-ignore:return_value_discarded
 	_units.erase(_active_unit.cell)
 	_units[new_cell] = _active_unit
 	_deselect_active_unit()
 	_active_unit.walk_along(_unit_path.current_path)
 	await _active_unit.walk_finished
-	_clear_active_unit()
+	_popup_action_window(_active_unit.position)
 
 
 ## Selects the unit in the `cell` if there's one there.
@@ -127,6 +132,11 @@ func _clear_active_unit() -> void:
 	_walkable_cells.clear()
 
 
+func _popup_action_window(pos: Vector2):
+	$ActionWindow.position = pos
+	$ActionWindow.visible = true
+
+
 ## Selects or moves a unit based on where the cursor is.
 func _on_Cursor_accept_pressed(cell: Vector2) -> void:
 	if not _active_unit:
@@ -139,3 +149,21 @@ func _on_Cursor_accept_pressed(cell: Vector2) -> void:
 func _on_Cursor_moved(new_cell: Vector2) -> void:
 	if _active_unit and _active_unit.is_selected:
 		_unit_path.draw(_active_unit.cell, new_cell)
+
+
+func _on_wait_pressed():
+	_clear_active_unit()
+	$ActionWindow.hide()
+
+
+func _on_cancel_pressed():
+	_units.erase(_active_unit.cell)
+	_units[_origin_cell] = _active_unit
+	_deselect_active_unit()
+	
+	_active_unit.set_grid_position(_origin_cell)
+	
+	_clear_active_unit()
+	$ActionWindow.hide()
+	
+	

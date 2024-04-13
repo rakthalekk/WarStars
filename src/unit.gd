@@ -1,7 +1,6 @@
 ## Represents a unit on the game board.
 ## The board manages its position inside the game grid.
 ## The unit itself holds stats and a visual representation that moves smoothly in the game world.
-@tool
 class_name Unit
 extends Path2D
 
@@ -29,6 +28,10 @@ signal walk_finished
 		if not _sprite:
 			await ready
 		_sprite.position = value
+
+enum TEAM {PLAYER, OPPONENT}
+
+@export var team = TEAM.PLAYER
 
 ## Coordinates of the current cell the cursor moved to.
 var cell := Vector2.ZERO:
@@ -73,6 +76,11 @@ func _process(delta: float) -> void:
 		position = grid.calculate_map_position(cell)
 		curve.clear_points()
 		emit_signal("walk_finished")
+
+
+func set_grid_position(pos: Vector2):
+	cell = pos
+	position = grid.calculate_map_position(cell)
 
 
 ## Starts walking along the `path`.

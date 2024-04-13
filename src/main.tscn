@@ -31,5 +31,32 @@ position = Vector2(8, 8)
 [node name="Unit2" parent="GameBoard" instance=ExtResource("2_0vku1")]
 position = Vector2(216, 88)
 
+[node name="ActionWindow" type="Control" parent="GameBoard"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameBoard/ActionWindow"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Attack" type="Button" parent="GameBoard/ActionWindow/VBoxContainer"]
+layout_mode = 2
+text = "Attack"
+
+[node name="Wait" type="Button" parent="GameBoard/ActionWindow/VBoxContainer"]
+layout_mode = 2
+text = "Wait"
+
+[node name="Cancel" type="Button" parent="GameBoard/ActionWindow/VBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
 [connection signal="accept_pressed" from="GameBoard/Cursor" to="GameBoard" method="_on_Cursor_accept_pressed"]
 [connection signal="moved" from="GameBoard/Cursor" to="GameBoard" method="_on_Cursor_moved"]
+[connection signal="pressed" from="GameBoard/ActionWindow/VBoxContainer/Wait" to="GameBoard" method="_on_wait_pressed"]
+[connection signal="pressed" from="GameBoard/ActionWindow/VBoxContainer/Cancel" to="GameBoard" method="_on_cancel_pressed"]
