@@ -19,6 +19,6 @@ enum Weapon_Type{NONE, MELEE, PISTOL, SHOTGUN, RIFLE}
 @export var tier_1_chance: float = 0.6
 
 func SpawnWeapon(tier: int, disallowed_type: Weapon_Type = Weapon_Type.NONE):
-	
+	pass
 
 
