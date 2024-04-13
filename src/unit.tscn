@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://bjm36plh0kgfo"]
+[gd_scene load_steps=5 format=3 uid="uid://bjm36plh0kgfo"]
 
 [ext_resource type="Script" path="res://src/unit.gd" id="1_inr72"]
 [ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="2_0fi0v"]
 [ext_resource type="Resource" uid="uid://ba7p87gewwk8k" path="res://src/grid/grid.tres" id="2_vw7vr"]
+[ext_resource type="Texture2D" uid="uid://bw3qkfwwv04o8" path="res://assets/icon.svg" id="4_ckmhb"]
 
 [node name="Unit" type="Path2D"]
 script = ExtResource("1_inr72")
 grid = ExtResource("2_vw7vr")
 move_speed = 150.0
+weapon_names = Array[String](["Laser"])
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 rotates = false
@@ -16,3 +18,9 @@ loop = false
 [node name="Sprite" type="Sprite2D" parent="PathFollow2D"]
 scale = Vector2(0.143, 0.143)
 texture = ExtResource("2_0fi0v")
+
+[node name="Highlight" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 0.8, 0, 0.85098)
+scale = Vector2(0.143, 0.143)
+texture = ExtResource("4_ckmhb")

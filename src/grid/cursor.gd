@@ -49,7 +49,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if !controller && event is InputEventMouseMotion:
 		cell = grid.calculate_grid_coordinates(event.position)
 	# Trying to select something in a cell.
-	elif event.is_action_pressed("click") or event.is_action_pressed("ui_accept"):
+	elif event.is_action_pressed("click"):
 		emit_signal("accept_pressed", cell)
 		get_viewport().set_input_as_handled()
 

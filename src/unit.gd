@@ -13,6 +13,11 @@ signal walk_finished
 @export var move_range := 6
 ## The unit's move speed when it's moving along a path.
 @export var move_speed := 600.0
+## The unit's health stat
+@export var health := 8
+
+@export var weapon_names: Array[String]
+
 ## Texture representing the unit.
 @export var skin: Texture:
 	set(value):
@@ -49,6 +54,14 @@ var _is_walking := false:
 		_is_walking = value
 		set_process(_is_walking)
 
+var _highlighted := false:
+	set(value):
+		_highlighted = value
+		$Highlight.visible = value
+
+var weapons: Array[WeaponData]
+var active_weapon: WeaponData
+
 @onready var _sprite: Sprite2D = $PathFollow2D/Sprite
 @onready var _path_follow: PathFollow2D = $PathFollow2D
 
@@ -59,6 +72,11 @@ func _ready() -> void:
 
 	cell = grid.calculate_grid_coordinates(position)
 	position = grid.calculate_map_position(cell)
+	
+	for weapon_name in weapon_names:
+		weapons.append(WeaponDatabase._get_weapon_by_name(weapon_name))
+	
+	active_weapon = weapons[0]
 
 	# We create the curve resource here because creating it in the editor prevents us from
 	# moving the unit.
@@ -94,3 +112,9 @@ func walk_along(path: PackedVector2Array) -> void:
 		curve.add_point(grid.calculate_map_position(point) - position)
 	cell = path[-1]
 	_is_walking = true
+
+
+func damage(dmg: int):
+	health = max(0, health - dmg)
+	if health == 0:
+		queue_free()

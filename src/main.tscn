@@ -58,5 +58,6 @@ text = "Cancel"
 
 [connection signal="accept_pressed" from="GameBoard/Cursor" to="GameBoard" method="_on_Cursor_accept_pressed"]
 [connection signal="moved" from="GameBoard/Cursor" to="GameBoard" method="_on_Cursor_moved"]
+[connection signal="pressed" from="GameBoard/ActionWindow/VBoxContainer/Attack" to="GameBoard" method="_on_attack_pressed"]
 [connection signal="pressed" from="GameBoard/ActionWindow/VBoxContainer/Wait" to="GameBoard" method="_on_wait_pressed"]
 [connection signal="pressed" from="GameBoard/ActionWindow/VBoxContainer/Cancel" to="GameBoard" method="_on_cancel_pressed"]
