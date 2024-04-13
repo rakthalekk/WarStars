@@ -20,9 +20,16 @@ base_rifle = NodePath("Rifle")
 base_weapons = [NodePath("Melee"), NodePath("Pistol"), NodePath("Shotgun"), NodePath("Rifle")]
 
 [node name="Melee" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
+weapon_type = 1
+is_melee = true
+range = 1
+damage = 1
 
 [node name="Pistol" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
+weapon_type = 2
 
 [node name="Shotgun" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
+weapon_type = 3
 
 [node name="Rifle" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
+weapon_type = 4
