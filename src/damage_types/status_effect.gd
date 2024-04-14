@@ -9,6 +9,7 @@ var target: Unit
 @export var duration: int
 var original_stat
 @export var applied_every_turn: bool = false
+@export var max_magnitude = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -44,8 +45,8 @@ func add_effect_to_target(unit: Unit):
 		target.end_unit_action.connect(on_action_end)
 		_save_stat()
 	else:
-		existing_effect.magnitude += magnitude
-		existing_effect.duration = max(duration, existing_effect.duration)
+		existing_effect.magnitude = max(existing_effect.magnitude + magnitude, max_magnitude)
+		existing_effect.duration = (duration + existing_effect.duration) / 2
 		
 	if not applied_every_turn:
 		_apply_effect()
