@@ -1,7 +1,46 @@
 extends Node
 
 enum Contract_Type {CAPTURE, DEFEND, ROUTE}
+# Stores the contract difficulties in a dictionary for rerolling purposes stored in the order of the type
+var contractDifficulties = {Contract_Type.CAPTURE: 1, Contract_Type.DEFEND: 1, Contract_Type.ROUTE: 1}
+# List of the "shiny" names
+var devList = ["Haley", "Faye", "Max", "Jack", "Charlie", "Landon", "Maverick", "Mitchell", "Tyler"]:
+	get:
+		return devList
+# List of the alien names read from a file
+var alienList = []:
+	get:
+		return alienList
+# Contract Data structure
+var currentContract: ContractData = null:
+	set(newContract):
+		currentContract = newContract
+	get:
+		return currentContract
+	
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	var file = FileAccess.open("res://assets/AlienNames.txt", FileAccess.READ)
+	while !file.eof_reached():
+		alienList.append(file.get_line())
+	file.close()
+	alienList.remove_at(alienList.size() - 1)
 
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+func removeDev(devIndex: int):
+	devList.remove_at(devIndex)
+	
+func removeAlien(alienIndex: int):
+	alienList.remove_at(alienIndex)
+# Adds contract difficulty to the dictionary of difficulties with the index of the type of contract and value of the difficulty 
+func addContractDifficulty(index: int, value: int):
+	contractDifficulties[index] = value
+	
+# Inner class storing the contract data
 class ContractData:
 
 	var type: Contract_Type:
@@ -18,19 +57,3 @@ class ContractData:
 		type = newContract.type
 		difficulty_stars = newContract.difficulty_stars
 		reward = newContract.reward
-	
-var currentContract: ContractData = null:
-	set(newContract):
-		currentContract = newContract
-	get:
-		return currentContract
-	
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
