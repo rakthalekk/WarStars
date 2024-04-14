@@ -17,7 +17,11 @@ func _ready():
 	
 	for i in range(chunk_grid_size.x):
 		for j in range(chunk_grid_size.y):
-			var chunk = ChunkDatabase.get_random_chunk()
+			var chunk = null
+			if GameManager.currentContract:
+				chunk = ChunkDatabase.get_random_chunk_by_contract_difficulty()
+			else:
+				chunk = ChunkDatabase.get_random_chunk()
 			
 			if Vector2(i, j) == player_chunk_position:
 				chunk = ChunkDatabase.get_player_chunk()
