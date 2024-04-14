@@ -2,6 +2,7 @@ class_name Mothership
 extends Fleet_Structure
 
 @export var troops: Array[Person]
+@export var mothership_ui: Mothership_UI
 var troop_cost: int = -1
 
 # Called when the node enters the scene tree for the first time.

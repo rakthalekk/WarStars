@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://f0o7xboju44g"]
+
+[ext_resource type="Script" path="res://src/ErrorScript.gd" id="1_43ptm"]
+[ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="1_bopyj"]
+
+[node name="ErrorScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_43ptm")
+
+[node name="Window" type="Window" parent="."]
+mode = 4
+initial_position = 1
+size = Vector2i(1920, 1080)
+
+[node name="Camera2D" type="Camera2D" parent="Window"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Window/Camera2D"]
+texture = ExtResource("1_bopyj")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Window/Camera2D"]
+modulate = Color(1, 0, 0, 1)
+self_modulate = Color(1, 0, 0, 1)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -480.0
+offset_top = 220.0
+offset_right = 1440.0
+offset_bottom = 357.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/bold_font_size = 100
+bbcode_enabled = true
+text = "[b][center]This is all your fault![/center][/b]"
+fit_content = true
