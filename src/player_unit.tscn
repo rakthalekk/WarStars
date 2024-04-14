@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c08w2xnjck2wa"]
+[gd_scene load_steps=15 format=3 uid="uid://c08w2xnjck2wa"]
 
 [ext_resource type="Texture2D" uid="uid://cwdfpaxroeukk" path="res://assets/PlayerUnits/UnitArmor.png" id="1_emlgu"]
 [ext_resource type="Script" path="res://src/player_unit.gd" id="1_o7chy"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dnnfj5hx7vi5r" path="res://assets/PlayerUnits/UnitHeadType7.png" id="3_163a3"]
 [ext_resource type="Texture2D" uid="uid://d2cm55eypthll" path="res://assets/PlayerUnits/UnitHelmetType1.png" id="4_h178y"]
 [ext_resource type="Texture2D" uid="uid://bw3qkfwwv04o8" path="res://assets/icon.svg" id="5_egpnx"]
+[ext_resource type="Texture2D" uid="uid://celycusapsiae" path="res://assets/CombatUI/8-HealthBar_Border.png" id="8_u5v2g"]
+[ext_resource type="Texture2D" uid="uid://bj1idskr6gk4y" path="res://assets/CombatUI/8-HealthBar_Health.png" id="9_ev36i"]
 
 [sub_resource type="Animation" id="Animation_65a1p"]
 length = 0.001
@@ -59,23 +61,6 @@ tracks/3/keys = {
 "values": [Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_3uy03"]
-resource_name = "idle"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PathFollow2D/Body:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
-}
-
 [sub_resource type="Animation" id="Animation_77axj"]
 resource_name = "head5_idle"
 length = 0.8
@@ -115,6 +100,35 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_3uy03"]
+resource_name = "idle"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Body:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PathFollow2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_r28jt"]
@@ -169,32 +183,49 @@ script = ExtResource("1_o7chy")
 grid = ExtResource("2_oxfat")
 move_speed = 300.0
 weapon_names = Array[String](["Laser"])
-team = null
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 rotates = false
 loop = false
 
 [node name="Body" type="Sprite2D" parent="PathFollow2D"]
+position = Vector2(0, -8)
 texture = ExtResource("1_emlgu")
 hframes = 2
 
 [node name="Hands" type="Sprite2D" parent="PathFollow2D"]
+position = Vector2(0, -8)
 texture = ExtResource("2_h5pv2")
 hframes = 2
 
 [node name="Head" type="Sprite2D" parent="PathFollow2D"]
+position = Vector2(0, -8)
 texture = ExtResource("3_163a3")
 
 [node name="Helmet" type="Sprite2D" parent="PathFollow2D"]
 visible = false
+position = Vector2(0, -9)
 texture = ExtResource("4_h178y")
 
-[node name="Highlight" type="Sprite2D" parent="."]
+[node name="Highlight" type="Sprite2D" parent="PathFollow2D"]
 visible = false
 modulate = Color(1, 0.8, 0, 0.85098)
 scale = Vector2(0.143, 0.143)
 texture = ExtResource("5_egpnx")
+
+[node name="HealthBar" type="Sprite2D" parent="PathFollow2D"]
+position = Vector2(0, 5)
+texture = ExtResource("8_u5v2g")
+
+[node name="Health" type="TextureProgressBar" parent="PathFollow2D/HealthBar"]
+offset_left = -5.0
+offset_top = -2.0
+offset_right = 35.0
+offset_bottom = 38.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+value = 50.0
+texture_progress = ExtResource("9_ev36i")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

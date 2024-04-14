@@ -1,3 +1,4 @@
+class_name PlayerUnit
 extends Unit
 
 
@@ -15,7 +16,7 @@ func select_sprites():
 		$PathFollow2D/Helmet.show()
 	elif rand == 5:
 		$PathFollow2D/Head.hframes = 2
-		$AnimationPlayer.play("head5_idle")
+		idle_anim = "head5_idle"
 	
 	var color = hex_colors.pick_random()
 	$PathFollow2D/Head.modulate = color
