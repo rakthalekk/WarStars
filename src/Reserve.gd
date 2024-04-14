@@ -58,3 +58,12 @@ func army_full() -> bool:
 	
 func stockpile_full() -> bool:
 	return stockpile.size() >= max_stockpile_size
+
+func rest_army():
+	for person: Person in army:
+		#if person did not go to battle, restore 10% hp
+		pass
+
+func remove_dead_units():
+	## also check for any units marked as dead
+	army = army.filter(func(unit): return unit != null)

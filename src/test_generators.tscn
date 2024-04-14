@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2kmclsi6b1eg"]
+
+[ext_resource type="Script" path="res://src/test_generators.gd" id="1_tjg2l"]
+[ext_resource type="PackedScene" uid="uid://bt306fals7b5n" path="res://src/person_generator.tscn" id="2_d4is8"]
+
+[node name="Test_Generators" type="Node2D"]
+script = ExtResource("1_tjg2l")
+
+[node name="PersonGenerator" parent="." instance=ExtResource("2_d4is8")]

@@ -2,6 +2,7 @@ class_name Black_Market
 extends Fleet_Structure
 
 @export var items_to_purchase: Array[Gear]
+@export var ui: Black_Market_UI
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,6 +18,7 @@ func refresh():
 	items_to_purchase.clear()
 	for i in capacity:
 		scout_item()
+	ui.refresh()
 		
 
 
