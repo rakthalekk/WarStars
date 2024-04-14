@@ -3,6 +3,7 @@ extends Fleet_Structure
 
 @export var people_to_summon: Array[Person]
 @export var summon_prices: Array[int]
+@export var ui: Rift_UI
 
 var people_generator
 
