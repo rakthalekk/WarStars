@@ -35,7 +35,7 @@ func spawn_random_weapon_at_tier(tier: int, disallowed_type: Weapon_Type = Weapo
 				valid_weapons.erase(base_rifle)
 	
 	var random_int = randi() % valid_weapons.size()
-	var random_weapon_type = valid_weapons[random_int]
+	var random_weapon_type = valid_weapons.pick_random()
 	
 	
 	var new_weapon = random_weapon_type.duplicate(DuplicateFlags.DUPLICATE_SCRIPTS)

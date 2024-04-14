@@ -10,6 +10,8 @@ var equip2 : Gear
 @export var base_price = 150
 @export var weapon_price_base = 20
 @export var gear_price_base = 25
+
+@export var image: Texture
 var price = 100
 
 var tier = 1

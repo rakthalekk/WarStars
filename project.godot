@@ -20,6 +20,7 @@ config/icon="res://assets/icon.svg"
 WeaponDatabase="*res://src/weapons/weapon_database.tscn"
 ChunkDatabase="*res://src/grid/chunk_database.tscn"
 GameManager="*res://src/GameManager.gd"
+PersonGenerator="*res://src/person_generator.tscn"
 
 [display]
 

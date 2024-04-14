@@ -1,0 +1,69 @@
+[gd_scene load_steps=3 format=3 uid="uid://birl181fhw3cc"]
+
+[ext_resource type="Script" path="res://src/Mini Menu.gd" id="1_p4sm8"]
+[ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="2_og0c0"]
+
+[node name="Mini Menu" type="Control" node_paths=PackedStringArray("mothership_button", "rift_button", "black_market_button", "healing_vats_button")]
+layout_mode = 3
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+script = ExtResource("1_p4sm8")
+mothership_button = NodePath("MarginContainer/ColorRect/MothershipButton")
+rift_button = NodePath("MarginContainer/ColorRect/RiftButton")
+black_market_button = NodePath("MarginContainer/ColorRect/BlackMarketButton")
+healing_vats_button = NodePath("MarginContainer/ColorRect/HealingVatsButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 40.0
+offset_bottom = -65.0
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="MothershipButton" type="TextureButton" parent="MarginContainer/ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("2_og0c0")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="RiftButton" type="TextureButton" parent="MarginContainer/ColorRect"]
+layout_mode = 0
+offset_top = 40.0
+offset_right = 40.0
+offset_bottom = 80.0
+texture_normal = ExtResource("2_og0c0")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="BlackMarketButton" type="TextureButton" parent="MarginContainer/ColorRect"]
+layout_mode = 0
+offset_top = 80.0
+offset_right = 40.0
+offset_bottom = 120.0
+texture_normal = ExtResource("2_og0c0")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="HealingVatsButton" type="TextureButton" parent="MarginContainer/ColorRect"]
+layout_mode = 0
+offset_top = 120.0
+offset_right = 40.0
+offset_bottom = 160.0
+texture_normal = ExtResource("2_og0c0")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="MarginContainer/ColorRect/MothershipButton" to="." method="on_press_mothership_button"]
+[connection signal="pressed" from="MarginContainer/ColorRect/RiftButton" to="." method="on_press_rift_button"]
+[connection signal="pressed" from="MarginContainer/ColorRect/BlackMarketButton" to="." method="on_press_black_market_button"]
+[connection signal="pressed" from="MarginContainer/ColorRect/HealingVatsButton" to="." method="on_press_vats_button"]
