@@ -13,4 +13,8 @@ func apply_effect():
 	target.damage(magnitude)
 
 func remove_effect():
-	queue_free()
+	pass
+	
+func on_action_end():
+	apply_effect()
+	super.on_action_end()
