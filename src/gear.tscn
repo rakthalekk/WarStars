@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm507f6fdgtur"]
+
+[ext_resource type="Script" path="res://Gear.gd" id="1_bbh2j"]
+
+[node name="Gear" type="Node"]
+script = ExtResource("1_bbh2j")

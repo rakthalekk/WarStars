@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bq04wip4d1kki"]
+
+[ext_resource type="Script" path="res://src/FleetStructureManager.gd" id="1_8pirh"]
+
+[node name="FleetStructureManager" type="Node"]
+script = ExtResource("1_8pirh")

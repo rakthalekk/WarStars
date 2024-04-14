@@ -1,12 +1,13 @@
 ## Represents a unit on the game board.
 ## The board manages its position inside the game grid.
 ## The unit itself holds stats and a visual representation that moves smoothly in the game world.
-@tool
 class_name Unit
 extends Path2D
 
 ## Emitted when the unit reached the end of a path along which it was walking.
 signal walk_finished
+
+signal die(unit: Unit)
 
 ## Shared resource of type Grid, used to calculate map coordinates.
 @export var grid: Resource
@@ -14,21 +15,16 @@ signal walk_finished
 @export var move_range := 6
 ## The unit's move speed when it's moving along a path.
 @export var move_speed := 600.0
-## Texture representing the unit.
-@export var skin: Texture:
-	set(value):
-		skin = value
-		if not _sprite:
-			# This will resume execution after this node's _ready()
-			await ready
-		_sprite.texture = value
-## Offset to apply to the `skin` sprite in pixels.
-@export var skin_offset := Vector2.ZERO:
-	set(value):
-		skin_offset = value
-		if not _sprite:
-			await ready
-		_sprite.position = value
+## The unit's health stat
+@export var max_health := 8
+## The unit's tier
+@export var tier := 1
+
+@export var weapon_names: Array[String]
+
+var health: int
+
+var idle_anim = "idle"
 
 ## Coordinates of the current cell the cursor moved to.
 var cell := Vector2.ZERO:
@@ -46,8 +42,24 @@ var _is_walking := false:
 		_is_walking = value
 		set_process(_is_walking)
 
-@onready var _sprite: Sprite2D = $PathFollow2D/Sprite
+var _highlighted := false:
+	set(value):
+		_highlighted = value
+		$PathFollow2D/Highlight.visible = value
+
+var acted := false:
+	set(value):
+		acted = value
+		if acted:
+			$AnimationPlayer.play("inactive")
+		else:
+			$AnimationPlayer.play(idle_anim)
+
+var weapons: Array[WeaponData]
+var active_weapon: WeaponData
+
 @onready var _path_follow: PathFollow2D = $PathFollow2D
+@onready var health_bar = $PathFollow2D/HealthBar/Health as TextureProgressBar
 
 
 func _ready() -> void:
@@ -56,6 +68,14 @@ func _ready() -> void:
 
 	cell = grid.calculate_grid_coordinates(position)
 	position = grid.calculate_map_position(cell)
+	
+	health = max_health
+	health_bar.max_value = max_health
+	
+	for weapon_name in weapon_names:
+		weapons.append(WeaponDatabase._get_weapon_by_name(weapon_name))
+	
+	active_weapon = weapons[0]
 
 	# We create the curve resource here because creating it in the editor prevents us from
 	# moving the unit.
@@ -75,6 +95,11 @@ func _process(delta: float) -> void:
 		emit_signal("walk_finished")
 
 
+func set_grid_position(pos: Vector2):
+	cell = pos
+	position = grid.calculate_map_position(cell)
+
+
 ## Starts walking along the `path`.
 ## `path` is an array of grid coordinates that the function converts to map coordinates.
 func walk_along(path: PackedVector2Array) -> void:
@@ -86,3 +111,10 @@ func walk_along(path: PackedVector2Array) -> void:
 		curve.add_point(grid.calculate_map_position(point) - position)
 	cell = path[-1]
 	_is_walking = true
+
+
+func damage(dmg: int):
+	health = max(0, health - dmg)
+	health_bar.value = health
+	if health == 0:
+		emit_signal("die", self)
