@@ -9,7 +9,7 @@ enum Weapon_Type{NONE, MELEE, PISTOL, SHOTGUN, RIFLE}
 @export var base_rifle: Equipment
 @export var base_weapons: Array[Equipment] = [base_melee, base_pistol, base_shotgun, base_rifle]
 
-@export var base_gear: Array[Equipment]
+#@export var base_gear: Array[Equipment]
 @export var tier_1_gear: Array[Equipment]
 @export var tier_2_gear: Array[Equipment]
 @export var tier_3_gear: Array[Equipment]
@@ -106,7 +106,7 @@ func spawn_random_gear_at_tier(tier: int)-> Gear:
 		2:
 			gear_to_copy = tier_2_gear.pick_random()
 		3:
-			gear_to_copy = tier_1_gear.pick_random()
+			gear_to_copy = tier_3_gear.pick_random()
 	return gear_to_copy.duplicate(DuplicateFlags.DUPLICATE_SCRIPTS)
 
 

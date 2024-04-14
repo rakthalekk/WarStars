@@ -9,15 +9,14 @@ var generator : Equipment_Generator
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var generator : Equipment_Generator
-	generator = get_node("Equipment_Generator") # Replace with path to the actual equipment generator node when possible
+	generator =  WeaponDatabase.get_generator()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
 func generate_unit() -> Person:
-	var unit = get_node("Unit")
+	var unit = Person.new()
 	
 	var rank_chance_total = rank_1_chance + rank_2_chance + rank_3_chance
 	var rank_roll = randf_range(0, rank_chance_total)
@@ -36,7 +35,7 @@ func generate_unit() -> Person:
 	# Generate equipment
 	var weapon1 = generator.spawn_random_weapon_at_tier(unit.tier)
 	unit.equip(0, weapon1)
-	var weapon2 = generator.spawn_random_weapon_up_to_tier(one_below_tier)
+	var weapon2 = generator.spawn_random_weapon_up_to_tier(one_below_tier, weapon1.weapon_type)
 	unit.equip(1, weapon2)
 	
 	var gear_roll = randi_range(0, 2)

@@ -67,4 +67,4 @@ func equip(slot : int, equipment : Equipment):
 				equip2 = equipment
 			else: return
 	equipment.apply_stat_changes(self)
-	price += equipment.tier * weapon_price_base
+	price += equipment.rarity * weapon_price_base
