@@ -15,12 +15,14 @@ var cooldown_counter: int = 0
 func can_use_active():
 	return super.can_use_active() && cooldown_counter <= 0 && (num_uses < 0 || uses_left > 0)
 
-func use_active() -> bool:
+func use_active(target: Unit = null) -> bool:
 	
 	if(!can_use_active()):
 		return false
 		
 	#actually use the active ability
+	_active_ability(target)
+	
 	cooldown_counter = use_cooldown
 	
 	# Decrement remaining uses, if applicable
@@ -29,6 +31,8 @@ func use_active() -> bool:
 	
 	return true
 	
+func _active_ability(target: Unit):
+	pass
 	
 func apply_stat_changes(person: Person):
 	super.apply_stat_changes(person)
