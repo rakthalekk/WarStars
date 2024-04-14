@@ -7,6 +7,8 @@ var weapon2 : Equipment
 var equip1 : Equipment
 var equip2 : Equipment
 
+@export var image: Texture
+
 @export var base_price = 100
 @export var weapon_price_base = 25
 var price = 100

@@ -2,6 +2,5 @@
 
 [ext_resource type="Script" path="res://src/EquipmentGenerator.gd" id="1_0j4wc"]
 
-[node name="Equipment_Generator" type="Node2D" node_paths=PackedStringArray("base_weapons")]
+[node name="Equipment_Generator" type="Node2D"]
 script = ExtResource("1_0j4wc")
-base_weapons = []
