@@ -215,11 +215,11 @@ func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
 	if _units.has(cell):
 		var unit = _units[cell]
 		if initiator is PlayerUnit && unit is EnemyUnit:
-			unit.damage(initiator.active_weapon.base_damage)
+			unit.damage(initiator.active_weapon.damage)
 			attacking = false
 			end_action()
 		elif initiator is EnemyUnit && unit is PlayerUnit:
-			unit.damage(initiator.active_weapon.base_damage)
+			unit.damage(initiator.active_weapon.damage)
 
 
 func remove_unit(unit: Unit):
@@ -276,6 +276,7 @@ func _on_cancel_pressed():
 
 func end_action():
 	_active_unit.acted = true
+	_active_unit.end_action()
 	_deselect_active_unit()
 	_clear_active_unit()
 	action_window.hide()

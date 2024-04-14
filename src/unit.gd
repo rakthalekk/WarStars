@@ -28,6 +28,8 @@ var health: int
 
 var idle_anim = "idle"
 
+signal end_unit_action(unit: Unit)
+
 ## Coordinates of the current cell the cursor moved to.
 var cell := Vector2.ZERO:
 	set(value):
@@ -120,3 +122,9 @@ func damage(dmg: int):
 	health_bar.value = health
 	if health == 0:
 		emit_signal("die", self)
+		
+func switch_weapons(index: int):
+	active_weapon = weapons[index]
+	
+func end_action():
+	end_unit_action.emit()
