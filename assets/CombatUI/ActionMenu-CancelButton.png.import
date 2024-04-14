@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d4fb2hw8jwdxa"
-path="res://.godot/imported/ActionMenu-CancelButton-sheet.png-a4928f985134dc59586fcdd35a6a4a49.ctex"
+path="res://.godot/imported/ActionMenu-CancelButton.png-d9feaef6300a7fbb0bd037000d580b4a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/CombatUI/ActionMenu-CancelButton-sheet.png"
-dest_files=["res://.godot/imported/ActionMenu-CancelButton-sheet.png-a4928f985134dc59586fcdd35a6a4a49.ctex"]
+source_file="res://assets/CombatUI/ActionMenu-CancelButton.png"
+dest_files=["res://.godot/imported/ActionMenu-CancelButton.png-d9feaef6300a7fbb0bd037000d580b4a.ctex"]
 
 [params]
 

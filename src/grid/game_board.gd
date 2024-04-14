@@ -22,17 +22,18 @@ var attacking = false
 
 var player_turn = false
 
-var screen_center = Vector2(200, 112)
+var ui_up = false
 
 @onready var action_window = get_parent().get_node("ActionWindow")
-@onready var attack_button = action_window.get_node("VBoxContainer/Attack")
 @onready var animation_player = get_parent().get_node("AnimationPlayer")
+@onready var combat_anim = get_parent().get_node("CombatUIAnimation")
 
 @onready var _unit_overlay: UnitOverlay = $UnitOverlay
 @onready var _unit_path: UnitPath = $UnitPath
 
 @onready var map: TileMap = get_parent().get_node("Map")
 @onready var camera: Camera2D = get_parent().get_node("Camera2D")
+@onready var ui_timer: Timer = get_parent().get_node("UI/UITimer")
 
 func _ready() -> void:
 	_reinitialize()
@@ -43,15 +44,16 @@ func _process(delta):
 	if _active_unit and (Input.is_action_just_pressed("ui_cancel") || Input.is_action_just_pressed("right_click")):
 		if attacking:
 			highlight_targets(false)
-			action_window.show()
+			action_window.display()
 			attacking = false
 		elif !_active_unit._is_walking:
-			_on_cancel_pressed()
+			cancel_action()
 	
-	if Input.is_action_pressed("middle_click"):
-		var diff = get_local_mouse_position() - screen_center
-		camera.position += diff / 100
-		screen_center += diff / 100
+	var camera_pan = get_local_mouse_position() - camera.position
+	camera_pan = Vector2(camera_pan.x / 200.0, camera_pan.y / 112.0)
+	
+	if _active_unit == null && camera_pan.length() > .8:
+		camera.position += camera_pan
 
 
 func _get_configuration_warning() -> String:
@@ -225,12 +227,9 @@ func _clear_active_unit() -> void:
 func _popup_action_window(pos: Vector2):
 	find_attack_targets()
 	
-	if attack_targets.size() > 0:
-		attack_button.show()
-	else:
-		attack_button.hide()
+	action_window.update_buttons()
 	
-	action_window.position = pos + Vector2(20, -40)
+	action_window.position = pos + Vector2(10, -20)
 	action_window.visible = true
 
 
@@ -281,7 +280,7 @@ func _on_Cursor_accept_pressed(cell: Vector2) -> void:
 	elif _active_unit.is_selected && !unit_moved:
 		_move_active_unit(cell)
 	elif _active_unit.cell == cell:
-		_on_wait_pressed()
+		end_action()
 
 
 ## Updates the interactive path's drawing if there's an active and selected unit.
@@ -289,15 +288,19 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 	if !player_turn:
 		return
 	
+	if _units.has(new_cell):
+		if !ui_up:
+			combat_anim.play("popup")
+			ui_up = true
+	elif ui_up:
+		if ui_timer.is_stopped():
+			ui_timer.start()
+	
 	if _active_unit and _active_unit.is_selected and !unit_moved:
 		_unit_path.draw(_active_unit.cell, new_cell)
 
 
-func _on_wait_pressed():
-	end_action()
-
-
-func _on_cancel_pressed():
+func cancel_action():
 	_units.erase(_active_unit.cell)
 	_units[_origin_cell] = _active_unit
 	_active_unit.set_grid_position(_origin_cell)
@@ -387,7 +390,7 @@ func highlight_targets(highlight):
 		target._highlighted = highlight
 
 
-func _on_attack_pressed():
-	attacking = true
-	highlight_targets(true)
-	action_window.hide()
+func _on_ui_timer_timeout():
+	if !_units.has($Cursor.cell):
+		combat_anim.play("popdown")
+		ui_up = false

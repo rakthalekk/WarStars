@@ -7,6 +7,10 @@ extends Node2D
 @export var cell_size := Vector2(16, 16)
 
 
+func _ready():
+	hide()
+
+
 func get_random_chunk() -> Chunk:
 	return get_children().pick_random()
 
