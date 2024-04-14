@@ -95,4 +95,12 @@ func construct_unit():
 
 func update_from_unit(unit: Unit):
 	health = unit.health
-	# TODO update lost/used gear
+	
+	var unit_gear = unit.gear_list
+		
+	# update used gear
+	for gear in unit_gear:
+		if gear == equip1 and gear.is_consumable and gear.num_uses == 0:
+			equip1 = null
+		elif gear == equip2 and gear.is_consumable and gear.num_uses == 0:
+			equip2 = null
