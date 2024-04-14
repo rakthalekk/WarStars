@@ -3,7 +3,7 @@ extends Node
 
 enum Equip_Type {WEAPON, CONSUMABLE, GEAR}
 
-@export var equipment_name: String
+@export var equipment_description: String
 @export var rarity: int = 1
 @export var weight: int = 0
 @export var has_active: bool
