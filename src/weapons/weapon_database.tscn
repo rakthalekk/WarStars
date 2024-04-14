@@ -13,9 +13,9 @@ base_melee = NodePath("Melee")
 base_pistol = NodePath("Pistol")
 base_shotgun = NodePath("Shotgun")
 base_rifle = NodePath("Laser")
-tier_1_gear = [NodePath("Gear")]
-tier_2_gear = [NodePath("Gear2")]
-tier_3_gear = [NodePath("Gear3")]
+tier_1_gear = [NodePath("Armor")]
+tier_2_gear = [NodePath("Grenade")]
+tier_3_gear = [NodePath("Magic orb")]
 
 [node name="Melee" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
 weapon_type = 1
@@ -40,8 +40,16 @@ range = 2
 damage = 2
 equipment_name = "The Device (sexy)"
 
-[node name="Gear" parent="Equipment_Generator" instance=ExtResource("5_j4y3p")]
+[node name="Armor" parent="Equipment_Generator" instance=ExtResource("5_j4y3p")]
+uses_action = false
+passive_armor = 1
+equipment_name = "Armor"
+weight = 1
+has_passive = true
+equip_type = 2
 
-[node name="Gear2" parent="Equipment_Generator" instance=ExtResource("5_j4y3p")]
+[node name="Grenade" parent="Equipment_Generator" instance=ExtResource("5_j4y3p")]
+equipment_name = "Genrade"
+equip_type = 2
 
-[node name="Gear3" parent="Equipment_Generator" instance=ExtResource("5_j4y3p")]
+[node name="Magic orb" parent="Equipment_Generator" instance=ExtResource("5_j4y3p")]

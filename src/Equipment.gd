@@ -26,8 +26,8 @@ func can_use_active():
 	return has_active
 
 #make this take a player parameter
-func apply_stat_changes(unit: Person):
-	unit.speed -= weight
+func apply_stat_changes(person: Person):
+	person.speed -= weight
 
 func rest():
 	pass

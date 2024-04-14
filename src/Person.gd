@@ -1,11 +1,11 @@
 extends Node2D
 class_name Person
 
-var weapon1 : Equipment
-var weapon2 : Equipment
+var weapon1 : Weapon
+var weapon2 : Weapon
 
-var equip1 : Equipment
-var equip2 : Equipment
+var equip1 : Gear
+var equip2 : Gear
 
 @export var base_price = 100
 @export var weapon_price_base = 25
@@ -15,6 +15,7 @@ var tier = 1
 @export var max_health = 8
 var health = max_health
 @export var speed = 6
+var armor = 0
 
 @export var min_health_gain = 2
 @export var max_health_gain = 5
@@ -80,7 +81,9 @@ func construct_unit():
 	
 	unit.weapons.append(weapon1)
 	unit.weapons.append(weapon2)
-	# TODO add gear
+	
+	unit.gear_list.append(equip1)
+	unit.gear_list.append(equip2)
 	
 	return unit
 

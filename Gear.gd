@@ -24,11 +24,12 @@ func use_active() -> bool:
 	return true
 	
 	
+func apply_stat_changes(person: Person):
+	super.apply_stat_changes(person)
+	person.max_health += passive_hp_buff
+	person.speed += passive_move_buff
+	person.armor += passive_armor
 
-#make this take a player parameter
-func use_passive():
-	pass
-	
 func rest():
 	if(cooldown_counter > 0):
 		cooldown_counter -= 1

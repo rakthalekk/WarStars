@@ -60,6 +60,9 @@ var acted := false:
 var weapons: Array[Weapon]
 var active_weapon: Weapon
 
+var gear_list: Array[Gear]
+var armor: int
+
 @onready var _path_follow: PathFollow2D = $PathFollow2D
 @onready var health_bar = $PathFollow2D/HealthBar/Health as TextureProgressBar
 
@@ -116,6 +119,7 @@ func walk_along(path: PackedVector2Array) -> void:
 
 
 func damage(dmg: int):
+	dmg = max(0, dmg - armor)
 	health = max(0, health - dmg)
 	health_bar.value = health
 	if health == 0:
