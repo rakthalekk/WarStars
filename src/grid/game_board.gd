@@ -6,9 +6,6 @@ extends Node2D
 
 const DIRECTIONS = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 
-## Resource of type Grid.
-@export var grid: Resource
-
 ## Mapping of coordinates of a cell to a reference to the unit it contains.
 var _units := {}
 var _active_unit: Unit
@@ -25,6 +22,8 @@ var attacking = false
 
 var player_turn = false
 
+var screen_center = Vector2(200, 112)
+
 @onready var action_window = get_parent().get_node("ActionWindow")
 @onready var attack_button = action_window.get_node("VBoxContainer/Attack")
 @onready var animation_player = get_parent().get_node("AnimationPlayer")
@@ -32,6 +31,8 @@ var player_turn = false
 @onready var _unit_overlay: UnitOverlay = $UnitOverlay
 @onready var _unit_path: UnitPath = $UnitPath
 
+@onready var map: TileMap = get_parent().get_node("Map")
+@onready var camera: Camera2D = get_parent().get_node("Camera2D")
 
 func _ready() -> void:
 	_reinitialize()
@@ -46,11 +47,16 @@ func _process(delta):
 			attacking = false
 		elif !_active_unit._is_walking:
 			_on_cancel_pressed()
+	
+	if Input.is_action_pressed("middle_click"):
+		var diff = get_local_mouse_position() - screen_center
+		camera.position += diff / 100
+		screen_center += diff / 100
 
 
 func _get_configuration_warning() -> String:
 	var warning := ""
-	if not grid:
+	if not ChunkDatabase:
 		warning = "You need a Grid resource for this node to work."
 	return warning
 
@@ -85,11 +91,27 @@ func _reinitialize() -> void:
 
 ## Returns an array with all the coordinates of walkable cells based on the `max_distance`.
 func _flood_fill(cell: Vector2, max_distance: int, attack_range = false) -> Array:
+	var walkable_ish_grid = []
+	var upper_left = Vector2(cell.x - max_distance - 1, cell.y - max_distance)
+	for x in range(upper_left.x, upper_left.x + max_distance * 2 + 1):
+		if x <= 0 || x >= ChunkDatabase.size.x:
+			continue
+		for y in range(upper_left.y, upper_left.y + max_distance * 2 + 1):
+			if y <= 0 || y >= ChunkDatabase.size.y:
+				continue
+			
+			var vector = Vector2(x, y)
+			var walkable = map.get_cell_tile_data(0, vector).get_custom_data("walkable")
+			if walkable:
+				walkable_ish_grid.append(vector)
+	
+	var _pathfinder = PathFinder.new(walkable_ish_grid)
+	
 	var array := []
 	var stack := [cell]
 	while not stack.size() == 0:
 		var current = stack.pop_back()
-		if not grid.is_within_bounds(current):
+		if not ChunkDatabase.is_within_bounds(current):
 			continue
 		if current in array:
 			continue
@@ -98,14 +120,27 @@ func _flood_fill(cell: Vector2, max_distance: int, attack_range = false) -> Arra
 		var distance := int(difference.x + difference.y)
 		if distance > max_distance:
 			continue
-
+		
+		var path_size = _pathfinder.calculate_point_path(cell, current).size()
+		
+		if path_size > max_distance + 1:
+			continue
+		
 		array.append(current)
+		
 		for direction in DIRECTIONS:
 			var coordinates: Vector2 = current + direction
-			if !attack_range && is_occupied(coordinates):
-				continue
 			if coordinates in array:
 				continue
+			
+			if not ChunkDatabase.is_within_bounds(coordinates):
+				continue
+			
+			var walkable = map.get_cell_tile_data(0, coordinates).get_custom_data("walkable")
+			
+			if !attack_range && (is_occupied(coordinates) || !walkable):
+				continue
+			
 			# Minor optimization: If this neighbor is already queued
 			#	to be checked, we don't need to queue it again
 			if coordinates in stack:
@@ -132,7 +167,8 @@ func _move_active_unit(new_cell: Vector2) -> void:
 	set_unit_moved(true)
 	_active_unit.walk_along(_unit_path.current_path)
 	await _active_unit.walk_finished
-	_popup_action_window(_active_unit.position)
+	if _active_unit:
+		_popup_action_window(_active_unit.position)
 
 
 func _move_enemy_unit(new_cell: Vector2, unit: EnemyUnit) -> void:
@@ -215,11 +251,11 @@ func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
 	if _units.has(cell):
 		var unit = _units[cell]
 		if initiator is PlayerUnit && unit is EnemyUnit:
-			unit.damage(initiator.active_weapon.base_damage)
+			unit.damage(initiator.active_weapon.damage)
 			attacking = false
 			end_action()
 		elif initiator is EnemyUnit && unit is PlayerUnit:
-			unit.damage(initiator.active_weapon.base_damage)
+			unit.damage(initiator.active_weapon.damage)
 
 
 func remove_unit(unit: Unit):
@@ -281,6 +317,8 @@ func end_action():
 	action_window.hide()
 	_unit_overlay.clear()
 	highlight_targets(false)
+	
+	attack_targets.clear()
 	
 	check_end_turn()
 
