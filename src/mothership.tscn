@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bs2s4bmlbc2oc"]
+
+[ext_resource type="Script" path="res://src/Mothership.gd" id="1_bcf6m"]
+
+[node name="Mothership" type="Node"]
+script = ExtResource("1_bcf6m")

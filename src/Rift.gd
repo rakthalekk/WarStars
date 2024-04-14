@@ -2,6 +2,7 @@ class_name Rift
 extends Fleet_Structure
 
 @export var people_to_summon: Array[Person]
+@export var ui: Rift_UI
 
 var people_generator : Person_Generator
 

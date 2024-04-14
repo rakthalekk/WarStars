@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://5c2wibe5jmlj"]
+
+[ext_resource type="Script" path="res://src/fleet_structure_ui.gd" id="1_17slt"]
+
+[node name="fleet_structure_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_17slt")
