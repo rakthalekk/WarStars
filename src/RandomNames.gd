@@ -5,8 +5,8 @@ extends Node
 #var alienList = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	await get_tree().create_timer(0.5).timeout
-	get_tree().change_scene_to_file("res://src/ContractUI.tscn")
+	#await get_tree().create_timer(0.5).timeout
+	#get_tree().change_scene_to_file("res://src/ContractUI.tscn")
 	pass
 	#print(Contract_Type.find_key(GameManager.currentContract.type))
 	#print(GameManager.currentContract.difficulty_stars)
