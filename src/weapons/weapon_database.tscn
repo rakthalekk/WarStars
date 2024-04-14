@@ -26,14 +26,18 @@ equipment_name = "Stick"
 
 [node name="Pistol" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
 weapon_type = 2
+range = 2
 equipment_name = "The Device (normal)"
 
 [node name="Shotgun" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
 weapon_type = 3
+range = 2
 equipment_name = "problem causer"
 
 [node name="Laser" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
 weapon_type = 4
+range = 2
+damage = 2
 equipment_name = "The Device (sexy)"
 
 [node name="Gear" parent="Equipment_Generator" instance=ExtResource("5_j4y3p")]

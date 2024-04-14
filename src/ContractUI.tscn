@@ -16,7 +16,7 @@ script = ExtResource("1_8hwki")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 100.0
+offset_bottom = 225.0
 grow_horizontal = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
@@ -25,7 +25,7 @@ layout_mode = 2
 [node name="CaptureContract" type="Button" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "    Capture Point
+text = "Capture Point
 
 
 
@@ -33,46 +33,41 @@ text = "    Capture Point
 
 
 
-
-Difficulty:
-Reward:"
-alignment = 0
+"
 script = ExtResource("1_xpubj")
-difficulty_stars = null
-reward = null
 
 [node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/CaptureContract"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -76.0
+offset_left = -65.0
 offset_top = -50.0
-offset_right = -6.0
+offset_right = 65.0
 offset_bottom = -27.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 0
 
 [node name="RewardLabel" type="Label" parent="MarginContainer/HBoxContainer/CaptureContract"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -86.0
+offset_left = -65.0
 offset_top = -27.0
-offset_right = -16.0
+offset_right = 65.0
 offset_bottom = -4.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 0
 
 [node name="DefendContract" type="Button" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "     Defend Area
+text = "Defend Area
 
 
 
@@ -80,47 +75,42 @@ text = "     Defend Area
 
 
 
-
-Difficulty:
-Reward:"
-alignment = 0
+"
 script = ExtResource("1_xpubj")
 type = 1
-difficulty_stars = null
-reward = null
 
 [node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/DefendContract"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -76.0
+offset_left = -65.0
 offset_top = -50.0
-offset_right = -6.0
+offset_right = 65.0
 offset_bottom = -27.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 0
 
 [node name="RewardLabel" type="Label" parent="MarginContainer/HBoxContainer/DefendContract"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -86.0
+offset_left = -65.0
 offset_top = -27.0
-offset_right = -16.0
+offset_right = 65.0
 offset_bottom = -4.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 0
 
 [node name="RouteContract" type="Button" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = " Route The Enemy
+text = "Route Enemy
 
 
 
@@ -128,41 +118,36 @@ text = " Route The Enemy
 
 
 
-
-Difficulty:
-Reward:"
-alignment = 0
+"
 script = ExtResource("1_xpubj")
 type = 2
-difficulty_stars = null
-reward = null
 
 [node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/RouteContract"]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -76.0
+offset_left = -65.0
 offset_top = -50.0
-offset_right = -6.0
+offset_right = 65.0
 offset_bottom = -27.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 0
 
 [node name="RewardLabel" type="Label" parent="MarginContainer/HBoxContainer/RouteContract"]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 7
+anchor_left = 0.5
 anchor_top = 1.0
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -86.0
+offset_left = -65.0
 offset_top = -27.0
-offset_right = -16.0
+offset_right = 65.0
 offset_bottom = -4.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 0
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/CaptureContract" to="." method="_on_capture_contract_pressed"]
