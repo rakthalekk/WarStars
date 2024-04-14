@@ -9,6 +9,7 @@ extends Control
 @export var healing_vats_menu: Fleet_Structure_UI
 @export var black_market_menu: Fleet_Structure_UI
 @export var mothership_menu: Fleet_Structure_UI
+
 var last_menu: Fleet_Structure_UI = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
