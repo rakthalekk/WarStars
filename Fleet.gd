@@ -1,9 +1,10 @@
-extends Node2D
+class_name Fleet
+extends Control
 
 @export var fleet_manager: Fleet_Structure_Manager
 @export var reserves: Reserve
 
-@export var quick_menu: Fleet_Structure_UI
+@export var quick_menu: Mini_Menu
 @export var rift_menu: Fleet_Structure_UI
 @export var healing_vats_menu: Fleet_Structure_UI
 @export var black_market_menu: Fleet_Structure_UI
@@ -11,7 +12,7 @@ extends Node2D
 var last_menu: Fleet_Structure_UI = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,6 +24,7 @@ func open_rift_menu():
 	menu_opened(rift_menu)
 
 func open_black_market_menu():
+	print("button")
 	menu_opened(black_market_menu)
 
 func open_healing_vats_menu():
@@ -42,6 +44,7 @@ func menu_opened(new_menu: Fleet_Structure_UI):
 
 func menu_closed():
 	quick_menu.visible = false
+	quick_menu.on_close_mini_menu()
 	if(last_menu != null):
 		last_menu.visible = false
 		last_menu = null

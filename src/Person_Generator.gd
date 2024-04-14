@@ -1,4 +1,3 @@
-class_name Person_Generator
 extends Node2D
 
 @export var rank_1_chance = .6

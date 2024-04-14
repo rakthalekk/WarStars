@@ -40,3 +40,5 @@ func upgrade_capacity():
 	upgrade_price *= upgrade_increase_mult
 	level += 1
 
+func get_money()->int:
+	return manager.get_current_money()
