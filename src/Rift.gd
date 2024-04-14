@@ -2,10 +2,9 @@ class_name Rift
 extends Fleet_Structure
 
 @export var people_to_summon: Array[Person]
-@export var summon_prices: Array[int]
 @export var ui: Rift_UI
 
-var people_generator
+var people_generator : Person_Generator
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,7 +17,6 @@ func _process(delta):
 
 func refresh():
 	people_to_summon.clear()
-	summon_prices.clear()
 	for i in capacity:
 		scout_summon()
 
@@ -29,11 +27,10 @@ func upgrade_capacity():
 	
 func scout_summon():
 	var new_person
-	#generate new person: people_generator.generate()
+	new_person = people_generator.generate_unit()
 	people_to_summon.append(new_person)
 	#add their price to the price list
-	var new_price
-	summon_prices.append(new_price)
+	var new_price = new_person.price
 	
 	
 
@@ -42,7 +39,7 @@ func can_summon(id: int)-> bool:
 		return false
 	if(people_to_summon[id] == null):
 		return false
-	if(manager.get_current_money() < summon_prices[id]):
+	if(manager.get_current_money() < people_to_summon[id].price):
 		return false
 	if(manager.at_max_units()):
 		return false
@@ -53,9 +50,7 @@ func summon(id: int) -> bool:
 		return false
 	
 	manager.add_new_unit(people_to_summon[id])
-	manager.spend_money(summon_prices[id])
+	manager.spend_money(people_to_summon[id].price)
 	people_to_summon.remove_at(id)
 	people_to_summon.insert(id, null)
-	summon_prices.remove_at(id)
-	summon_prices.insert(id, null)
 	return true
