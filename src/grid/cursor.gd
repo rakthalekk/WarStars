@@ -8,8 +8,6 @@ signal accept_pressed(cell)
 ## Emitted when the cursor moved to a new cell.
 signal moved(new_cell)
 
-## Grid resource, giving the node access to the grid size, and more.
-@export var grid: Resource
 ## Time before the cursor can move again in seconds.
 @export var ui_cooldown := 0.02
 
@@ -21,7 +19,7 @@ var cell := Vector2.ZERO:
 	set(value):
 		# We first clamp the cell coordinates and ensure that we aren't
 		#	trying to move outside the grid boundaries
-		var new_cell: Vector2 = grid.grid_clamp(value)
+		var new_cell: Vector2 = ChunkDatabase.grid_clamp(value)
 		if new_cell.is_equal_approx(cell):
 			return
 
@@ -30,7 +28,7 @@ var cell := Vector2.ZERO:
 		#	a signal, and start the cooldown timer that will limit the rate
 		#	at which the cursor moves when we keep the direction key held
 		#	down
-		position = grid.calculate_map_position(cell)
+		position = ChunkDatabase.calculate_map_position(cell)
 		emit_signal("moved", cell)
 		_timer.start()
 
@@ -41,13 +39,13 @@ var active = true
 
 func _ready() -> void:
 	_timer.wait_time = ui_cooldown
-	position = grid.calculate_map_position(cell)
+	position = ChunkDatabase.calculate_map_position(cell)
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Navigating cells with the mouse.
 	if !controller && event is InputEventMouseMotion:
-		cell = grid.calculate_grid_coordinates(event.position)
+		cell = ChunkDatabase.calculate_grid_coordinates(get_global_mouse_position())
 	# Trying to select something in a cell.
 	elif event.is_action_pressed("click"):
 		emit_signal("accept_pressed", cell)
@@ -102,5 +100,5 @@ func handle_button_input():
 
 
 func _draw() -> void:
-	draw_rect(Rect2(-grid.cell_size / 2, grid.cell_size), Color.ALICE_BLUE, false, 2.0)
+	draw_rect(Rect2(-ChunkDatabase.cell_size / 2, ChunkDatabase.cell_size), Color.ALICE_BLUE, false, 2.0)
 

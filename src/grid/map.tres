@@ -1,0 +1,39 @@
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://7rj1ht7n2gs3"]
+
+[ext_resource type="Texture2D" uid="uid://bs1q076w7oosp" path="res://assets/temp_tilemap.png" id="1_2cr5n"]
+[ext_resource type="Texture2D" uid="uid://cm200de32v26l" path="res://assets/enemy_spawn.png" id="2_qpld7"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jai34"]
+texture = ExtResource("1_2cr5n")
+0:0/0 = 0
+0:0/0/custom_data_0 = true
+0:0/0/custom_data_1 = true
+1:0/0 = 0
+0:1/0 = 0
+0:1/0/custom_data_0 = true
+0:1/0/custom_data_1 = true
+0:1/0/custom_data_3 = true
+1:1/0 = 0
+1:1/0/custom_data_0 = true
+1:1/0/custom_data_1 = true
+1:1/0/custom_data_2 = true
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5v5b0"]
+texture = ExtResource("2_qpld7")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+
+[resource]
+custom_data_layer_0/name = "walkable"
+custom_data_layer_0/type = 1
+custom_data_layer_1/name = "attackable"
+custom_data_layer_1/type = 1
+custom_data_layer_2/name = "damaging"
+custom_data_layer_2/type = 1
+custom_data_layer_3/name = "heat"
+custom_data_layer_3/type = 1
+custom_data_layer_4/name = "enemy_spawn"
+custom_data_layer_4/type = 2
+sources/0 = SubResource("TileSetAtlasSource_jai34")
+sources/4 = SubResource("TileSetAtlasSource_5v5b0")

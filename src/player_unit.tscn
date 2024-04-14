@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://c08w2xnjck2wa"]
+[gd_scene load_steps=14 format=3 uid="uid://c08w2xnjck2wa"]
 
 [ext_resource type="Texture2D" uid="uid://cwdfpaxroeukk" path="res://assets/PlayerUnits/UnitArmor.png" id="1_emlgu"]
 [ext_resource type="Script" path="res://src/player_unit.gd" id="1_o7chy"]
 [ext_resource type="Texture2D" uid="uid://d23l0w58myipf" path="res://assets/PlayerUnits/UnitHandspng.png" id="2_h5pv2"]
-[ext_resource type="Resource" uid="uid://ba7p87gewwk8k" path="res://src/grid/grid.tres" id="2_oxfat"]
 [ext_resource type="Texture2D" uid="uid://dnnfj5hx7vi5r" path="res://assets/PlayerUnits/UnitHeadType7.png" id="3_163a3"]
 [ext_resource type="Texture2D" uid="uid://d2cm55eypthll" path="res://assets/PlayerUnits/UnitHelmetType1.png" id="4_h178y"]
 [ext_resource type="Texture2D" uid="uid://bw3qkfwwv04o8" path="res://assets/icon.svg" id="5_egpnx"]
@@ -180,7 +179,6 @@ _data = {
 
 [node name="PlayerUnit" type="Path2D"]
 script = ExtResource("1_o7chy")
-grid = ExtResource("2_oxfat")
 move_speed = 300.0
 weapon_names = Array[String](["Laser"])
 

@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bysu2jw153iwu"]
+
+[ext_resource type="Script" path="res://src/grid/chunk_database.gd" id="1_f8qlm"]
+[ext_resource type="PackedScene" uid="uid://dmty2mm63eoar" path="res://src/grid/chunk.tscn" id="1_mpyw6"]
+
+[node name="ChunkDatabase" type="Node2D"]
+script = ExtResource("1_f8qlm")
+
+[node name="PlayerChunk" parent="." instance=ExtResource("1_mpyw6")]
+position = Vector2(-206, -19)
+layer_0/tile_data = PackedInt32Array()
+
+[node name="Chunk" parent="." instance=ExtResource("1_mpyw6")]
+layer_0/tile_data = PackedInt32Array(196611, 4, 0)
+
+[node name="Chunk2" parent="." instance=ExtResource("1_mpyw6")]
+position = Vector2(172, 0)
+layer_0/tile_data = PackedInt32Array(131078, 4, 0, 393218, 4, 0)

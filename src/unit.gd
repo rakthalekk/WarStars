@@ -9,8 +9,6 @@ signal walk_finished
 
 signal die(unit: Unit)
 
-## Shared resource of type Grid, used to calculate map coordinates.
-@export var grid: Resource
 ## Distance to which the unit can walk in cells.
 @export var move_range := 6
 ## The unit's move speed when it's moving along a path.
@@ -31,7 +29,7 @@ var cell := Vector2.ZERO:
 	set(value):
 		# When changing the cell's value, we don't want to allow coordinates outside
 		#	the grid, so we clamp them
-		cell = grid.grid_clamp(value)
+		cell = ChunkDatabase.grid_clamp(value)
 ## Toggles the "selected" animation on the unit.
 var is_selected := false:
 	set(value):
@@ -66,8 +64,8 @@ func _ready() -> void:
 	set_process(false)
 	_path_follow.rotates = false
 
-	cell = grid.calculate_grid_coordinates(position)
-	position = grid.calculate_map_position(cell)
+	cell = ChunkDatabase.calculate_grid_coordinates(position)
+	position = ChunkDatabase.calculate_map_position(cell)
 	
 	health = max_health
 	health_bar.max_value = max_health
@@ -90,14 +88,14 @@ func _process(delta: float) -> void:
 		_is_walking = false
 		# Setting this value to 0.0 causes a Zero Length Interval error
 		_path_follow.progress = 0.00001
-		position = grid.calculate_map_position(cell)
+		position = ChunkDatabase.calculate_map_position(cell)
 		curve.clear_points()
 		emit_signal("walk_finished")
 
 
 func set_grid_position(pos: Vector2):
 	cell = pos
-	position = grid.calculate_map_position(cell)
+	position = ChunkDatabase.calculate_map_position(cell)
 
 
 ## Starts walking along the `path`.
@@ -108,7 +106,7 @@ func walk_along(path: PackedVector2Array) -> void:
 
 	curve.add_point(Vector2.ZERO)
 	for point in path:
-		curve.add_point(grid.calculate_map_position(point) - position)
+		curve.add_point(ChunkDatabase.calculate_map_position(point) - position)
 	cell = path[-1]
 	_is_walking = true
 

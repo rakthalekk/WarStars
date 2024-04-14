@@ -2,15 +2,13 @@
 class_name UnitPath
 extends TileMap
 
-@export var grid: Resource
-
 var _pathfinder: PathFinder
 var current_path := PackedVector2Array()
 
 ## Creates a new PathFinder that uses the AStar algorithm to find a path between two cells among
 ## the `walkable_cells`.
 func initialize(walkable_cells: Array) -> void:
-	_pathfinder = PathFinder.new(grid, walkable_cells)
+	_pathfinder = PathFinder.new(walkable_cells)
 
 
 func update_path(cell_start: Vector2, cell_end: Vector2):
