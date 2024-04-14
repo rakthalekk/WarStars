@@ -85,3 +85,21 @@ func apply_upgrade(upgrade_type: Upgrade_Type):
 
 func prep_for_battle():
 	current_heat = 0
+	
+func perform_specialty(target: Unit):
+	match(specialty):
+		(Specialty_Type.NONE):
+			return
+		(Specialty_Type.BURN):
+			var burn_effect = Burn.new()
+			burn_effect.magnitude = specialty_tier
+			burn_effect.add_effect_to_target(target)
+		(Specialty_Type.ACID):
+			var acid_effect = Acid.new()
+			acid_effect.magnitude = specialty_tier
+			acid_effect.add_effect_to_target(target)
+		(Specialty_Type.STUN):
+			var stun_effect = Daze.new()
+			stun_effect.magnitude = specialty_tier
+		(Specialty_Type.PLASMA):
+			return

@@ -1,3 +1,4 @@
+class_name Daze
 extends Status_Effect
 
 

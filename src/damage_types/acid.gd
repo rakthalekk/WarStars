@@ -1,3 +1,4 @@
+class_name Acid
 extends Status_Effect
 
 

@@ -1,3 +1,4 @@
+class_name Burn
 extends Status_Effect
 
 # Called when the node enters the scene tree for the first time.
