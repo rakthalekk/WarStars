@@ -14,4 +14,5 @@ func _ready():
 		#mark as interactable only if you can afford its
 
 func try_summon(id: int):
-	
+	if(rift_script.summon(id)):
+		summon_panels[id].visible = false
