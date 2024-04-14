@@ -1,11 +1,17 @@
 class_name Contract
 extends Node
 
-enum Contract_Type {CAPTURE, DEFEND, ROUTE}
 
-@export var type: Contract_Type
-@export var difficulty_stars: int = 1
-@export var reward: int
+@export var type: GameManager.Contract_Type:
+	get:
+		return type
+@export var difficulty_stars: int = 1:
+	get:
+		return difficulty_stars
+@export var reward: int:
+	get:
+		return reward
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,7 +20,7 @@ func _ready():
 	#TODO: Replace with formula
 	difficulty_stars = rng.randi_range(1, 5)
 	#TODO: Replace with formula
-	reward = rng.randi_range(1, 1000) * 100
+	reward = rng.randi_range(1, 1000) * 1000
 	#print(Contract_Type.find_key(type))
 	#print(difficulty_stars)
 	#print(reward)

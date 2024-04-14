@@ -38,6 +38,8 @@ Difficulty:
 Reward:"
 alignment = 0
 script = ExtResource("1_xpubj")
+difficulty_stars = null
+reward = null
 
 [node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/CaptureContract"]
 layout_mode = 1
@@ -84,6 +86,8 @@ Reward:"
 alignment = 0
 script = ExtResource("1_xpubj")
 type = 1
+difficulty_stars = null
+reward = null
 
 [node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/DefendContract"]
 layout_mode = 1
@@ -130,6 +134,8 @@ Reward:"
 alignment = 0
 script = ExtResource("1_xpubj")
 type = 2
+difficulty_stars = null
+reward = null
 
 [node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/RouteContract"]
 layout_mode = 1

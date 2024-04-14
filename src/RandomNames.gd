@@ -1,6 +1,6 @@
 class_name RandomNames
 extends Node
-
+enum Contract_Type {CAPTURE, DEFEND, ROUTE}
 var devList = ["Haley", "Faye", "Max", "Jack", "Charlie", "Landon", "Maverick", "Mitchell", "Tyler"]
 var alienList = []
 # Called when the node enters the scene tree for the first time.
@@ -10,6 +10,9 @@ func _ready():
 		alienList.append(file.get_line())
 	file.close()
 	alienList.remove_at(alienList.size() - 1)
+	#print(Contract_Type.find_key(GameManager.currentContract.type))
+	#print(GameManager.currentContract.difficulty_stars)
+	#print(GameManager.currentContract.reward)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
