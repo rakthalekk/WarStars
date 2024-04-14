@@ -3,6 +3,8 @@ extends Node
 
 enum Equip_Type {WEAPON, CONSUMABLE, GEAR}
 
+@export var image: Texture
+
 @export var equipment_name: String
 @export var rarity: int = 1
 @export var weight: int = 0

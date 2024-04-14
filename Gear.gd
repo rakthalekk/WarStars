@@ -40,6 +40,6 @@ func prep_for_battle():
 func get_cost():
 	if cost == 0:
 		var rand = randf() * .5 + .85
-		cost = rarity * 3 * rand
+		cost = rarity * 75 * rand
 	return cost
 

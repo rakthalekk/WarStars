@@ -38,6 +38,13 @@ func can_purchase(id: int)-> bool:
 		return false
 	return true
 
+func item_available(id: int):
+	if(id >= capacity || id < 0):
+		return false
+	if(items_to_purchase[id] == null):
+		return false
+	return true
+
 
 func purchase(id: int) -> bool:
 	if(!can_purchase(id)):
@@ -47,4 +54,11 @@ func purchase(id: int) -> bool:
 	manager.spend_money(items_to_purchase[id].get_cost())
 	items_to_purchase.remove_at(id)
 	items_to_purchase.insert(id, null)
+	ui.refresh()
 	return true
+
+
+func get_equip(id: int)->Equipment:
+	if(id < 0 || id >= capacity):
+		return null
+	return items_to_purchase[id]

@@ -1,0 +1,100 @@
+[gd_scene load_steps=3 format=3 uid="uid://2xpvkl0nlncf"]
+
+[ext_resource type="Script" path="res://src/Rift_Selection_Panel.gd" id="1_rv3gr"]
+[ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="2_o74iw"]
+
+[node name="Rift_Selection_Panel" type="Control" node_paths=PackedStringArray("main_select_button", "main_image", "main_text", "gold_text")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_rv3gr")
+main_select_button = NodePath("TextureButton")
+main_image = NodePath("TextureButton/TextureRect")
+main_text = NodePath("TextureButton/Label")
+gold_text = NodePath("TextureButton/Label2")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_o74iw")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="TextureButton"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 55.0
+grow_vertical = 2
+texture = ExtResource("2_o74iw")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="TextureButton"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -68.0
+offset_right = 72.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Name Here"
+
+[node name="Label2" type="Label" parent="TextureButton"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "143"
+
+[node name="TextureRect2" type="TextureRect" parent="TextureButton"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -56.0
+offset_top = -18.0
+offset_right = -40.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("2_o74iw")
+expand_mode = 2
+
+[connection signal="pressed" from="Button" to="." method="on_button_click"]
+[connection signal="pressed" from="TextureButton" to="." method="on_button_click"]

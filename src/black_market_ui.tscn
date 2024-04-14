@@ -1,10 +1,128 @@
-[gd_scene load_steps=2 format=3 uid="uid://c7u2o2qoxbsrs"]
+[gd_scene load_steps=5 format=3 uid="uid://c7u2o2qoxbsrs"]
 
 [ext_resource type="Script" path="res://src/Black_Market_UI.gd" id="1_2kp81"]
+[ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="2_fqc16"]
+[ext_resource type="PackedScene" uid="uid://8p5eomm4bfei" path="res://src/black_market_selection_panel.tscn" id="3_kxnov"]
 
-[node name="Black_Market_UI" type="Control"]
+[sub_resource type="LabelSettings" id="LabelSettings_fgts8"]
+font_size = 20
+
+[node name="Black_Market_UI" type="Control" node_paths=PackedStringArray("purchase_panels")]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_2kp81")
+purchase_panels = [NodePath("MarginContainer/TextureRect/Equipment_1"), NodePath("MarginContainer/TextureRect/Equipment_2"), NodePath("MarginContainer/TextureRect/Equipment_3"), NodePath("MarginContainer/TextureRect/Equipment_4"), NodePath("MarginContainer/TextureRect/Equipment_5")]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = ExtResource("2_fqc16")
+
+[node name="TextureButton2" type="TextureButton" parent="MarginContainer/TextureRect"]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_bottom = 50.0
+grow_horizontal = 0
+texture_normal = ExtResource("2_fqc16")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="MarginContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Black Market"
+label_settings = SubResource("LabelSettings_fgts8")
+
+[node name="Equipment_1" parent="MarginContainer/TextureRect" node_paths=PackedStringArray("market_UI") instance=ExtResource("3_kxnov")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -125.0
+offset_top = 37.0
+offset_right = 125.0
+offset_bottom = 67.0
+grow_vertical = 1
+market_UI = NodePath("../../..")
+
+[node name="Equipment_2" parent="MarginContainer/TextureRect" node_paths=PackedStringArray("market_UI") instance=ExtResource("3_kxnov")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -125.0
+offset_top = 67.0
+offset_right = 125.0
+offset_bottom = 97.0
+grow_vertical = 1
+market_UI = NodePath("../../..")
+id = 1
+
+[node name="Equipment_3" parent="MarginContainer/TextureRect" node_paths=PackedStringArray("market_UI") instance=ExtResource("3_kxnov")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -125.0
+offset_top = 97.0
+offset_right = 125.0
+offset_bottom = 127.0
+grow_vertical = 1
+market_UI = NodePath("../../..")
+id = 2
+
+[node name="Equipment_4" parent="MarginContainer/TextureRect" node_paths=PackedStringArray("market_UI") instance=ExtResource("3_kxnov")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -125.0
+offset_top = 127.0
+offset_right = 125.0
+offset_bottom = 157.0
+grow_vertical = 1
+market_UI = NodePath("../../..")
+id = 3
+
+[node name="Equipment_5" parent="MarginContainer/TextureRect" node_paths=PackedStringArray("market_UI") instance=ExtResource("3_kxnov")]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = -125.0
+offset_top = 157.0
+offset_right = 125.0
+offset_bottom = 187.0
+grow_vertical = 1
+market_UI = NodePath("../../..")
+id = 4
+
+[connection signal="pressed" from="MarginContainer/TextureRect/TextureButton2" to="." method="on_close_ui"]
