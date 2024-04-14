@@ -6,7 +6,7 @@ func _ready():
 	hide()
 
 
-func _get_weapon_by_name(weapon_name: String) -> WeaponData:
+func _get_weapon_by_name(weapon_name: String) -> Weapon:
 	return get_node(weapon_name)
 	
 func get_generator()->Equipment_Generator:

@@ -12,13 +12,14 @@ var equip2 : Equipment
 var price = 100
 
 var tier = 1
-@export var health = 8
-@export var speed = 10
+@export var max_health = 8
+var health = max_health
+@export var speed = 6
 
 @export var min_health_gain = 2
 @export var max_health_gain = 5
 
-@export var max_tier = 3
+const max_tier = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,9 +38,9 @@ func raise_tier_to(new_tier : int):
 	
 	while(tier < new_tier):
 		tier += 1
-		health += randi_range(min_health_gain, max_health_gain)
+		max_health += randi_range(min_health_gain, max_health_gain)
 		price += base_price
-
+	health = max_health
 # Raise tier by 1
 func raise_tier():
 	raise_tier_to(tier + 1)
@@ -68,3 +69,21 @@ func equip(slot : int, equipment : Equipment):
 			else: return
 	equipment.apply_stat_changes(self)
 	price += equipment.rarity * weapon_price_base
+
+func construct_unit():
+	var unit = Unit.new()
+	unit.max_health = max_health
+	unit.health = health
+	unit.move_range = speed
+	unit.tier = tier
+	unit.person_source = self
+	
+	unit.weapons.append(weapon1)
+	unit.weapons.append(weapon2)
+	# TODO add gear
+	
+	return unit
+
+func update_from_unit(unit: Unit):
+	health = unit.health
+	# TODO update lost/used gear
