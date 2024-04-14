@@ -1,16 +1,18 @@
 class_name Status_Effect
 extends Node2D
 
-enum EFFECT_TYPE {BURN, ACID, STUN}
+enum EFFECT_TYPE {BURN, ACID, DAZE}
 
 var target: Unit
-var magnitude: int
-var type: EFFECT_TYPE
-var duration: int
+@export var magnitude: int
+@export var type: EFFECT_TYPE
+@export var duration: int
+var original_stat
+@export var applied_every_turn: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	target.end_unit_action.connect(on_action_end)
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -18,13 +20,32 @@ func _process(delta):
 	pass
 
 func on_action_end():
+	if applied_every_turn:
+		_apply_effect()
 	duration -= 1
 	if duration == 0:
-		remove_effect()
+		_remove_effect()
 		queue_free()
 
-func apply_effect():
+func _apply_effect():
 	pass
 
-func remove_effect():
+func _remove_effect():
 	pass
+	
+func _save_stat():
+	pass
+	
+func add_effect_to_target(unit: Unit):
+	target = unit
+	var existing_effect = get_node(str(target.get_path(), "/", name))
+	if existing_effect == null:
+		target = unit
+		target.end_unit_action.connect(on_action_end)
+		_save_stat()
+	else:
+		existing_effect.magnitude += magnitude
+		existing_effect.duration += duration
+		
+	if not applied_every_turn:
+		_apply_effect()
