@@ -13,10 +13,14 @@ func initialize(walkable_cells: Array) -> void:
 	_pathfinder = PathFinder.new(grid, walkable_cells)
 
 
+func update_path(cell_start: Vector2, cell_end: Vector2):
+	current_path = _pathfinder.calculate_point_path(cell_start, cell_end)
+
+
 ## Finds and draws the path between `cell_start` and `cell_end`
 func draw(cell_start: Vector2, cell_end: Vector2) -> void:
 	clear()
-	current_path = _pathfinder.calculate_point_path(cell_start, cell_end)
+	update_path(cell_start, cell_end)
 	set_cells_terrain_connect(0, current_path, 0, 0)
 
 
