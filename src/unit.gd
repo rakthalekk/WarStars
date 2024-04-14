@@ -18,6 +18,8 @@ signal die(unit: Unit)
 ## The unit's tier
 @export var tier := 1
 
+var person_source: Person
+
 @export var weapon_names: Array[String]
 
 var health: int
@@ -53,8 +55,8 @@ var acted := false:
 		else:
 			$AnimationPlayer.play(idle_anim)
 
-var weapons: Array[WeaponData]
-var active_weapon: WeaponData
+var weapons: Array[Weapon]
+var active_weapon: Weapon
 
 @onready var _path_follow: PathFollow2D = $PathFollow2D
 @onready var health_bar = $PathFollow2D/HealthBar/Health as TextureProgressBar

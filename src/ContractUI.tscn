@@ -1,0 +1,155 @@
+[gd_scene load_steps=3 format=3 uid="uid://17o6ijlgpb2i"]
+
+[ext_resource type="Script" path="res://src/ContractUIButtons.gd" id="1_8hwki"]
+[ext_resource type="Script" path="res://src/Contract.gd" id="1_xpubj"]
+
+[node name="ContractUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8hwki")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 225.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="CaptureContract" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Capture Point
+
+
+
+
+
+
+
+"
+script = ExtResource("1_xpubj")
+
+[node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/CaptureContract"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -65.0
+offset_top = -50.0
+offset_right = 65.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RewardLabel" type="Label" parent="MarginContainer/HBoxContainer/CaptureContract"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -65.0
+offset_top = -27.0
+offset_right = 65.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DefendContract" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Defend Area
+
+
+
+
+
+
+
+"
+script = ExtResource("1_xpubj")
+type = 1
+
+[node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/DefendContract"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -65.0
+offset_top = -50.0
+offset_right = 65.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RewardLabel" type="Label" parent="MarginContainer/HBoxContainer/DefendContract"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -65.0
+offset_top = -27.0
+offset_right = 65.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RouteContract" type="Button" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Route Enemy
+
+
+
+
+
+
+
+"
+script = ExtResource("1_xpubj")
+type = 2
+
+[node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/RouteContract"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -65.0
+offset_top = -50.0
+offset_right = 65.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="RewardLabel" type="Label" parent="MarginContainer/HBoxContainer/RouteContract"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -65.0
+offset_top = -27.0
+offset_right = 65.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/CaptureContract" to="." method="_on_capture_contract_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/DefendContract" to="." method="_on_defend_contract_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/RouteContract" to="." method="_on_route_contract_pressed"]

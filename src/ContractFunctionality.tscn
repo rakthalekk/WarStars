@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://we2gsnynm3bg"]
+
+[ext_resource type="Script" path="res://src/Contract.gd" id="1_qbhlw"]
+
+[node name="ContractFunctionality" type="Node2D"]
+script = ExtResource("1_qbhlw")

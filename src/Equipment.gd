@@ -5,7 +5,7 @@ enum Equip_Type {WEAPON, CONSUMABLE, GEAR}
 
 @export var equipment_name: String
 @export var rarity: int = 1
-@export var weight: int
+@export var weight: int = 0
 @export var has_active: bool
 @export var has_passive: bool
 @export var equip_type: Equip_Type
@@ -26,8 +26,8 @@ func can_use_active():
 	return has_active
 
 #make this take a player parameter
-func use_passive():
-	pass
+func apply_stat_changes(unit: Person):
+	unit.speed -= weight
 
 func rest():
 	pass

@@ -6,8 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dnnfj5hx7vi5r" path="res://assets/PlayerUnits/UnitHeadType7.png" id="3_163a3"]
 [ext_resource type="Texture2D" uid="uid://d2cm55eypthll" path="res://assets/PlayerUnits/UnitHelmetType1.png" id="4_h178y"]
 [ext_resource type="Texture2D" uid="uid://bw3qkfwwv04o8" path="res://assets/icon.svg" id="5_egpnx"]
-[ext_resource type="Texture2D" uid="uid://celycusapsiae" path="res://assets/CombatUI/8-HealthBar_Border.png" id="8_u5v2g"]
-[ext_resource type="Texture2D" uid="uid://bj1idskr6gk4y" path="res://assets/CombatUI/8-HealthBar_Health.png" id="9_ev36i"]
+[ext_resource type="Texture2D" uid="uid://shjqsaeqouin" path="res://assets/CombatUI/8-HealthBar_Border.png" id="8_u5v2g"]
+[ext_resource type="Texture2D" uid="uid://cbtietfu0rec3" path="res://assets/CombatUI/8-HealthBar_Health.png" id="9_ev36i"]
 
 [sub_resource type="Animation" id="Animation_65a1p"]
 length = 0.001
