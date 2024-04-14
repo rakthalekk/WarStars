@@ -7,7 +7,7 @@ enum Weapon_Type{NONE, MELEE, PISTOL, SHOTGUN, RIFLE}
 @export var base_pistol: Equipment
 @export var base_shotgun: Equipment
 @export var base_rifle: Equipment
-@export var base_weapons: Array[Equipment] = [base_melee, base_pistol, base_shotgun, base_rifle]
+@onready var base_weapons: Array[Equipment] = [base_melee, base_pistol, base_shotgun, base_rifle]
 
 #@export var base_gear: Array[Equipment]
 @export var tier_1_gear: Array[Equipment]

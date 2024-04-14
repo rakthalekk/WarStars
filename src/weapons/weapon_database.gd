@@ -7,7 +7,7 @@ func _ready():
 
 
 func _get_weapon_by_name(weapon_name: String) -> Weapon:
-	return get_node(weapon_name)
+	return get_node("Equipment_Generator/" + weapon_name)
 	
 func get_generator()->Equipment_Generator:
 	return get_node("Equipment_Generator")
