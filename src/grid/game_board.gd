@@ -26,14 +26,13 @@ var ui_up = false
 
 @onready var action_window = get_parent().get_node("ActionWindow")
 @onready var animation_player = get_parent().get_node("AnimationPlayer")
-@onready var combat_anim = get_parent().get_node("CombatUIAnimation")
 
 @onready var _unit_overlay: UnitOverlay = $UnitOverlay
 @onready var _unit_path: UnitPath = $UnitPath
 
 @onready var map: TileMap = get_parent().get_node("Map")
 @onready var camera: Camera2D = get_parent().get_node("Camera2D")
-@onready var ui_timer: Timer = get_parent().get_node("UI/UITimer")
+@onready var combat_ui: Control = get_parent().get_node("UI/CombatUI")
 
 func _ready() -> void:
 	_reinitialize()
@@ -197,7 +196,9 @@ func _select_unit(cell: Vector2) -> void:
 	var unit = _units[cell]
 	if unit.acted or not unit is PlayerUnit:
 		return
-
+	
+	combat_ui.hide()
+	
 	_active_unit = unit
 	_active_unit.is_selected = true
 	_walkable_cells = get_walkable_cells(_active_unit)
@@ -288,15 +289,12 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 	if !player_turn:
 		return
 	
-	if _units.has(new_cell):
-		if !ui_up:
-			combat_anim.play("popup")
-			ui_up = true
-	elif ui_up:
-		if ui_timer.is_stopped():
-			ui_timer.start()
-	
-	if _active_unit and _active_unit.is_selected and !unit_moved:
+	if !_active_unit:
+		if _units.has(new_cell):
+			combat_ui.show()
+		else:
+			combat_ui.hide()
+	elif _active_unit.is_selected and !unit_moved:
 		_unit_path.draw(_active_unit.cell, new_cell)
 
 
@@ -353,6 +351,9 @@ func change_turn():
 	for unit in _units.values():
 		unit.acted = false
 	
+	for unit in player_units:
+		unit.acted = false
+	
 	if player_turn:
 		animation_player.play("player_turn_start")
 	else:
@@ -388,9 +389,3 @@ func check_enemy_range(enemy: EnemyUnit):
 func highlight_targets(highlight):
 	for target in attack_targets:
 		target._highlighted = highlight
-
-
-func _on_ui_timer_timeout():
-	if !_units.has($Cursor.cell):
-		combat_anim.play("popdown")
-		ui_up = false
