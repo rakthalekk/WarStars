@@ -18,6 +18,7 @@ config/icon="res://assets/icon.svg"
 [autoload]
 
 WeaponDatabase="*res://src/weapons/weapon_database.tscn"
+GameManager="*res://src/GameManager.gd"
 
 [display]
 
