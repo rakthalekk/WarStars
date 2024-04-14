@@ -10,7 +10,7 @@ script = ExtResource("1_ug3or")
 
 [node name="Laser" type="Node2D" parent="."]
 script = ExtResource("2_wpyj0")
-base_damage = 99
+base_damage = 2
 
 [node name="Equipment_Generator" parent="." node_paths=PackedStringArray("base_melee", "base_pistol", "base_shotgun", "base_rifle", "base_weapons") instance=ExtResource("3_bxivp")]
 base_melee = NodePath("Melee")

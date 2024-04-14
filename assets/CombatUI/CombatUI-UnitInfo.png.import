@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d1oif5chwwqok"
-path="res://.godot/imported/12-Health-Bar_Health.png-5e2556467757f469c50d52a92048fe79.ctex"
+uid="uid://p6dw5cwdantu"
+path="res://.godot/imported/CombatUI-UnitInfo.png-9f6f35aaadebe60a1c71218869ecd463.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/CombatUI/12-Health-Bar_Health.png"
-dest_files=["res://.godot/imported/12-Health-Bar_Health.png-5e2556467757f469c50d52a92048fe79.ctex"]
+source_file="res://assets/CombatUI/CombatUI-UnitInfo.png"
+dest_files=["res://.godot/imported/CombatUI-UnitInfo.png-9f6f35aaadebe60a1c71218869ecd463.ctex"]
 
 [params]
 

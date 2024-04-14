@@ -1,3 +1,4 @@
+class_name EnemyUnit
 extends Unit
 
 
@@ -7,4 +8,4 @@ func _ready():
 
 
 func select_sprite(tier: int):
-	$PathFollow2D/Head.texture = load("res://assets/EnemyUnits/Tier" + str(tier) +  "Enemy.png")
+	$PathFollow2D/Sprite.texture = load("res://assets/EnemyUnits/Tier" + str(tier) +  "Enemy.png")
