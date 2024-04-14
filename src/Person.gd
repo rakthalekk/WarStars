@@ -7,8 +7,9 @@ var weapon2 : Weapon
 var equip1 : Gear
 var equip2 : Gear
 
-@export var base_price = 100
-@export var weapon_price_base = 25
+@export var base_price = 150
+@export var weapon_price_base = 20
+@export var gear_price_base = 25
 var price = 100
 
 var tier = 1
@@ -24,7 +25,7 @@ const max_tier = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	price = base_price
+	price = base_price + randi_range(0, 25)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -52,24 +53,27 @@ func equip(slot : int, equipment : Equipment):
 			# Check that it's a weapon, otherwise return
 			if equipment.equip_type == Equipment.Equip_Type.WEAPON:
 				weapon1 = equipment
+				price += equipment.rarity * weapon_price_base
 			else: return
 		1:
 			# Check that it's a weapon, otherwise return
 			if equipment.equip_type == Equipment.Equip_Type.WEAPON:
 				weapon2 = equipment
+				price += equipment.rarity * weapon_price_base
 			else: return
 		2:
 			# Check that it's not a weapon, otherwise return
 			if not equipment.equip_type == Equipment.Equip_Type.WEAPON:
 				equip1 = equipment
+				price += equipment.rarity * gear_price_base
 			else: return
 		3:
 			# Check that it's not a weapon, otherwise return
 			if not equipment.equip_type == Equipment.Equip_Type.WEAPON:
 				equip2 = equipment
+				price += equipment.rarity * gear_price_base
 			else: return
 	equipment.apply_stat_changes(self)
-	price += equipment.rarity * weapon_price_base
 
 func construct_unit():
 	var unit = Unit.new()

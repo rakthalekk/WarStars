@@ -45,7 +45,7 @@ func add_effect_to_target(unit: Unit):
 		_save_stat()
 	else:
 		existing_effect.magnitude += magnitude
-		existing_effect.duration += duration
+		existing_effect.duration = max(duration, existing_effect.duration)
 		
 	if not applied_every_turn:
 		_apply_effect()
