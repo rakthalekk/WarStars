@@ -101,5 +101,6 @@ func perform_specialty(target: Unit):
 		(Specialty_Type.STUN):
 			var stun_effect = Daze.new()
 			stun_effect.magnitude = specialty_tier
+			stun_effect.add_effect_to_target(target)
 		(Specialty_Type.PLASMA):
 			return
