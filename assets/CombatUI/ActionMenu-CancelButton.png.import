@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsgso0i5c65c5"
-path="res://.godot/imported/WS_Emprie_Glaive.png-3a3f47b75f0529d769fac1b7ed72c1c7.ctex"
+uid="uid://d4fb2hw8jwdxa"
+path="res://.godot/imported/ActionMenu-CancelButton.png-d9feaef6300a7fbb0bd037000d580b4a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Weapons & Gear/WS_Emprie_Glaive.png"
-dest_files=["res://.godot/imported/WS_Emprie_Glaive.png-3a3f47b75f0529d769fac1b7ed72c1c7.ctex"]
+source_file="res://assets/CombatUI/ActionMenu-CancelButton.png"
+dest_files=["res://.godot/imported/ActionMenu-CancelButton.png-d9feaef6300a7fbb0bd037000d580b4a.ctex"]
 
 [params]
 

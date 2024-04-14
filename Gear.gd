@@ -10,6 +10,7 @@ var cooldown_counter: int = 0
 @export var passive_move_buff: int = 0
 @export var passive_armor: int = 0
 @export var cost: int = 0
+@export var is_consumable: bool = false
 
 func can_use_active():
 	return super.can_use_active() && cooldown_counter <= 0 && (num_uses < 0 || uses_left > 0)
@@ -21,14 +22,20 @@ func use_active() -> bool:
 		
 	#actually use the active ability
 	cooldown_counter = use_cooldown
+	
+	# Decrement remaining uses, if applicable
+	if num_uses > 0:
+		num_uses -= 1
+	
 	return true
 	
 	
+func apply_stat_changes(person: Person):
+	super.apply_stat_changes(person)
+	person.max_health += passive_hp_buff
+	person.speed += passive_move_buff
+	person.armor += passive_armor
 
-#make this take a player parameter
-func use_passive():
-	pass
-	
 func rest():
 	if(cooldown_counter > 0):
 		cooldown_counter -= 1

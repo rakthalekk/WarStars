@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2so8ghk6tf27"]
+
+[ext_resource type="Script" path="res://src/damage_types/daze.gd" id="1_reyu8"]
+
+[node name="Daze" type="Node2D"]
+script = ExtResource("1_reyu8")
+type = 2

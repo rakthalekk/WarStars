@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr0e1dgmsfnur"
-path="res://.godot/imported/PlanetTileset.png-d3a8c8a99399239057124e2f87c27966.ctex"
+uid="uid://csiyajgybgkq3"
+path="res://.godot/imported/MovementIndication.png-bf5c643668dead3e78b3469b0b11867e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tilesets/PlanetTileset.png"
-dest_files=["res://.godot/imported/PlanetTileset.png-d3a8c8a99399239057124e2f87c27966.ctex"]
+source_file="res://assets/MovementIndication.png"
+dest_files=["res://.godot/imported/MovementIndication.png-bf5c643668dead3e78b3469b0b11867e.ctex"]
 
 [params]
 

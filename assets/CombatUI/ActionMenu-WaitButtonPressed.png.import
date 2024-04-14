@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr0e1dgmsfnur"
-path="res://.godot/imported/PlanetTileset.png-d3a8c8a99399239057124e2f87c27966.ctex"
+uid="uid://qajelw0m5dd1"
+path="res://.godot/imported/ActionMenu-WaitButtonPressed.png-89b71e87430aa89b439f098d3f6b8265.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tilesets/PlanetTileset.png"
-dest_files=["res://.godot/imported/PlanetTileset.png-d3a8c8a99399239057124e2f87c27966.ctex"]
+source_file="res://assets/CombatUI/ActionMenu-WaitButtonPressed.png"
+dest_files=["res://.godot/imported/ActionMenu-WaitButtonPressed.png-89b71e87430aa89b439f098d3f6b8265.ctex"]
 
 [params]
 

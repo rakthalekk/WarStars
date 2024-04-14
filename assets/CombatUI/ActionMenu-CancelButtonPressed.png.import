@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://63mqn44jd0o"
-path="res://.godot/imported/WS_Troupe_Glaive.png-c95da3b175a5323f6401192d68463c1d.ctex"
+uid="uid://2c2v45wujq5p"
+path="res://.godot/imported/ActionMenu-CancelButtonPressed.png-c66338c76e7cba19b571b7f9bd3f8278.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Weapons & Gear/WS_Troupe_Glaive.png"
-dest_files=["res://.godot/imported/WS_Troupe_Glaive.png-c95da3b175a5323f6401192d68463c1d.ctex"]
+source_file="res://assets/CombatUI/ActionMenu-CancelButtonPressed.png"
+dest_files=["res://.godot/imported/ActionMenu-CancelButtonPressed.png-c66338c76e7cba19b571b7f9bd3f8278.ctex"]
 
 [params]
 

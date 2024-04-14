@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr0e1dgmsfnur"
-path="res://.godot/imported/PlanetTileset.png-d3a8c8a99399239057124e2f87c27966.ctex"
+uid="uid://bn2gnjmqak64s"
+path="res://.godot/imported/Cursor.png-d18120ae8365ddf6290324ebb7300e3f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tilesets/PlanetTileset.png"
-dest_files=["res://.godot/imported/PlanetTileset.png-d3a8c8a99399239057124e2f87c27966.ctex"]
+source_file="res://assets/Cursor.png"
+dest_files=["res://.godot/imported/Cursor.png-d18120ae8365ddf6290324ebb7300e3f.ctex"]
 
 [params]
 

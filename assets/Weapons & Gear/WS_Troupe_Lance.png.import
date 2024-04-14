@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr0e1dgmsfnur"
-path="res://.godot/imported/PlanetTileset.png-d3a8c8a99399239057124e2f87c27966.ctex"
+uid="uid://63mqn44jd0o"
+path="res://.godot/imported/WS_Troupe_Lance.png-cf13d12e7572c8ff11c0171b778f8370.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Tilesets/PlanetTileset.png"
-dest_files=["res://.godot/imported/PlanetTileset.png-d3a8c8a99399239057124e2f87c27966.ctex"]
+source_file="res://assets/Weapons & Gear/WS_Troupe_Lance.png"
+dest_files=["res://.godot/imported/WS_Troupe_Lance.png-cf13d12e7572c8ff11c0171b778f8370.ctex"]
 
 [params]
 
