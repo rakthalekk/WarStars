@@ -167,7 +167,8 @@ func _move_active_unit(new_cell: Vector2) -> void:
 	set_unit_moved(true)
 	_active_unit.walk_along(_unit_path.current_path)
 	await _active_unit.walk_finished
-	_popup_action_window(_active_unit.position)
+	if _active_unit:
+		_popup_action_window(_active_unit.position)
 
 
 func _move_enemy_unit(new_cell: Vector2, unit: EnemyUnit) -> void:
@@ -250,11 +251,11 @@ func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
 	if _units.has(cell):
 		var unit = _units[cell]
 		if initiator is PlayerUnit && unit is EnemyUnit:
-			unit.damage(initiator.active_weapon.base_damage)
+			unit.damage(initiator.active_weapon.damage)
 			attacking = false
 			end_action()
 		elif initiator is EnemyUnit && unit is PlayerUnit:
-			unit.damage(initiator.active_weapon.base_damage)
+			unit.damage(initiator.active_weapon.damage)
 
 
 func remove_unit(unit: Unit):

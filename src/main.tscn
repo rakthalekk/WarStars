@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://bvxj0pfbkkljm"]
+[gd_scene load_steps=14 format=3 uid="uid://bvxj0pfbkkljm"]
 
 [ext_resource type="PackedScene" uid="uid://dr28wheto1jnr" path="res://src/grid/map.tscn" id="1_0bs38"]
 [ext_resource type="Script" path="res://src/grid/map_generator.gd" id="1_8koai"]
 [ext_resource type="Script" path="res://src/grid/game_board.gd" id="2_2gqiw"]
-[ext_resource type="Resource" uid="uid://ba7p87gewwk8k" path="res://src/grid/grid.tres" id="3_o275t"]
 [ext_resource type="PackedScene" uid="uid://djst6xt2q1nff" path="res://src/grid/cursor.tscn" id="3_yqmtd"]
 [ext_resource type="PackedScene" uid="uid://cprleh6fpmxcm" path="res://src/grid/unit_path.tscn" id="5_sgnn1"]
 [ext_resource type="PackedScene" uid="uid://c37p1jxss1cx" path="res://src/grid/unit_overlay.tscn" id="6_tiuqn"]
@@ -117,7 +116,6 @@ layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 131072, 0, 0, 196608,
 [node name="GameBoard" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("2_2gqiw")
-grid = ExtResource("3_o275t")
 
 [node name="Cursor" parent="GameBoard" instance=ExtResource("3_yqmtd")]
 position = Vector2(8, 8)
