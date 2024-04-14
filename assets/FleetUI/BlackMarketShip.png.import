@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://63mqn44jd0o"
-path="res://.godot/imported/WS_Troupe_Glaive.png-c95da3b175a5323f6401192d68463c1d.ctex"
+uid="uid://d2ryr6yo6xosm"
+path="res://.godot/imported/BlackMarketShip.png-7032ee53fb8989890a7c0ba4ddc553f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Weapons & Gear/WS_Troupe_Glaive.png"
-dest_files=["res://.godot/imported/WS_Troupe_Glaive.png-c95da3b175a5323f6401192d68463c1d.ctex"]
+source_file="res://assets/FleetUI/BlackMarketShip.png"
+dest_files=["res://.godot/imported/BlackMarketShip.png-7032ee53fb8989890a7c0ba4ddc553f8.ctex"]
 
 [params]
 
