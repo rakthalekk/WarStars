@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cprleh6fpmxcm" path="res://src/grid/unit_path.tscn" id="5_sgnn1"]
 [ext_resource type="PackedScene" uid="uid://c37p1jxss1cx" path="res://src/grid/unit_overlay.tscn" id="6_tiuqn"]
 [ext_resource type="PackedScene" uid="uid://c08w2xnjck2wa" path="res://src/player_unit.tscn" id="7_p5jcs"]
-[ext_resource type="PackedScene" path="res://src/grid/unit_attack_range.tscn" id="7_sw4l4"]
+[ext_resource type="PackedScene" uid="uid://fg6fbe17ssya" path="res://src/grid/unit_attack_range.tscn" id="7_sw4l4"]
 [ext_resource type="Script" path="res://src/ChapterEndButton.gd" id="8_fkc47"]
 [ext_resource type="Texture2D" uid="uid://ra0pi0wergc" path="res://assets/CombatUI/CombatUI.png" id="9_q67u5"]
 [ext_resource type="Script" path="res://src/ChapterRewardLabel.gd" id="9_xxesh"]
@@ -210,6 +210,15 @@ script = ExtResource("2_2gqiw")
 
 [node name="Cursor" parent="GameBoard" instance=ExtResource("3_yqmtd")]
 position = Vector2(8, 8)
+
+[node name="DangerArea" parent="GameBoard" instance=ExtResource("7_sw4l4")]
+modulate = Color(0.392157, 0, 0.231373, 0.741176)
+
+[node name="EnemyUnitOverlay" parent="GameBoard" instance=ExtResource("6_tiuqn")]
+modulate = Color(0.792157, 0, 0.521569, 1)
+
+[node name="EnemyAttackRange" parent="GameBoard" instance=ExtResource("6_tiuqn")]
+modulate = Color(0.34902, 0, 0, 1)
 
 [node name="UnitOverlay" parent="GameBoard" instance=ExtResource("6_tiuqn")]
 
