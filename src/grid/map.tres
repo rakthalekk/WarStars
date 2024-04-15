@@ -245,23 +245,14 @@ texture = ExtResource("1_bs0ch")
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n30v6"]
 texture = ExtResource("2_e2cup")
 0:0/0 = 0
-0:0/0/terrain = 0
 1:0/0 = 0
-1:0/0/terrain = 0
 2:0/0 = 0
-2:0/0/terrain = 0
 0:1/0 = 0
-0:1/0/terrain = 0
 1:1/0 = 0
-1:1/0/terrain = 0
 2:1/0 = 0
-2:1/0/terrain = 0
 0:2/0 = 0
-0:2/0/terrain = 0
 1:2/0 = 0
-1:2/0/terrain = 0
 2:2/0 = 0
-2:2/0/terrain = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5v5b0"]
 texture = ExtResource("2_qpld7")

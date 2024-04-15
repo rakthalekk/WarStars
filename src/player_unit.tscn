@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c08w2xnjck2wa"]
+[gd_scene load_steps=18 format=3 uid="uid://c08w2xnjck2wa"]
 
 [ext_resource type="Texture2D" uid="uid://cwdfpaxroeukk" path="res://assets/PlayerUnits/UnitArmor.png" id="1_emlgu"]
 [ext_resource type="Script" path="res://src/player_unit.gd" id="1_o7chy"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bw3qkfwwv04o8" path="res://assets/icon.svg" id="5_egpnx"]
 [ext_resource type="Texture2D" uid="uid://celycusapsiae" path="res://assets/CombatUI/8-HealthBar_Border.png" id="8_u5v2g"]
 [ext_resource type="Texture2D" uid="uid://bj1idskr6gk4y" path="res://assets/CombatUI/8-HealthBar_Health.png" id="9_ev36i"]
+[ext_resource type="FontFile" uid="uid://d3xknqxa16oqj" path="res://assets/fonts/dogica.ttf" id="9_ps3ld"]
 
 [sub_resource type="Animation" id="Animation_65a1p"]
 length = 0.001
@@ -189,6 +190,67 @@ _data = {
 "inactive": SubResource("Animation_r28jt")
 }
 
+[sub_resource type="Animation" id="Animation_fj8w3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageDisplay:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_uhhx6"]
+resource_name = "damage_flash"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageDisplay:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vhofn"]
+_data = {
+"RESET": SubResource("Animation_fj8w3"),
+"damage_flash": SubResource("Animation_uhhx6")
+}
+
 [node name="PlayerUnit" type="Path2D"]
 script = ExtResource("1_o7chy")
 move_range = 7
@@ -243,3 +305,20 @@ libraries = {
 "": SubResource("AnimationLibrary_tus72")
 }
 autoplay = "idle"
+
+[node name="EffectsAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vhofn")
+}
+
+[node name="DamageDisplay" type="Label" parent="."]
+visible = false
+offset_left = 6.0
+offset_top = -10.0
+offset_right = 30.0
+offset_bottom = -3.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("9_ps3ld")
+theme_override_font_sizes/font_size = 8
+text = "-99"

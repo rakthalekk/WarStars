@@ -257,7 +257,7 @@ func _select_unit(cell: Vector2) -> void:
 		
 		for location in attack_cells:
 			var attackable = map.get_cell_tile_data(0, location).get_custom_data("attackable")
-			if !attackable && cell.distance_to(_active_unit.cell) > 1:
+			if !attackable && cell.distance_to(location) > 1:
 				continue
 			
 			if not location in _walkable_cells:
@@ -350,13 +350,12 @@ func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
 			if not unit in attack_targets:
 				return
 			
-			unit.damage(initiator.active_weapon.damage)
-			initiator.active_weapon.perform_specialty(unit)
+			await unit.damage(initiator.active_weapon.damage)
+			await initiator.active_weapon.perform_specialty(unit)
 			attacking = false
 			end_action()
 		elif initiator is EnemyUnit && unit is PlayerUnit:
-			initiator.active_weapon.use_active(unit)
-			
+			await initiator.active_weapon.use_active(unit)
 
 
 func remove_unit(unit: Unit):
@@ -381,7 +380,7 @@ func _on_Cursor_accept_pressed(cell: Vector2) -> void:
 		return
 	
 	if attacking:
-		_attack_unit(cell)
+		await _attack_unit(cell)
 	elif not _active_unit:
 		if _units.has(cell):
 			if _units[cell] is PlayerUnit:
@@ -497,13 +496,13 @@ func change_turn():
 		for unit in player_units:
 			var damaging = map.get_cell_tile_data(0, unit.cell).get_custom_data("damaging")
 			if damaging:
-				unit.damage(2)
+				await unit.damage(2)
 	else:
 		animation_player.play("enemy_turn_start")
 		for unit in enemy_units:
 			var damaging = map.get_cell_tile_data(0, unit.cell).get_custom_data("damaging")
 			if damaging:
-				unit.damage(2)
+				await unit.damage(2)
 		
 		await animation_player.animation_finished
 		enemy_turn()
@@ -558,7 +557,7 @@ func check_enemy_range(enemy: EnemyUnit):
 					
 					# destination and target
 					await _move_enemy_unit(destination, enemy)
-					_attack_unit(target, enemy)
+					await _attack_unit(target, enemy)
 					
 					display_danger_area()
 					
