@@ -51,18 +51,21 @@ func _process(delta):
 			$Cursor.active = false
 			attacking = false
 		elif !_active_unit._is_walking:
-			cancel_action()
+			if action_window.get_node("Submenu").visible:
+				action_window._on_action_cancel_pressed()
+			else:
+				cancel_action()
 	
 	if GameManager.controller:
 		var cursor_to_camera = $Cursor.position - camera.position
 		if cursor_to_camera.x < -100:
-			camera.position += Vector2(-1, 0)
+			camera.position += Vector2(-1.25, 0)
 		elif cursor_to_camera.x > 100:
-			camera.position += Vector2(1, 0)
+			camera.position += Vector2(1.25, 0)
 		if cursor_to_camera.y < -60:
-			camera.position += Vector2(0, -1)
+			camera.position += Vector2(0, -1.25)
 		elif cursor_to_camera.y > 60:
-			camera.position += Vector2(0, 1)
+			camera.position += Vector2(0, 1.25)
 	else:
 		var camera_pan = get_local_mouse_position() - camera.position
 		camera_pan = Vector2(camera_pan.x / 200.0, camera_pan.y / 112.0)
@@ -287,8 +290,8 @@ func find_attack_targets():
 
 
 func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
-	if _units.has(cell) and (_active_unit.active_weapon is Weapon 
-		or (_active_unit.active_weapon is Gear and (_active_unit.active_weapon.use_type == Gear.USE_TYPE.ENEMY))):
+	if _units.has(cell) and (initiator.active_weapon is Weapon 
+		or (initiator.active_weapon is Gear and (initiator.active_weapon.use_type == Gear.USE_TYPE.ENEMY))):
 		var unit = _units[cell]
 		
 		var attackable = map.get_cell_tile_data(0, cell).get_custom_data("attackable")
@@ -345,10 +348,15 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 	
 	if !_active_unit:
 		if _units.has(new_cell):
+			var unit = _units[new_cell] as Unit
+			combat_ui.get_node("HealthBar").frame = 17 - unit.health
+			combat_ui.get_node("Name").text = unit.name
+			
 			combat_ui.show()
 		else:
 			combat_ui.hide()
 	elif _active_unit.is_selected and !unit_moved:
+		_unit_path.show()
 		_unit_path.draw(_active_unit.cell, new_cell)
 
 

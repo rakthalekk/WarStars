@@ -34,7 +34,7 @@ func incrementTurns():
 func resetTurns():
 	current_turn = 0
 
-var controller = false
+var controller = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
