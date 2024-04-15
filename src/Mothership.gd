@@ -25,7 +25,7 @@ func get_troop_cost()->int:
 
 func try_add_person(new_person: Person)->bool:
 	var total_cost = get_troop_cost()
-	if(troops.has(new_person) || total_cost + new_person.tier > max_capacity):
+	if(troops.has(new_person) || new_person.resting || total_cost + new_person.tier > max_capacity):
 		return false
 	troops.append(new_person)
 	new_person.fighting = true
