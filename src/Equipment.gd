@@ -12,6 +12,8 @@ enum Equip_Type {WEAPON, CONSUMABLE, GEAR}
 @export var has_passive: bool
 @export var equip_type: Equip_Type
 
+@export var range: int = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

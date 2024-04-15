@@ -11,7 +11,6 @@ enum Upgrade_Type{SPECIALTY, DAMAGE, RANGE, HEAT}
 @export var heat_cooldown: int = 1
 var current_heat: int
 var overheated: bool
-@export var range: int
 @export var damage: int
 @export var specialty: Specialty_Type
 @export var specialty_tier: int = 0

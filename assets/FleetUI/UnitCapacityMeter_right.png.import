@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5n2r83tcniin"
-path="res://.godot/imported/DifficultyMeter.png-015db2aeeb5bd98b23ead84dec85bbe7.ctex"
+uid="uid://tmjq515w70tt"
+path="res://.godot/imported/UnitCapacityMeter_right.png-1997ddfa9a4d5416157fab70b9ec5006.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/FleetUI/DifficultyMeter.png"
-dest_files=["res://.godot/imported/DifficultyMeter.png-015db2aeeb5bd98b23ead84dec85bbe7.ctex"]
+source_file="res://assets/FleetUI/UnitCapacityMeter_right.png"
+dest_files=["res://.godot/imported/UnitCapacityMeter_right.png-1997ddfa9a4d5416157fab70b9ec5006.ctex"]
 
 [params]
 

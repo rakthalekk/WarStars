@@ -86,7 +86,7 @@ _data = {
 
 [node name="EnemyUnit" type="Path2D"]
 script = ExtResource("1_sa3nq")
-move_range = 7
+move_range = 5
 move_speed = 300.0
 weapon_names = Array[String](["Laser"])
 
