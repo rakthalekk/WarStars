@@ -55,6 +55,7 @@ func _process(delta):
 		elif self_targeting:
 			highlight_self(false)
 			action_window.display()
+			$Cursor.active = false
 			self_targeting = false
 		elif !_active_unit._is_walking:
 			cancel_action()
@@ -341,7 +342,7 @@ func _on_Cursor_accept_pressed(cell: Vector2) -> void:
 	elif _active_unit.is_selected && !unit_moved:
 		_move_active_unit(cell)
 	elif _active_unit.cell == cell:
-		if _active_unit.active_weapon is Gear and _active_unit.active_weapon.use_type == Gear.USE_TYPE.SELF:
+		if self_targeting and _active_unit.active_weapon is Gear and _active_unit.active_weapon.use_type == Gear.USE_TYPE.SELF:
 			_active_unit.active_weapon.use_active(_active_unit)
 			end_action()
 		else:
@@ -487,4 +488,5 @@ func highlight_targets(highlight):
 		target._highlighted = highlight
 		
 func highlight_self(highlight):
+	$Cursor.active = true
 	_active_unit._highlighted = highlight

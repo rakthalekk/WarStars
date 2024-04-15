@@ -15,6 +15,10 @@ var cooldown_counter: int = 0
 @export var cost: int = 0
 @export var is_consumable: bool = false
 
+func _ready():
+	if num_uses > 0:
+		uses_left = num_uses
+
 func can_use_active():
 	return super.can_use_active() && cooldown_counter <= 0 && (num_uses < 0 || uses_left > 0)
 
@@ -29,8 +33,8 @@ func use_active(target = null) -> bool:
 	cooldown_counter = use_cooldown
 	
 	# Decrement remaining uses, if applicable
-	if num_uses > 0:
-		num_uses -= 1
+	if uses_left > 0:
+		uses_left -= 1
 	
 	return true
 	

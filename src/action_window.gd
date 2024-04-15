@@ -111,7 +111,6 @@ func _use_gear(unit):
 			game_board.highlight_targets(true)
 		(Gear.USE_TYPE.SELF):
 			game_board.highlight_self(true)
-			unit.active_weapon.use_active(unit)
 		(Gear.USE_TYPE.TERRAIN):
 			# TODO make some kind of confirm popup and do the effect
 			pass
