@@ -63,3 +63,4 @@ equip_type = 2
 
 [node name="StimPack" parent="Equipment_Generator" instance=ExtResource("5_7nnu8")]
 use_type = 2
+num_uses = 3

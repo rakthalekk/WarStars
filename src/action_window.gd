@@ -72,6 +72,7 @@ func _on_cancel_mouse_exited():
 
 
 func _on_weapon_1_button_pressed():
+	game_board._active_unit.switch_weapons(0)
 	game_board.attacking = true
 	game_board.highlight_targets(true)
 	hide()
@@ -79,14 +80,26 @@ func _on_weapon_1_button_pressed():
 
 
 func _on_weapon_2_button_pressed():
+	game_board._active_unit.switch_weapons(1)
+	game_board.attacking = true
+	game_board.highlight_targets(true)
+	hide()
 	$Submenu.hide()
 
 
 func _on_ability_1_button_pressed():
+	game_board._active_unit.switch_weapons(2)
+	game_board.attacking = true
+	game_board.highlight_targets(true)
+	hide()
 	$Submenu.hide()
 
 
 func _on_ability_2_button_pressed():
+	game_board._active_unit.switch_weapons(3)
+	game_board.attacking = true
+	game_board.highlight_targets(true)
+	hide()
 	$Submenu.hide()
 
 
