@@ -22,11 +22,15 @@ var person_source: Person
 
 @export var weapon_names: Array[String]
 
+var death_sounds = [load("res://assets/sounds/DEATH 1.mp3"), load("res://assets/sounds/DEATH 1.mp3")]
+
 var health: int
 
 var idle_anim = "idle"
 
 signal end_unit_action(unit: Unit)
+
+const DEATH_SOUND = preload("res://src/death_sound.tscn")
 
 ## Coordinates of the current cell the cursor moved to.
 var cell := Vector2.ZERO:
@@ -131,6 +135,10 @@ func damage(dmg: int):
 	await effects_anim.animation_finished
 	
 	if health == 0:
+		var sound = DEATH_SOUND.instantiate()
+		get_parent().add_child(sound)
+		sound.play_sound(death_sounds.pick_random())
+		
 		emit_signal("die", self)
 		
 func switch_weapons(index: int):

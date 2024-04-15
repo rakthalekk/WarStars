@@ -48,6 +48,7 @@ func _ready() -> void:
 	_reinitialize()
 	change_turn()
 	chapter_end_ui.hide()
+	combat_ui.hide()
 	display_danger_area()
 
 
@@ -723,7 +724,8 @@ func highlight_targets(highlight):
 	$Cursor.active = true
 	for target in attack_targets:
 		target._highlighted = highlight
-		
+
+
 func highlight_self(highlight):
 	$Cursor.active = true
 	_active_unit._highlighted = highlight
