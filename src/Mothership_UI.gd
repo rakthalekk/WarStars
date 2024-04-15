@@ -9,6 +9,10 @@ extends Fleet_Structure_UI
 @export var base_icon: Person_Icon
 @export var icon_holder: Control
 @export var capacity_label: Label
+@export var capacity_bar: Mothership_Unit_Capacity_UI
+
+func _ready():
+	refresh()
 
 func open_ui():
 	refresh_visuals()
@@ -20,6 +24,8 @@ func refresh():
 	for unit in mothership_script.troops:
 		spawn_new_soldier(unit)
 	refresh_visuals()
+	capacity_bar.reset()
+	capacity_bar.set_tier(1)
 
 func refresh_visuals():
 	current_platoon = current_platoon.filter(func(unit): return unit != null && unit.person != null && unit.person.health > 0)
@@ -63,3 +69,4 @@ func spawn_new_soldier(person: Person):
 
 func update_label():
 	capacity_label.text = str(mothership_script.troops.size()) + "/" + str(mothership_script.capacity)
+	capacity_bar.display_capacity(mothership_script.troops.size(), mothership_script.capacity)

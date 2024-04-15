@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://er246y3denep"]
+[gd_scene load_steps=11 format=3 uid="uid://er246y3denep"]
 
 [ext_resource type="Script" path="res://src/Mothership_UI.gd" id="1_t10ip"]
 [ext_resource type="Texture2D" uid="uid://d0p6c3xmg0jww" path="res://assets/FleetUI/BackButton.png" id="2_i0mnv"]
@@ -6,14 +6,16 @@
 [ext_resource type="Script" path="res://src/Army_Drop_Area.gd" id="4_r1vmg"]
 [ext_resource type="PackedScene" uid="uid://bpt0fhuqt7wvt" path="res://src/person_icon.tscn" id="5_esohi"]
 [ext_resource type="PackedScene" uid="uid://17o6ijlgpb2i" path="res://src/ContractUI.tscn" id="5_sxc4d"]
+[ext_resource type="PackedScene" uid="uid://bhgdf5qvokd6k" path="res://src/mothership_unit_capacity_ui.tscn" id="6_32ydw"]
 [ext_resource type="PackedScene" uid="uid://cddgbv7vtuu7u" path="res://src/army_person_icon.tscn" id="6_tijfb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_n1xy2"]
 font_size = 20
 
 [sub_resource type="LabelSettings" id="LabelSettings_yma8u"]
+font_size = 15
 
-[node name="Mothership_UI" type="Control" node_paths=PackedStringArray("army_container", "base_icon", "icon_holder", "capacity_label")]
+[node name="Mothership_UI" type="Control" node_paths=PackedStringArray("army_container", "base_icon", "icon_holder", "capacity_label", "capacity_bar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,6 +29,7 @@ army_container = NodePath("MarginContainer/ColorRect/ColorRect")
 base_icon = NodePath("Army_Person_Icon")
 icon_holder = NodePath("MarginContainer/ColorRect/ColorRect/ScrollContainer/GridContainer")
 capacity_label = NodePath("MarginContainer/ColorRect/Label2")
+capacity_bar = NodePath("MarginContainer/ColorRect/Mothership_Unit_Capacity_UI")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -110,9 +113,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -137.0
+offset_left = -136.0
 offset_top = 37.0
-offset_right = -94.0
+offset_right = -93.0
 offset_bottom = 60.0
 grow_horizontal = 0
 text = "16/16"
@@ -122,6 +125,17 @@ horizontal_alignment = 2
 [node name="ContractUi" parent="MarginContainer/ColorRect" instance=ExtResource("5_sxc4d")]
 layout_mode = 1
 offset_top = -1.0
+
+[node name="Mothership_Unit_Capacity_UI" parent="MarginContainer/ColorRect" instance=ExtResource("6_32ydw")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -112.0
+offset_top = -59.5
+offset_right = -112.0
+offset_bottom = -59.5
+grow_horizontal = 2
 
 [node name="Person_Icon" parent="." instance=ExtResource("5_esohi")]
 visible = false
