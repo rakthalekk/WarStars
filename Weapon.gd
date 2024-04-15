@@ -50,7 +50,7 @@ func use_active(target = null) -> bool:
 		return false
 	
 	#use weapon
-	target.damage(damage)
+	await target.damage(damage)
 	perform_specialty(target)
 	
 	current_heat += heat_gain

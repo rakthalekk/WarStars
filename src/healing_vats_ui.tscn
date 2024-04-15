@@ -1,10 +1,105 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkwpke6vc60yr"]
+[gd_scene load_steps=8 format=3 uid="uid://dkwpke6vc60yr"]
 
 [ext_resource type="Script" path="res://src/Healing_Vats_UI.gd" id="1_bwss5"]
+[ext_resource type="Texture2D" uid="uid://d0p6c3xmg0jww" path="res://assets/FleetUI/BackButton.png" id="2_kf0x2"]
+[ext_resource type="Texture2D" uid="uid://crm8k14ei2hgm" path="res://assets/FleetUI/BackButtonHover.png" id="3_bm44r"]
+[ext_resource type="PackedScene" uid="uid://rrd285mtrnui" path="res://src/healing_vats_selection_panel.tscn" id="4_ytxpb"]
+[ext_resource type="PackedScene" uid="uid://n1qfnjqujvc5" path="res://src/healing_vats_top_selection_panel.tscn" id="5_gh0k7"]
+[ext_resource type="PackedScene" uid="uid://c4ro2ttr7unv4" path="res://src/healing_vats_bottom_selection_panel.tscn" id="6_v2sls"]
 
-[node name="Healing_Vats_UI" type="Control"]
+[sub_resource type="LabelSettings" id="LabelSettings_t4pjs"]
+font_size = 20
+
+[node name="Healing_Vats_UI" type="Control" node_paths=PackedStringArray("heal_panels")]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_bwss5")
+heal_panels = [NodePath("MarginContainer/ColorRect/Vat 1"), NodePath("MarginContainer/ColorRect/Vat 2"), NodePath("MarginContainer/ColorRect/Vat 3"), NodePath("MarginContainer/ColorRect/Vat 4"), NodePath("MarginContainer/ColorRect/Vat 5")]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer"]
+layout_mode = 2
+color = Color(0.643137, 0.858824, 0.956863, 0.52549)
+
+[node name="TextureButton2" type="TextureButton" parent="MarginContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -95.0
+offset_right = -45.0
+offset_bottom = 50.0
+grow_horizontal = 0
+texture_normal = ExtResource("2_kf0x2")
+texture_hover = ExtResource("3_bm44r")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="MarginContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -63.5
+offset_right = 63.5
+offset_bottom = 28.0
+grow_horizontal = 2
+text = "Med Bay
+"
+label_settings = SubResource("LabelSettings_t4pjs")
+horizontal_alignment = 1
+
+[node name="Vat 1" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("main_ui") instance=ExtResource("5_gh0k7")]
+layout_mode = 1
+offset_left = -105.0
+offset_top = -88.5
+offset_right = 106.0
+offset_bottom = -45.5
+main_ui = NodePath("../../..")
+
+[node name="Vat 2" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("main_ui") instance=ExtResource("4_ytxpb")]
+layout_mode = 1
+offset_left = -106.0
+offset_top = -42.5
+offset_right = 105.0
+offset_bottom = -8.5
+main_ui = NodePath("../../..")
+id = 1
+
+[node name="Vat 3" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("main_ui") instance=ExtResource("4_ytxpb")]
+layout_mode = 1
+offset_top = 8.5
+offset_bottom = 8.5
+main_ui = NodePath("../../..")
+id = 2
+
+[node name="Vat 4" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("main_ui") instance=ExtResource("4_ytxpb")]
+layout_mode = 1
+offset_top = 42.5
+offset_bottom = 42.5
+main_ui = NodePath("../../..")
+id = 3
+
+[node name="Vat 5" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("main_ui") instance=ExtResource("6_v2sls")]
+layout_mode = 1
+offset_left = -106.0
+offset_top = 59.5
+offset_right = 106.0
+offset_bottom = 102.5
+main_ui = NodePath("../../..")
+id = 4
+
+[connection signal="pressed" from="MarginContainer/ColorRect/TextureButton2" to="." method="on_close_ui"]

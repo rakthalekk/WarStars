@@ -1,0 +1,76 @@
+[gd_scene load_steps=7 format=3 uid="uid://bpt0fhuqt7wvt"]
+
+[ext_resource type="Script" path="res://src/Person_Icon.gd" id="1_q31mb"]
+[ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="2_ghpid"]
+[ext_resource type="Texture2D" uid="uid://h7nsqdept6f0" path="res://assets/FleetUI/FleetSubmenu_smallcontainer.png" id="3_ho36m"]
+[ext_resource type="Script" path="res://src/Drag_Icon.gd" id="3_ytu4x"]
+[ext_resource type="PackedScene" uid="uid://y2bxmv4cxpv6" path="res://src/drag_icon.tscn" id="5_eg77c"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6xfqd"]
+font_size = 8
+
+[node name="Person_Icon" type="Control" node_paths=PackedStringArray("icon", "drag_icon", "sleep_icon")]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -32.0
+offset_bottom = 32.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_q31mb")
+icon = NodePath("Icon")
+drag_icon = NodePath("Icon")
+sleep_icon = NodePath("Sleep_Label")
+is_army = null
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_ghpid")
+expand_mode = 1
+script = ExtResource("3_ytu4x")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+modulate = Color(0.298039, 0.298039, 0.298039, 0.313726)
+layout_mode = 1
+texture = ExtResource("3_ho36m")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="Drag_Icon" parent="." instance=ExtResource("5_eg77c")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_ghpid")
+expand_mode = 1
+
+[node name="Sleep_Label" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 14.0
+offset_top = 2.0
+offset_right = 29.0
+offset_bottom = 14.0
+rotation = -0.55428
+text = "ZZZ"
+label_settings = SubResource("LabelSettings_6xfqd")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="gui_input" from="Icon" to="." method="_on_gui_input"]
+[connection signal="gui_input" from="TextureRect2" to="." method="_on_gui_input"]
+[connection signal="gui_input" from="Drag_Icon" to="." method="_on_gui_input"]

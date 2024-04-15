@@ -12,7 +12,7 @@ func _ready():
 
 func try_purchase(id: int):
 	if(black_market_script.purchase(id)):
-		purchase_panels[id].visible = false
+		pass#purchase_panels[id].visible = false
 		
 
 func refresh():
@@ -22,7 +22,7 @@ func refresh():
 	for i in black_market_script.capacity:
 		purchase_panels[i].setup(black_market_script.get_equip(i))
 	for i in purchase_panels.size():
-		purchase_panels[i].visible = i < black_market_script.capacity && black_market_script.item_available(i)
+		purchase_panels[i].visible = i < black_market_script.capacity# && black_market_script.item_available(i)
 		#mark as interactable only if you can afford its
 	check_prices()
 

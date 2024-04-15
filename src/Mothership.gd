@@ -4,6 +4,7 @@ extends Fleet_Structure
 @export var troops: Array[Person]
 @export var mothership_ui: Mothership_UI
 var troop_cost: int = -1
+var max_capacity: int = 8
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,8 +25,11 @@ func get_troop_cost()->int:
 
 func try_add_person(new_person: Person)->bool:
 	var total_cost = get_troop_cost()
-	#if the person's tier is too expensive, return false
+	if(troops.has(new_person) || new_person.resting || total_cost + new_person.tier > max_capacity):
+		return false
 	troops.append(new_person)
+	new_person.fighting = true
+	manager.reserves.update_unit_visual(new_person)
 	return true
 
 func is_valid_troop()->bool:
@@ -42,6 +46,13 @@ func is_valid_troop()->bool:
 	
 	return has_valid_unit && !has_invalid_unit
 		 
+
+func remove_person(person: Person):
+	if(troops.has(person)):
+		troops.erase(person)
+		person.fighting = false
+		manager.reserves.update_unit_visual(person)
+		
 
 func remove_dead_troops():
 	#also check for troops marked as dead

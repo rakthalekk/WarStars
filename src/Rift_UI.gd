@@ -10,7 +10,7 @@ func open_ui():
 
 func try_summon(id: int):
 	if(rift_script.summon(id)):
-		summon_panels[id].visible = false
+		pass#summon_panels[id].visible = false
 		
 
 func refresh():
@@ -20,7 +20,7 @@ func refresh():
 	for i in rift_script.capacity:
 		summon_panels[i].setup(rift_script.get_summon(i))
 	for i in summon_panels.size():
-		summon_panels[i].visible = i < rift_script.capacity && rift_script.has_summon(i)
+		summon_panels[i].visible = i < rift_script.capacity
 		
 	check_prices()
 
