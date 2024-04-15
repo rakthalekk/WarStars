@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cddgbv7vtuu7u"]
+
+[ext_resource type="PackedScene" uid="uid://bpt0fhuqt7wvt" path="res://src/person_icon.tscn" id="1_xsxkd"]
+[ext_resource type="Script" path="res://src/Army_Person_Icon.gd" id="2_bo2yc"]
+
+[node name="Army_Person_Icon" instance=ExtResource("1_xsxkd")]
+script = ExtResource("2_bo2yc")
+sleep_color = Color(0.411765, 0.411765, 0.411765, 1)
+warband_color = Color(0.698039, 0.133333, 0.133333, 1)
+is_army = false

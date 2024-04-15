@@ -1,0 +1,468 @@
+[gd_scene load_steps=8 format=3 uid="uid://bhgdf5qvokd6k"]
+
+[ext_resource type="Script" path="res://src/Mothership_Unit_Capacity_UI.gd" id="1_ugwlo"]
+[ext_resource type="Texture2D" uid="uid://cm3rdnkhagy2j" path="res://assets/FleetUI/UnitCapacityMeter_left_empty.png" id="2_hswr8"]
+[ext_resource type="Texture2D" uid="uid://d2i2d14o3jr4" path="res://assets/FleetUI/UnitCapacityMeter_center_empty.png" id="3_jxsyf"]
+[ext_resource type="Texture2D" uid="uid://cnmfu12owm755" path="res://assets/FleetUI/UnitCapacityMeter_right_empty.png" id="4_lrj8d"]
+[ext_resource type="Texture2D" uid="uid://crxi44xwg3xlr" path="res://assets/FleetUI/UnitCapacityMeter_left.png" id="5_cft8x"]
+[ext_resource type="Texture2D" uid="uid://na0vmqrlv01k" path="res://assets/FleetUI/UnitCapacityMeter_center.png" id="6_exxwr"]
+[ext_resource type="Texture2D" uid="uid://tmjq515w70tt" path="res://assets/FleetUI/UnitCapacityMeter_right.png" id="7_8ioux"]
+
+[node name="Mothership_Unit_Capacity_UI" type="Control" node_paths=PackedStringArray("fill_sections", "fill_end_1", "fill_end_2", "tier_1_sections", "tier_1_end", "tier_2_sections", "tier_2_end", "tier_3_sections", "tier_3_end")]
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
+size_flags_horizontal = 2
+script = ExtResource("1_ugwlo")
+fill_sections = [NodePath("TextureRect"), NodePath("TextureRect2"), NodePath("TextureRect3"), NodePath("TextureRect4"), NodePath("TextureRect5"), NodePath("TextureRect6"), NodePath("TextureRect7"), NodePath("TextureRect8"), NodePath("TextureRect9"), NodePath("TextureRect10"), NodePath("TextureRect11"), NodePath("TextureRect12"), NodePath("TextureRect13"), NodePath("TextureRect14"), NodePath("TextureRect15"), NodePath("tier_3_end")]
+fill_end_1 = NodePath("tier_1_end")
+fill_end_2 = NodePath("tier_2_end")
+tier_1_sections = [NodePath("TextureRect16"), NodePath("TextureRect17"), NodePath("TextureRect18"), NodePath("TextureRect19"), NodePath("TextureRect20"), NodePath("TextureRect21"), NodePath("TextureRect22")]
+tier_1_end = NodePath("tier_1_end2")
+tier_2_sections = [NodePath("TextureRect23"), NodePath("TextureRect24"), NodePath("TextureRect25"), NodePath("TextureRect26")]
+tier_2_end = NodePath("tier_2_end2")
+tier_3_sections = [NodePath("TextureRect27"), NodePath("TextureRect28"), NodePath("TextureRect29"), NodePath("TextureRect30")]
+tier_3_end = NodePath("tier_3_end2")
+
+[node name="TextureRect16" type="TextureRect" parent="."]
+layout_mode = 2
+offset_top = -7.5
+offset_right = 12.0
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 8
+texture = ExtResource("2_hswr8")
+stretch_mode = 2
+
+[node name="TextureRect17" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 12.0
+offset_top = -3.5
+offset_right = 23.0
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="TextureRect18" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 23.0
+offset_top = -3.5
+offset_right = 34.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="TextureRect19" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 34.0
+offset_top = -3.5
+offset_right = 45.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="TextureRect20" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 45.0
+offset_top = -3.5
+offset_right = 56.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="TextureRect21" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 56.0
+offset_top = -3.5
+offset_right = 67.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="TextureRect22" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 67.0
+offset_top = -3.5
+offset_right = 78.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="tier_1_end2" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+offset_left = 78.0
+offset_top = -7.5
+offset_right = 90.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("4_lrj8d")
+stretch_mode = 2
+
+[node name="TextureRect23" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 78.0
+offset_top = -3.5
+offset_right = 89.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="TextureRect24" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 89.0
+offset_top = -3.5
+offset_right = 100.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="TextureRect25" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 100.0
+offset_top = -3.5
+offset_right = 111.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="TextureRect26" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 111.0
+offset_top = -3.5
+offset_right = 122.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="tier_2_end2" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+offset_top = -7.5
+offset_right = 12.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("4_lrj8d")
+stretch_mode = 2
+
+[node name="TextureRect27" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 122.0
+offset_top = -3.5
+offset_right = 133.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="TextureRect28" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 133.0
+offset_top = -3.5
+offset_right = 144.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="TextureRect29" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 144.0
+offset_top = -3.5
+offset_right = 155.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="TextureRect30" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 155.0
+offset_top = -3.5
+offset_right = 166.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("3_jxsyf")
+stretch_mode = 2
+
+[node name="tier_3_end2" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 166.0
+offset_top = -7.5
+offset_right = 178.0
+offset_bottom = 7.5
+size_flags_horizontal = 6
+size_flags_vertical = 8
+texture = ExtResource("4_lrj8d")
+stretch_mode = 2
+
+[node name="OpenBoxes" type="HBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -7.5
+offset_right = 178.0
+offset_bottom = 7.5
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_top = -7.5
+offset_right = 12.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("5_cft8x")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 12.0
+offset_top = -3.5
+offset_right = 23.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 23.0
+offset_top = -3.5
+offset_right = 34.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 34.0
+offset_top = -3.5
+offset_right = 45.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 45.0
+offset_top = -3.5
+offset_right = 56.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="TextureRect6" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 56.0
+offset_top = -3.5
+offset_right = 67.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="TextureRect7" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 67.0
+offset_top = -3.5
+offset_right = 78.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="tier_1_end" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(12, 15)
+layout_mode = 2
+offset_top = -7.5
+offset_right = 89.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("7_8ioux")
+stretch_mode = 2
+
+[node name="TextureRect8" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 78.0
+offset_top = -3.5
+offset_right = 89.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="TextureRect9" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 89.0
+offset_top = -3.5
+offset_right = 100.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="TextureRect10" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 100.0
+offset_top = -3.5
+offset_right = 111.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="TextureRect11" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 111.0
+offset_top = -3.5
+offset_right = 122.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="tier_2_end" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(12, 15)
+layout_mode = 2
+offset_left = 89.0
+offset_top = -7.5
+offset_right = 178.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("7_8ioux")
+stretch_mode = 2
+
+[node name="TextureRect12" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 122.0
+offset_top = -3.5
+offset_right = 133.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="TextureRect13" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 133.0
+offset_top = -3.5
+offset_right = 144.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="TextureRect14" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 144.0
+offset_top = -3.5
+offset_right = 155.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="TextureRect15" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(11, 11)
+layout_mode = 2
+offset_left = 155.0
+offset_top = -3.5
+offset_right = 166.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("6_exxwr")
+stretch_mode = 2
+
+[node name="tier_3_end" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(12, 15)
+layout_mode = 2
+offset_left = 166.0
+offset_top = -7.5
+offset_right = 178.0
+offset_bottom = 7.5
+size_flags_horizontal = 3
+size_flags_vertical = 8
+texture = ExtResource("7_8ioux")
+stretch_mode = 2
+
+[node name="FilledBoxes" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -7.5
+offset_right = 178.0
+offset_bottom = 7.5
+grow_vertical = 2
+theme_override_constants/separation = 0

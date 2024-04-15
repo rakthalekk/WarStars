@@ -6,7 +6,7 @@ func _ready():
 	if (GameManager.currentContract):
 		match GameManager.currentContract.type:
 			GameManager.Contract_Type.CAPTURE:
-				text = "Capture The Point"
+				text = "Capture The Flag"
 			GameManager.Contract_Type.DEFEND:
 				text = "Defend The Area For " + str(GameManager.currentContract.defend_turns) + " Turns"
 			GameManager.Contract_Type.ROUTE:

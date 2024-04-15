@@ -1,13 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://2xpvkl0nlncf"]
+[gd_scene load_steps=5 format=3 uid="uid://2xpvkl0nlncf"]
 
 [ext_resource type="Script" path="res://src/Rift_Selection_Panel.gd" id="1_rv3gr"]
-[ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="2_o74iw"]
+[ext_resource type="Texture2D" uid="uid://dbcomdwxg6fts" path="res://assets/FleetUI/LargeContainerMiddle.png" id="2_rvhwt"]
+[ext_resource type="Texture2D" uid="uid://h7nsqdept6f0" path="res://assets/FleetUI/FleetSubmenu_smallcontainer.png" id="3_ui6b1"]
+[ext_resource type="Texture2D" uid="uid://b53qxbulfchgb" path="res://assets/FleetUI/MoneySymbol.png" id="4_uua4l"]
 
 [node name="Rift_Selection_Panel" type="Control" node_paths=PackedStringArray("main_select_button", "main_image", "main_text", "gold_text")]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -36,35 +40,47 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TextureButton" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(210, 34)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -105.0
+offset_top = -17.0
+offset_right = 105.0
+offset_bottom = 17.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("2_o74iw")
-ignore_texture_size = true
-stretch_mode = 0
+texture_normal = ExtResource("2_rvhwt")
 
 [node name="TextureRect" type="TextureRect" parent="TextureButton"]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 55.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = -16.5
+offset_right = 33.0
+offset_bottom = 15.5
 grow_vertical = 2
-texture = ExtResource("2_o74iw")
-expand_mode = 1
+texture = ExtResource("3_ui6b1")
 stretch_mode = 4
 
 [node name="Label" type="Label" parent="TextureButton"]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -68.0
-offset_right = 72.0
-offset_bottom = 23.0
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -11.5
+offset_right = 70.0
+offset_bottom = 11.5
 grow_horizontal = 2
+grow_vertical = 2
 text = "Name Here"
 
 [node name="Label2" type="Label" parent="TextureButton"]
@@ -75,7 +91,8 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -40.0
-offset_top = -23.0
+offset_top = -22.5
+offset_bottom = 0.5
 grow_horizontal = 0
 grow_vertical = 0
 text = "143"
@@ -87,13 +104,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -56.0
-offset_top = -18.0
-offset_right = -40.0
-offset_bottom = -2.0
+offset_left = -55.0
+offset_top = -19.5
+offset_right = -39.0
+offset_bottom = -3.5
 grow_horizontal = 0
 grow_vertical = 0
-texture = ExtResource("2_o74iw")
+texture = ExtResource("4_uua4l")
 expand_mode = 2
 
 [connection signal="pressed" from="Button" to="." method="on_button_click"]

@@ -257,7 +257,7 @@ func _select_unit(cell: Vector2) -> void:
 		
 		for location in attack_cells:
 			var attackable = map.get_cell_tile_data(0, location).get_custom_data("attackable")
-			if !attackable && cell.distance_to(_active_unit.cell) > 1:
+			if !attackable && cell.distance_to(location) > 1:
 				continue
 			
 			if not location in _walkable_cells:
@@ -350,13 +350,12 @@ func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
 			if not unit in attack_targets:
 				return
 			
-			unit.damage(initiator.active_weapon.damage)
-			initiator.active_weapon.perform_specialty(unit)
+			await unit.damage(initiator.active_weapon.damage)
+			await initiator.active_weapon.perform_specialty(unit)
 			attacking = false
 			end_action()
 		elif initiator is EnemyUnit && unit is PlayerUnit:
-			initiator.active_weapon.use_active(unit)
-			
+			await initiator.active_weapon.use_active(unit)
 
 
 func remove_unit(unit: Unit):
@@ -381,7 +380,7 @@ func _on_Cursor_accept_pressed(cell: Vector2) -> void:
 		return
 	
 	if attacking:
-		_attack_unit(cell)
+		await _attack_unit(cell)
 	elif not _active_unit:
 		if _units.has(cell):
 			if _units[cell] is PlayerUnit:
@@ -408,6 +407,7 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 			var unit = _units[new_cell] as Unit
 			combat_ui.get_node("HealthBar").frame = 17 - unit.health
 			combat_ui.get_node("Name").text = unit.name
+			display_unit_weapons(unit, unit.weapons[0], combat_ui.get_node("Weapon"))
 			
 			combat_ui.show()
 		else:
@@ -416,6 +416,20 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 		_unit_path.show()
 		_unit_path.draw(_active_unit.cell, new_cell)
 
+
+func display_unit_weapons(unit: Unit, weapon: Weapon, image: TextureRect):
+	var weapon_name = "WS_Emprie_" if unit is EnemyUnit else "WS_Troupe_"
+	match weapon.name:
+		"Laser":
+			weapon_name += "Pistol.png"
+		"Shotgun":
+			weapon_name += "Shotty.png"
+		"Melee":
+			weapon_name += "Lance.png"
+		_:
+			weapon_name += weapon.name + ".png"
+	
+	image.texture = load("res://assets/Weapons & Gear/" + weapon_name)
 
 func cancel_action():
 	$Cursor.active = true
@@ -471,6 +485,8 @@ func check_acted(units):
 
 func chapter_end():
 	GameManager.chapter_complete = true
+	chapter_end_ui.get_node("ChapterEndButton").grab_focus()
+	$Cursor.active = false
 	chapter_end_ui.show()
 
 
@@ -497,13 +513,13 @@ func change_turn():
 		for unit in player_units:
 			var damaging = map.get_cell_tile_data(0, unit.cell).get_custom_data("damaging")
 			if damaging:
-				unit.damage(2)
+				await unit.damage(2)
 	else:
 		animation_player.play("enemy_turn_start")
 		for unit in enemy_units:
 			var damaging = map.get_cell_tile_data(0, unit.cell).get_custom_data("damaging")
 			if damaging:
-				unit.damage(2)
+				await unit.damage(2)
 		
 		await animation_player.animation_finished
 		enemy_turn()
@@ -544,11 +560,13 @@ func display_danger_area():
 
 func check_enemy_range(enemy: EnemyUnit):
 	var movement_options = _flood_fill(enemy.cell, enemy.move_range, false, false)
+	var number_of_targets = 0
 	for destination in movement_options:
 		var possible_targets = _flood_fill(destination, enemy.active_weapon.range, true, false)
 		for target in possible_targets:
 			if _units.has(target):
 				if _units[target] is PlayerUnit:
+					number_of_targets += 1
 					# If the opponent is in grass, make sure the path is 1 away
 					var attackable = map.get_cell_tile_data(0, target).get_custom_data("attackable")
 					if !attackable && target.distance_to(destination) > 1:
@@ -558,13 +576,225 @@ func check_enemy_range(enemy: EnemyUnit):
 					
 					# destination and target
 					await _move_enemy_unit(destination, enemy)
-					_attack_unit(target, enemy)
+					await _attack_unit(target, enemy)
 					
 					display_danger_area()
 					
 					return
-
-
+	if number_of_targets == 0 && GameManager.currentContract:
+		await no_attack_ai(enemy, movement_options)
+	
+	
+func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
+	var rng = RandomNumberGenerator.new()
+	match GameManager.currentContract.type:
+		GameManager.Contract_Type.CAPTURE:
+			match GameManager.currentContract.difficulty_stars:
+				1:
+					var wait_check = rng.randi_range(1, 10)
+					# 70% chance to wait
+					if wait_check <= 7:
+						return
+					var random_tile = movement_options[rng.randi_range(0, movement_options.size() - 1)]
+					if random_tile == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, random_tile)
+					await _move_enemy_unit(random_tile, enemy)
+					display_danger_area()
+				2:
+					var wait_check = rng.randi_range(1, 10)
+					# 60% chance to wait
+					if wait_check <= 6:
+						return
+					var random_tile = movement_options[rng.randi_range(0, movement_options.size() - 1)]
+					if random_tile == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, random_tile)
+					await _move_enemy_unit(random_tile, enemy)
+					display_danger_area()
+				3:
+					var wait_check = rng.randi_range(1, 10)
+					# 50% chance to wait
+					if wait_check <= 5:
+						return
+					var closest_tile_to_capture_point = enemy.cell
+					for tile_destination in movement_options:
+						if tile_destination.distance_to(GameManager.capture_tile) < closest_tile_to_capture_point.distance_to(GameManager.capture_tile) && !is_occupied(tile_destination):
+							closest_tile_to_capture_point = tile_destination
+					if closest_tile_to_capture_point == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, closest_tile_to_capture_point)
+					await _move_enemy_unit(closest_tile_to_capture_point, enemy)
+					display_danger_area()
+				4:
+					var wait_check = rng.randi_range(1, 10)
+					# 30% chance to wait
+					if wait_check <= 3:
+						return
+					var closest_tile_to_capture_point = enemy.cell
+					for tile_destination in movement_options:
+						if tile_destination.distance_to(GameManager.capture_tile) < closest_tile_to_capture_point.distance_to(GameManager.capture_tile) && !is_occupied(tile_destination):
+							closest_tile_to_capture_point = tile_destination
+					if closest_tile_to_capture_point == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, closest_tile_to_capture_point)
+					await _move_enemy_unit(closest_tile_to_capture_point, enemy)
+					display_danger_area()
+				5:
+					# 0% chance to wait
+					var closest_tile_to_capture_point = enemy.cell
+					for tile_destination in movement_options:
+						if tile_destination.distance_to(GameManager.capture_tile) < closest_tile_to_capture_point.distance_to(GameManager.capture_tile) && !is_occupied(tile_destination):
+							closest_tile_to_capture_point = tile_destination
+					if closest_tile_to_capture_point == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, closest_tile_to_capture_point)
+					await _move_enemy_unit(closest_tile_to_capture_point, enemy)
+					display_danger_area()
+		GameManager.Contract_Type.DEFEND:
+			match GameManager.currentContract.difficulty_stars:
+				1:
+					var wait_check = rng.randi_range(1, 10)
+					# 70% chance to wait
+					if wait_check <= 7:
+						return
+					var closest_tile_to_player = enemy.cell
+					for tile_destination in movement_options:
+						var player_tile = player_units[rng.randi_range(0, player_units.size() - 1)].cell
+						if tile_destination.distance_to(player_tile) < closest_tile_to_player.distance_to(player_tile) && !is_occupied(tile_destination):
+							closest_tile_to_player = tile_destination
+					if closest_tile_to_player == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, closest_tile_to_player)
+					await _move_enemy_unit(closest_tile_to_player, enemy)
+					display_danger_area()
+				2:
+					var wait_check = rng.randi_range(1, 10)
+					# 60% chance to wait
+					if wait_check <= 6:
+						return
+					var closest_tile_to_player = enemy.cell
+					for tile_destination in movement_options:
+						var player_tile = player_units[rng.randi_range(0, player_units.size() - 1)].cell
+						if tile_destination.distance_to(player_tile) < closest_tile_to_player.distance_to(player_tile) && !is_occupied(tile_destination):
+							closest_tile_to_player = tile_destination
+					if closest_tile_to_player == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, closest_tile_to_player)
+					await _move_enemy_unit(closest_tile_to_player, enemy)
+					display_danger_area()
+				3:
+					var wait_check = rng.randi_range(1, 10)
+					# 50% chance to wait
+					if wait_check <= 5:
+						return
+					var closest_tile_to_player = enemy.cell
+					for tile_destination in movement_options:
+						var player_tile = player_units[rng.randi_range(0, player_units.size() - 1)].cell
+						if tile_destination.distance_to(player_tile) < closest_tile_to_player.distance_to(player_tile) && !is_occupied(tile_destination):
+							closest_tile_to_player = tile_destination
+					if closest_tile_to_player == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, closest_tile_to_player)
+					await _move_enemy_unit(closest_tile_to_player, enemy)
+					display_danger_area()
+				4:
+					var wait_check = rng.randi_range(1, 10)
+					# 30% chance to wait
+					if wait_check <= 3:
+						return
+					var closest_tile_to_player = enemy.cell
+					for tile_destination in movement_options:
+						var player_tile = player_units[rng.randi_range(0, player_units.size() - 1)].cell
+						if tile_destination.distance_to(player_tile) < closest_tile_to_player.distance_to(player_tile) && !is_occupied(tile_destination):
+							closest_tile_to_player = tile_destination
+					if closest_tile_to_player == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, closest_tile_to_player)
+					await _move_enemy_unit(closest_tile_to_player, enemy)
+					display_danger_area()
+				5:
+					# 0% chance to wait
+					var closest_tile_to_player = enemy.cell
+					for tile_destination in movement_options:
+						var player_tile = player_units[rng.randi_range(0, player_units.size() - 1)].cell
+						if tile_destination.distance_to(player_tile) < closest_tile_to_player.distance_to(player_tile) && !is_occupied(tile_destination):
+							closest_tile_to_player = tile_destination
+					if closest_tile_to_player == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, closest_tile_to_player)
+					await _move_enemy_unit(closest_tile_to_player, enemy)
+					display_danger_area()
+					
+		GameManager.Contract_Type.ROUTE:
+			match GameManager.currentContract.difficulty_stars:
+				1:
+					var wait_check = rng.randi_range(1, 10)
+					# 70% chance to wait
+					if wait_check <= 7:
+						return
+					var random_tile = movement_options[rng.randi_range(0, movement_options.size() - 1)]
+					if random_tile == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, random_tile)
+					await _move_enemy_unit(random_tile, enemy)
+					display_danger_area()
+				2:
+					var wait_check = rng.randi_range(1, 10)
+					# 60% chance to wait
+					if wait_check <= 6:
+						return
+					var random_tile = movement_options[rng.randi_range(0, movement_options.size() - 1)]
+					if random_tile == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, random_tile)
+					await _move_enemy_unit(random_tile, enemy)
+					display_danger_area()
+				3:
+					var wait_check = rng.randi_range(1, 10)
+					# 50% chance to wait
+					if wait_check <= 5:
+						return
+					var closest_tile_to_player = enemy.cell
+					for tile_destination in movement_options:
+						var player_tile = player_units[rng.randi_range(0, player_units.size() - 1)].cell
+						if tile_destination.distance_to(player_tile) < closest_tile_to_player.distance_to(player_tile) && !is_occupied(tile_destination):
+							closest_tile_to_player = tile_destination
+					if closest_tile_to_player == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, closest_tile_to_player)
+					await _move_enemy_unit(closest_tile_to_player, enemy)
+					display_danger_area()
+				4:
+					var wait_check = rng.randi_range(1, 10)
+					# 30% chance to wait
+					if wait_check <= 3:
+						return
+					var closest_tile_to_player = enemy.cell
+					for tile_destination in movement_options:
+						var player_tile = player_units[rng.randi_range(0, player_units.size() - 1)].cell
+						if tile_destination.distance_to(player_tile) < closest_tile_to_player.distance_to(player_tile) && !is_occupied(tile_destination):
+							closest_tile_to_player = tile_destination
+					if closest_tile_to_player == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, closest_tile_to_player)
+					await _move_enemy_unit(closest_tile_to_player, enemy)
+					display_danger_area()
+				5:
+					# 0% chance to wait
+					var closest_tile_to_player = enemy.cell
+					for tile_destination in movement_options:
+						var player_tile = player_units[rng.randi_range(0, player_units.size() - 1)].cell
+						if tile_destination.distance_to(player_tile) < closest_tile_to_player.distance_to(player_tile) && !is_occupied(tile_destination):
+							closest_tile_to_player = tile_destination
+					if closest_tile_to_player == enemy.cell:
+						return
+					_unit_path.update_path(enemy.cell, closest_tile_to_player)
+					await _move_enemy_unit(closest_tile_to_player, enemy)
+					display_danger_area()	
+					
+					
+							
 func highlight_targets(highlight):
 	$Cursor.active = true
 	for target in attack_targets:

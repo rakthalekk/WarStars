@@ -21,6 +21,7 @@ WeaponDatabase="*res://src/weapons/weapon_database.tscn"
 ChunkDatabase="*res://src/grid/chunk_database.tscn"
 GameManager="*res://src/GameManager.gd"
 PersonGenerator="*res://src/person_generator.tscn"
+MouseDrag="*res://src/mouse_drag.tscn"
 
 [display]
 
@@ -93,10 +94,15 @@ right_click={
 ]
 }
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.0745098, 0.0235294, 0.129412, 1)
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true
