@@ -1,11 +1,8 @@
 class_name Gear
 extends Equipment
 
-enum USE_TYPE {NONE, ENEMY, SELF, TERRAIN}
-
-@export var use_type: USE_TYPE = USE_TYPE.NONE
 @export var num_uses: int = -1
-var uses_left: int = 0
+var _uses_left: int = 0
 @export var use_cooldown: int = 0
 var cooldown_counter: int = 0
 @export var uses_action: bool = true
@@ -16,11 +13,24 @@ var cooldown_counter: int = 0
 @export var is_consumable: bool = false
 
 func _ready():
-	if num_uses > 0:
-		uses_left = num_uses
-
+	prep_for_battle()
+	
+func clone() -> Gear:
+	var clone: Gear = super.clone()
+	clone.num_uses = num_uses
+	clone._uses_left = _uses_left
+	clone.use_cooldown = use_cooldown
+	clone.uses_action = uses_action
+	clone.passive_hp_buff = passive_hp_buff
+	clone.passive_move_buff = passive_move_buff
+	clone.passive_armor = passive_armor
+	clone.cost = cost
+	clone.is_consumable = is_consumable
+	
+	return clone
+	
 func can_use_active():
-	return super.can_use_active() && cooldown_counter <= 0 && (num_uses < 0 || uses_left > 0)
+	return super.can_use_active() && cooldown_counter <= 0 && (num_uses < 0 || _uses_left > 0)
 
 func use_active(target = null) -> bool:
 	
@@ -33,8 +43,8 @@ func use_active(target = null) -> bool:
 	cooldown_counter = use_cooldown
 	
 	# Decrement remaining uses, if applicable
-	if uses_left > 0:
-		uses_left -= 1
+	if _uses_left > 0:
+		_uses_left -= 1
 	
 	return true
 	
@@ -53,7 +63,7 @@ func rest():
 
 func prep_for_battle():
 	cooldown_counter = 0
-	uses_left = num_uses
+	_uses_left = num_uses
 	
 func get_cost():
 	if cost == 0:

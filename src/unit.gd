@@ -69,6 +69,8 @@ var active_weapon: Equipment
 #var gear_list: Array[Gear]
 var armor: int
 
+var stims: bool = false
+
 @onready var _path_follow: PathFollow2D = $PathFollow2D
 @onready var health_bar = $PathFollow2D/HealthBar/Health as TextureProgressBar
 @onready var effects_anim = $EffectsAnimation
@@ -86,7 +88,7 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	
 	for weapon_name in weapon_names:
-		weapons.append(WeaponDatabase._get_weapon_by_name(weapon_name))
+		weapons.append(WeaponDatabase._get_weapon_by_name(weapon_name).clone())
 	
 	active_weapon = weapons[0]
 
