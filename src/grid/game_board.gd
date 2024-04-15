@@ -584,7 +584,7 @@ func check_enemy_range(enemy: EnemyUnit):
 					
 					return
 	if number_of_targets == 0 && GameManager.currentContract:
-		no_attack_ai(enemy, movement_options)
+		await no_attack_ai(enemy, movement_options)
 	
 	
 func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
