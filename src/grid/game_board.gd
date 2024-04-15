@@ -284,7 +284,8 @@ func find_attack_targets():
 
 
 func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
-	if _units.has(cell):
+	if _units.has(cell) and (_active_unit.active_weapon is Weapon 
+		or (_active_unit.active_weapon is Gear and (_active_unit.active_weapon.use_type == Gear.USE_TYPE.ENEMY))):
 		var unit = _units[cell]
 		
 		var attackable = map.get_cell_tile_data(0, cell).get_custom_data("attackable")
