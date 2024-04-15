@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5n2r83tcniin"
-path="res://.godot/imported/DifficultyMeter.png-015db2aeeb5bd98b23ead84dec85bbe7.ctex"
+uid="uid://bpt32aj1hrbnc"
+path="res://.godot/imported/VictoryScreen.png-71d23382a7618b8965409a171ab1f930.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/FleetUI/DifficultyMeter.png"
-dest_files=["res://.godot/imported/DifficultyMeter.png-015db2aeeb5bd98b23ead84dec85bbe7.ctex"]
+source_file="res://assets/CombatUI/VictoryScreen.png"
+dest_files=["res://.godot/imported/VictoryScreen.png-71d23382a7618b8965409a171ab1f930.ctex"]
 
 [params]
 

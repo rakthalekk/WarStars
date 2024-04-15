@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5n2r83tcniin"
-path="res://.godot/imported/DifficultyMeter.png-015db2aeeb5bd98b23ead84dec85bbe7.ctex"
+uid="uid://dnjvweu7phtj3"
+path="res://.godot/imported/BackToGameButton-hover.png-670009fcac04644bd469d6ac548b2d2e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/FleetUI/DifficultyMeter.png"
-dest_files=["res://.godot/imported/DifficultyMeter.png-015db2aeeb5bd98b23ead84dec85bbe7.ctex"]
+source_file="res://assets/CombatUI/BackToGameButton-hover.png"
+dest_files=["res://.godot/imported/BackToGameButton-hover.png-670009fcac04644bd469d6ac548b2d2e.ctex"]
 
 [params]
 

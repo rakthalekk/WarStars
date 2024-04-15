@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5n2r83tcniin"
-path="res://.godot/imported/DifficultyMeter.png-015db2aeeb5bd98b23ead84dec85bbe7.ctex"
+uid="uid://c78ftcndulpxo"
+path="res://.godot/imported/PauseMenuBG.png-dfd2482d0e0880b42a3c6d536da9f294.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/FleetUI/DifficultyMeter.png"
-dest_files=["res://.godot/imported/DifficultyMeter.png-015db2aeeb5bd98b23ead84dec85bbe7.ctex"]
+source_file="res://assets/CombatUI/PauseMenuBG.png"
+dest_files=["res://.godot/imported/PauseMenuBG.png-dfd2482d0e0880b42a3c6d536da9f294.ctex"]
 
 [params]
 

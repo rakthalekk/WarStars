@@ -12,14 +12,18 @@ func _ready():
 
 
 func get_random_chunk() -> Chunk:
-	return get_children().pick_random()
+	var chunk = get_children().pick_random()
+	while chunk.name == "PlayerChunk":
+		chunk = get_children().pick_random()
+	
+	return chunk
 
 
 func get_random_chunk_by_difficulty(difficulty: int) -> Chunk:
 	var chunk = get_children().pick_random()
 	
 	var iterations = 0
-	while chunk.difficulty != difficulty && iterations > 20:
+	while (chunk.difficulty != difficulty || chunk.name == "PlayerChunk") && iterations > 20:
 		chunk = get_children().pick_random()
 		iterations += 1
 	
