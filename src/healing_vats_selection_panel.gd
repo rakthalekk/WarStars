@@ -9,7 +9,7 @@ extends UI_Selection_Panel
 @export var highlight_color: Color = Color.RED
 
 func highlight(highlight: bool):
-	if(highlight && !person && valid_funds && !MouseDrag.can_drag()):
+	if(highlight && !person && valid_funds && !MouseDrag.can_drag() && !MouseDrag.dragObject.person_icon.person.resting):
 		main_select_button.modulate = highlight_color
 	else:
 		main_select_button.modulate = default_color
@@ -17,7 +17,7 @@ func highlight(highlight: bool):
 func drop_person(dropped: Drag_Icon):
 	print("person dropped. old person: ",person,", funds: ", valid_funds)
 	var new_person = dropped.person_icon.person
-	if(person == null && valid_funds):
+	if(person == null && valid_funds && !new_person.resting):
 		if(main_ui.try_heal(id, new_person)):
 			main_image.texture = new_person.image
 			dropped.person_icon.set_sleep()

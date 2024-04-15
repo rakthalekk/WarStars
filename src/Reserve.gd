@@ -30,6 +30,9 @@ func add_money(new_money: int):
 func spend_money(spent_money: int):
 	money -= spent_money
 
+func update_unit_visual(person: Person):
+	party_menu.update_visual(person)
+
 #add a new unit to the army
 func add_unit_to_army(new_person: Person):
 	army.append(new_person)

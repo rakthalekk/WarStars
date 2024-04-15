@@ -21,7 +21,7 @@ func _ready():
 func _process(delta):
 	pass
 	
-func use_active() -> bool:
+func use_active(target = null) -> bool:
 	return false
 	
 func can_use_active():

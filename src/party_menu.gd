@@ -20,3 +20,11 @@ func remove_party_member(person: Person):
 	party_icons.erase(person)
 	icon_holder.remove_child(person)
 	person.queue_free()
+
+func update_visual(person: Person):
+	print("trying to update visual")
+	for icon in party_icons:
+		if(icon.person == person):
+			icon.check_visuals()
+			return
+	icon_holder.check_visuals(person)

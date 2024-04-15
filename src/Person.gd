@@ -25,6 +25,9 @@ var armor = 0
 
 const max_tier = 3
 
+@export var resting: bool
+@export var fighting: bool
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	price = base_price + randi_range(0, 25)
@@ -88,19 +91,18 @@ func construct_unit():
 	unit.weapons.append(weapon1)
 	unit.weapons.append(weapon2)
 	
-	unit.gear_list.append(equip1)
-	unit.gear_list.append(equip2)
+	unit.weapons.append(equip1)
+	unit.weapons.append(equip2)
 	
 	return unit
 
 func update_from_unit(unit: Unit):
 	health = unit.health
 	
-	var unit_gear = unit.gear_list
+	var unit_gear = unit.weapons
 		
 	# update used gear
-	for gear in unit_gear:
-		if gear == equip1 and gear.is_consumable and gear.num_uses == 0:
-			equip1 = null
-		elif gear == equip2 and gear.is_consumable and gear.num_uses == 0:
-			equip2 = null
+	if unit_gear[2] == equip1 and unit_gear[2].is_consumable and unit_gear[2].num_uses == 0:
+		equip1 = null
+	elif unit_gear[3] == equip2 and unit_gear[3].is_consumable and unit_gear[3].num_uses == 0:
+		equip2 = null

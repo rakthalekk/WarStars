@@ -33,6 +33,8 @@ func refresh():
 		if(vats[id] != null):
 			#restore all health and ensure is no longer resting
 			vats[id] = null
+			vats[id].health = vats[id].max_health
+			vats[id].resting = false
 	vats_ui.refresh()
 
 func try_add_person(id: int, person: Person)-> bool:
@@ -41,13 +43,14 @@ func try_add_person(id: int, person: Person)-> bool:
 	
 	#don't let player add person with full health
 	
-	if(person.health == person.max_health):
-		print("tried to heal with max health")
-		#return false
+	if(person.health == person.max_health || person.resting):
+		return false
 	
 	vats[id] = person
 	
 	vats_ui.refresh()
 	#mark person as resting
-	
+	person.resting = true
+	manager.reserves.update_unit_visual(person)
 	return true
+

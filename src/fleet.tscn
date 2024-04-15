@@ -161,9 +161,10 @@ layout_mode = 1
 healing_vats_script = NodePath("../../../FleetStructureManager/Healing_Vats")
 main_ui = NodePath("../../..")
 
-[node name="Mothership_UI" parent="FleetUI/Background" node_paths=PackedStringArray("main_ui") instance=ExtResource("10_wxysv")]
+[node name="Mothership_UI" parent="FleetUI/Background" node_paths=PackedStringArray("mothership_script", "main_ui") instance=ExtResource("10_wxysv")]
 visible = false
 layout_mode = 1
+mothership_script = NodePath("../../../FleetStructureManager/Mothership")
 main_ui = NodePath("../../..")
 
 [node name="Rift_UI" parent="FleetUI/Background" node_paths=PackedStringArray("rift_script", "main_ui") instance=ExtResource("11_eiixp")]

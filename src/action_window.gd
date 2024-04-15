@@ -10,6 +10,7 @@ func display():
 	show()
 	$MenuCursor.hide()
 	$Submenu.hide()
+	action_button.grab_focus()
 
 
 func update_buttons():
@@ -23,6 +24,7 @@ func update_buttons():
 
 func _on_action_pressed():
 	$Submenu.show()
+	$Submenu/Weapon1/Weapon1Button.grab_focus()
 
 
 func _on_wait_pressed():
@@ -72,6 +74,7 @@ func _on_cancel_mouse_exited():
 
 
 func _on_weapon_1_button_pressed():
+	game_board._active_unit.switch_weapons(0)
 	game_board.attacking = true
 	game_board.highlight_targets(true)
 	hide()
@@ -79,16 +82,40 @@ func _on_weapon_1_button_pressed():
 
 
 func _on_weapon_2_button_pressed():
+	game_board._active_unit.switch_weapons(1)
+	game_board.attacking = true
+	game_board.highlight_targets(true)
+	hide()
 	$Submenu.hide()
 
 
 func _on_ability_1_button_pressed():
+	var unit = game_board._active_unit
+	unit.switch_weapons(2)
+	_use_gear(unit)
+	hide()
 	$Submenu.hide()
 
 
 func _on_ability_2_button_pressed():
+	var unit = game_board._active_unit
+	unit.switch_weapons(3)
+	_use_gear(unit)
+	game_board.highlight_targets(true)
+	hide()
 	$Submenu.hide()
 
+func _use_gear(unit):
+	match(unit.active_weapon):
+		(Gear.USE_TYPE.ENEMY):
+			game_board.attacking = true
+			game_board.highlight_targets(true)
+		(Gear.USE_TYPE.SELF):
+			# TODO make some kind of confirm popup
+			unit.active_weapon.use_active(unit)
+		(Gear.USE_TYPE.TERRAIN):
+			# TODO make some kind of confirm popup and do the effect
+			pass
 
 func _on_weapon_1_button_mouse_entered():
 	$Submenu/SubmenuCursor.position = $Submenu/Weapon1.position + Vector2(1, 6)
@@ -112,6 +139,7 @@ func _on_ability_2_button_mouse_entered():
 
 func _on_action_cancel_pressed():
 	$Submenu.hide()
+	action_button.grab_focus()
 
 
 func _on_action_cancel_mouse_entered():

@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://fg6fbe17ssya"]
+
+[ext_resource type="Script" path="res://src/grid/unit_overlay.gd" id="1_6wl7k"]
+[ext_resource type="Texture2D" uid="uid://oxsti28yjn3a" path="res://assets/CombatUI/AttackIndicator.png" id="1_cb8yk"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6ynfo"]
+texture = ExtResource("1_cb8yk")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_47eqy"]
+sources/0 = SubResource("TileSetAtlasSource_6ynfo")
+
+[node name="UnitAttackRange" type="TileMap"]
+tile_set = SubResource("TileSet_47eqy")
+format = 2
+script = ExtResource("1_6wl7k")
