@@ -34,7 +34,7 @@ func incrementTurns():
 func resetTurns():
 	current_turn = 0
 
-var controller = false
+var controller = true
 
 var capture_tile: Vector2:
 	set(newCaptureTile):

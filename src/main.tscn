@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://bvxj0pfbkkljm"]
+[gd_scene load_steps=55 format=3 uid="uid://bvxj0pfbkkljm"]
 
 [ext_resource type="PackedScene" uid="uid://dr28wheto1jnr" path="res://src/grid/map.tscn" id="1_0bs38"]
 [ext_resource type="Script" path="res://src/grid/map_generator.gd" id="1_8koai"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cprleh6fpmxcm" path="res://src/grid/unit_path.tscn" id="5_sgnn1"]
 [ext_resource type="PackedScene" uid="uid://c37p1jxss1cx" path="res://src/grid/unit_overlay.tscn" id="6_tiuqn"]
 [ext_resource type="PackedScene" uid="uid://c08w2xnjck2wa" path="res://src/player_unit.tscn" id="7_p5jcs"]
+[ext_resource type="PackedScene" path="res://src/grid/unit_attack_range.tscn" id="7_sw4l4"]
 [ext_resource type="Script" path="res://src/ChapterEndButton.gd" id="8_fkc47"]
 [ext_resource type="Texture2D" uid="uid://ra0pi0wergc" path="res://assets/CombatUI/CombatUI.png" id="9_q67u5"]
 [ext_resource type="Script" path="res://src/ChapterRewardLabel.gd" id="9_xxesh"]
@@ -19,9 +20,12 @@
 [ext_resource type="Texture2D" uid="uid://dw2kgu6isg2bd" path="res://assets/CombatUI/ActionMenu-ActionButtonPressed.png" id="12_rnork"]
 [ext_resource type="Script" path="res://src/TurnNumberUI.gd" id="12_y3ns7"]
 [ext_resource type="Texture2D" uid="uid://dekam6q2k0djr" path="res://assets/CombatUI/ActionMenu-WaitButton.png" id="13_b4pfm"]
+[ext_resource type="Texture2D" uid="uid://dy58p2y47sa7h" path="res://assets/CombatUI/CombatUI-HealthBar.png" id="14_aljw5"]
 [ext_resource type="Texture2D" uid="uid://qajelw0m5dd1" path="res://assets/CombatUI/ActionMenu-WaitButtonPressed.png" id="14_shehp"]
 [ext_resource type="Texture2D" uid="uid://d4fb2hw8jwdxa" path="res://assets/CombatUI/ActionMenu-CancelButton.png" id="15_1077s"]
+[ext_resource type="Texture2D" uid="uid://dvxlp5jjycanl" path="res://assets/CombatUI/EnemyPhase.png" id="16_2niw8"]
 [ext_resource type="Texture2D" uid="uid://2c2v45wujq5p" path="res://assets/CombatUI/ActionMenu-CancelButtonPressed.png" id="16_p3oal"]
+[ext_resource type="Texture2D" uid="uid://dbncy1s8xa6lv" path="res://assets/CombatUI/PlayerPhase.png" id="17_gyg3i"]
 [ext_resource type="Texture2D" uid="uid://jhr0e7y42t2s" path="res://assets/CombatUI/ActionMenuCursor.png" id="17_h12n3"]
 [ext_resource type="Texture2D" uid="uid://dfyh8c8spq1x7" path="res://assets/CombatUI/ActionSubmenu-TopBit.png" id="19_i3712"]
 [ext_resource type="Texture2D" uid="uid://b54kbb3l0gp82" path="res://assets/CombatUI/ActionSubmenu-MiddleBits.png" id="20_i3gsc"]
@@ -40,7 +44,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UI/TurnChange:visible")
+tracks/0/path = NodePath("UI/PlayerPhase:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -52,14 +56,14 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("UI/TurnChange:text")
+tracks/1/path = NodePath("UI/EnemyPhase:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": ["PLAYER TURN"]
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_ft3lv"]
@@ -67,7 +71,7 @@ resource_name = "enemy_turn_start"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UI/TurnChange:visible")
+tracks/0/path = NodePath("UI/EnemyPhase:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -75,18 +79,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("UI/TurnChange:text")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["ENEMY TURN"]
 }
 
 [sub_resource type="Animation" id="Animation_ibn7n"]
@@ -94,7 +86,7 @@ resource_name = "player_turn_start"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("UI/TurnChange:visible")
+tracks/0/path = NodePath("UI/PlayerPhase:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -102,18 +94,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("UI/TurnChange:text")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": ["PLAYER TURN"]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y4s3e"]
@@ -231,12 +211,11 @@ script = ExtResource("2_2gqiw")
 [node name="Cursor" parent="GameBoard" instance=ExtResource("3_yqmtd")]
 position = Vector2(8, 8)
 
-[node name="UnitPath" parent="GameBoard" instance=ExtResource("5_sgnn1")]
-
 [node name="UnitOverlay" parent="GameBoard" instance=ExtResource("6_tiuqn")]
 
-[node name="UnitAttackRange" parent="GameBoard" instance=ExtResource("6_tiuqn")]
-modulate = Color(1, 1, 0, 1)
+[node name="UnitPath" parent="GameBoard" instance=ExtResource("5_sgnn1")]
+
+[node name="UnitAttackRange" parent="GameBoard" instance=ExtResource("7_sw4l4")]
 
 [node name="PlayerUnit" parent="GameBoard" instance=ExtResource("7_p5jcs")]
 position = Vector2(72, 40)
@@ -313,6 +292,7 @@ horizontal_alignment = 1
 script = ExtResource("9_xxesh")
 
 [node name="CombatUI" type="Control" parent="UI"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -344,23 +324,18 @@ sprite_frames = SubResource("SpriteFrames_q760w")
 autoplay = "default"
 frame_progress = 0.557876
 
-[node name="TurnChange" type="Label" parent="UI"]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -96.0
-offset_top = -40.5
-offset_right = 114.0
-offset_bottom = 4.5
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 6
-size_flags_vertical = 3
-theme_override_font_sizes/font_size = 32
-text = "PLAYER TURN"
+[node name="HealthBar" type="Sprite2D" parent="UI/CombatUI"]
+position = Vector2(79, 196)
+texture = ExtResource("14_aljw5")
+hframes = 17
+
+[node name="Name" type="Label" parent="UI/CombatUI"]
+layout_mode = 0
+offset_left = 51.0
+offset_top = 161.0
+offset_right = 91.0
+offset_bottom = 184.0
+text = "john"
 
 [node name="UITimer" type="Timer" parent="UI"]
 one_shot = true
@@ -379,6 +354,18 @@ offset_bottom = 23.0
 grow_horizontal = 0
 horizontal_alignment = 2
 script = ExtResource("12_y3ns7")
+
+[node name="EnemyPhase" type="TextureRect" parent="UI"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("16_2niw8")
+
+[node name="PlayerPhase" type="TextureRect" parent="UI"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("17_gyg3i")
 
 [node name="ActionWindow" type="Control" parent="."]
 layout_mode = 3
@@ -403,6 +390,7 @@ offset_right = 40.0
 offset_bottom = 9.0
 texture_normal = ExtResource("11_b0v0e")
 texture_hover = ExtResource("12_rnork")
+texture_focused = ExtResource("12_rnork")
 
 [node name="Wait" type="TextureButton" parent="ActionWindow/Buttons"]
 offset_top = 10.0
@@ -410,6 +398,7 @@ offset_right = 40.0
 offset_bottom = 19.0
 texture_normal = ExtResource("13_b4pfm")
 texture_hover = ExtResource("14_shehp")
+texture_focused = ExtResource("14_shehp")
 
 [node name="Cancel" type="TextureButton" parent="ActionWindow/Buttons"]
 offset_top = 20.0
@@ -417,6 +406,7 @@ offset_right = 40.0
 offset_bottom = 29.0
 texture_normal = ExtResource("15_1077s")
 texture_hover = ExtResource("16_p3oal")
+texture_focused = ExtResource("16_p3oal")
 
 [node name="MenuCursor" type="AnimatedSprite2D" parent="ActionWindow"]
 position = Vector2(-2, 22)
@@ -449,6 +439,7 @@ offset_right = 48.0
 offset_bottom = 9.0
 texture_normal = ExtResource("21_e128f")
 texture_hover = ExtResource("22_0uj7c")
+texture_focused = ExtResource("22_0uj7c")
 
 [node name="Weapon2" type="TextureRect" parent="ActionWindow/Submenu"]
 layout_mode = 2
@@ -461,6 +452,7 @@ offset_right = 48.0
 offset_bottom = 9.0
 texture_normal = ExtResource("23_e3rrc")
 texture_hover = ExtResource("24_un0ja")
+texture_focused = ExtResource("24_un0ja")
 
 [node name="Ability1" type="TextureRect" parent="ActionWindow/Submenu"]
 layout_mode = 2
@@ -473,6 +465,7 @@ offset_right = 48.0
 offset_bottom = 9.0
 texture_normal = ExtResource("25_tqihv")
 texture_hover = ExtResource("26_3lmln")
+texture_focused = ExtResource("26_3lmln")
 
 [node name="Ability2" type="TextureRect" parent="ActionWindow/Submenu"]
 layout_mode = 2
@@ -485,6 +478,7 @@ offset_right = 48.0
 offset_bottom = 9.0
 texture_normal = ExtResource("27_cjq8j")
 texture_hover = ExtResource("28_1iphq")
+texture_focused = ExtResource("28_1iphq")
 
 [node name="Cancel" type="TextureRect" parent="ActionWindow/Submenu"]
 layout_mode = 2
@@ -497,6 +491,7 @@ offset_right = 46.0
 offset_bottom = 9.0
 texture_normal = ExtResource("15_1077s")
 texture_hover = ExtResource("16_p3oal")
+texture_focused = ExtResource("16_p3oal")
 
 [node name="Bottom" type="TextureRect" parent="ActionWindow/Submenu"]
 layout_mode = 2
