@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://d3xknqxa16oqj"
-path="res://.godot/imported/dogica.ttf-efb44260da865886658b6c3bfd25f9bd.fontdata"
+uid="uid://bv4wc7c2ird3k"
+path="res://.godot/imported/warstarsfont.ttf-83ac43b2919dc31a5fad9eec1260510e.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/dogica.ttf"
-dest_files=["res://.godot/imported/dogica.ttf-efb44260da865886658b6c3bfd25f9bd.fontdata"]
+source_file="res://assets/fonts/warstarsfont.ttf"
+dest_files=["res://.godot/imported/warstarsfont.ttf-83ac43b2919dc31a5fad9eec1260510e.fontdata"]
 
 [params]
 

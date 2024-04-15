@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://bvxj0pfbkkljm"]
+[gd_scene load_steps=60 format=3 uid="uid://bvxj0pfbkkljm"]
 
 [ext_resource type="PackedScene" uid="uid://dr28wheto1jnr" path="res://src/grid/map.tscn" id="1_0bs38"]
 [ext_resource type="Script" path="res://src/grid/map_generator.gd" id="1_8koai"]
@@ -9,9 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c08w2xnjck2wa" path="res://src/player_unit.tscn" id="7_p5jcs"]
 [ext_resource type="PackedScene" uid="uid://fg6fbe17ssya" path="res://src/grid/unit_attack_range.tscn" id="7_sw4l4"]
 [ext_resource type="Script" path="res://src/ChapterEndButton.gd" id="8_fkc47"]
-[ext_resource type="FontFile" uid="uid://d3xknqxa16oqj" path="res://assets/fonts/dogica.ttf" id="9_frld5"]
 [ext_resource type="Texture2D" uid="uid://ra0pi0wergc" path="res://assets/CombatUI/CombatUI.png" id="9_q67u5"]
-[ext_resource type="Script" path="res://src/ChapterRewardLabel.gd" id="9_xxesh"]
 [ext_resource type="Texture2D" uid="uid://do7flyfk15mhh" path="res://assets/CombatUI/ActionMenu.png" id="10_4tx7p"]
 [ext_resource type="Texture2D" uid="uid://bn4uceercmyjl" path="res://assets/CombatUI/CombatUI-CRT.png" id="10_6se7s"]
 [ext_resource type="Script" path="res://src/action_window.gd" id="10_gv0dl"]
@@ -20,19 +18,25 @@
 [ext_resource type="Script" path="res://src/MainContractBoxUI.gd" id="11_sdl42"]
 [ext_resource type="Texture2D" uid="uid://dw2kgu6isg2bd" path="res://assets/CombatUI/ActionMenu-ActionButtonPressed.png" id="12_rnork"]
 [ext_resource type="Script" path="res://src/TurnNumberUI.gd" id="12_y3ns7"]
+[ext_resource type="FontFile" uid="uid://bv4wc7c2ird3k" path="res://assets/fonts/warstarsfont.ttf" id="13_a2tqg"]
 [ext_resource type="Texture2D" uid="uid://dekam6q2k0djr" path="res://assets/CombatUI/ActionMenu-WaitButton.png" id="13_b4pfm"]
 [ext_resource type="Texture2D" uid="uid://dy58p2y47sa7h" path="res://assets/CombatUI/CombatUI-HealthBar.png" id="14_aljw5"]
+[ext_resource type="Texture2D" uid="uid://63mqn44jd0o" path="res://assets/Weapons & Gear/WS_Troupe_Lance.png" id="14_hxpk4"]
 [ext_resource type="Texture2D" uid="uid://qajelw0m5dd1" path="res://assets/CombatUI/ActionMenu-WaitButtonPressed.png" id="14_shehp"]
 [ext_resource type="Texture2D" uid="uid://d4fb2hw8jwdxa" path="res://assets/CombatUI/ActionMenu-CancelButton.png" id="15_1077s"]
 [ext_resource type="Texture2D" uid="uid://dvxlp5jjycanl" path="res://assets/CombatUI/EnemyPhase.png" id="16_2niw8"]
 [ext_resource type="Texture2D" uid="uid://2c2v45wujq5p" path="res://assets/CombatUI/ActionMenu-CancelButtonPressed.png" id="16_p3oal"]
 [ext_resource type="Texture2D" uid="uid://dbncy1s8xa6lv" path="res://assets/CombatUI/PlayerPhase.png" id="17_gyg3i"]
 [ext_resource type="Texture2D" uid="uid://jhr0e7y42t2s" path="res://assets/CombatUI/ActionMenuCursor.png" id="17_h12n3"]
+[ext_resource type="Texture2D" uid="uid://ymuxuygmgyjv" path="res://assets/CombatUI/VictoryScreen.png" id="18_utp6f"]
+[ext_resource type="Texture2D" uid="uid://se8aa5qbn752" path="res://assets/CombatUI/BackToFleet.png" id="19_8d3qr"]
 [ext_resource type="Texture2D" uid="uid://dfyh8c8spq1x7" path="res://assets/CombatUI/ActionSubmenu-TopBit.png" id="19_i3712"]
+[ext_resource type="Texture2D" uid="uid://ddje5303og30n" path="res://assets/CombatUI/BackToFleet-hover.png" id="20_eux28"]
 [ext_resource type="Texture2D" uid="uid://b54kbb3l0gp82" path="res://assets/CombatUI/ActionSubmenu-MiddleBits.png" id="20_i3gsc"]
 [ext_resource type="Texture2D" uid="uid://52y65hai1jj5" path="res://assets/CombatUI/ActionSubmenu-BottomBit.png" id="21_5rqbm"]
 [ext_resource type="Texture2D" uid="uid://3dw3yg1su6yn" path="res://assets/CombatUI/ActionSubmenu-Weapon1.png" id="21_e128f"]
 [ext_resource type="Texture2D" uid="uid://d1555q8d2sxfd" path="res://assets/CombatUI/ActionSubmenu-Weapon1Pressed.png" id="22_0uj7c"]
+[ext_resource type="Texture2D" uid="uid://co5j0dy2uo5ru" path="res://assets/CombatUI/PauseMenuBG.png" id="22_y17e8"]
 [ext_resource type="Texture2D" uid="uid://kg6ntiucj7qh" path="res://assets/CombatUI/ActionSubmenu-Weapon2.png" id="23_e3rrc"]
 [ext_resource type="Texture2D" uid="uid://x4a8xukwh5vg" path="res://assets/CombatUI/ActionSubmenu-Weapon2Pressed.png" id="24_un0ja"]
 [ext_resource type="Texture2D" uid="uid://d0u5yfqobfn7i" path="res://assets/CombatUI/ActionSubmenu-Ability1.png" id="25_tqihv"]
@@ -246,64 +250,8 @@ libraries = {
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="ChapterEndControl" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -87.5
-offset_right = 150.0
-offset_bottom = 87.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ChapterCompleteLabel" type="Label" parent="UI/ChapterEndControl"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 50.0
-grow_horizontal = 2
-theme_override_fonts/font = ExtResource("9_frld5")
-text = "Chapter Complete!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ChapterEndButton" type="Button" parent="UI/ChapterEndControl"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -150.0
-offset_top = -75.0
-offset_right = 150.0
-grow_horizontal = 2
-grow_vertical = 0
-script = ExtResource("8_fkc47")
-
-[node name="ChapterRewardLabel" type="Label" parent="UI/ChapterEndControl"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -37.5
-offset_right = 150.0
-offset_bottom = 12.5
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("9_frld5")
-text = "Proceed To Fleet"
-horizontal_alignment = 1
-script = ExtResource("9_xxesh")
-
 [node name="CombatUI" type="Control" parent="UI"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -342,29 +290,52 @@ hframes = 17
 
 [node name="Name" type="Label" parent="UI/CombatUI"]
 layout_mode = 0
-offset_left = 48.0
-offset_top = 169.0
-offset_right = 81.0
-offset_bottom = 176.0
-theme_override_fonts/font = ExtResource("9_frld5")
+offset_left = 50.0
+offset_top = 172.0
+offset_right = 120.0
+offset_bottom = 190.0
+theme_override_fonts/font = ExtResource("13_a2tqg")
 theme_override_font_sizes/font_size = 8
-text = "john"
+text = "john \"jack\" Grace"
+autowrap_mode = 2
+
+[node name="Weapon1" type="TextureRect" parent="UI/CombatUI"]
+layout_mode = 0
+offset_left = 284.0
+offset_top = 168.0
+offset_right = 324.0
+offset_bottom = 208.0
+texture = ExtResource("14_hxpk4")
+
+[node name="Weapon2" type="TextureRect" parent="UI/CombatUI"]
+layout_mode = 0
+offset_left = 333.0
+offset_top = 168.0
+offset_right = 373.0
+offset_bottom = 208.0
 
 [node name="UITimer" type="Timer" parent="UI"]
 one_shot = true
 
 [node name="MainContractBoxUI" type="Label" parent="UI"]
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 2.0
+offset_top = 8.0
+offset_right = 82.0
+offset_bottom = 31.0
+theme_override_fonts/font = ExtResource("13_a2tqg")
+text = "Contract"
 script = ExtResource("11_sdl42")
 
 [node name="TurnNumberUI" type="Label" parent="UI"]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 23.0
+offset_left = -60.0
+offset_top = 8.0
+offset_bottom = 31.0
 grow_horizontal = 0
+theme_override_fonts/font = ExtResource("13_a2tqg")
+text = "Turn: 0"
 horizontal_alignment = 2
 script = ExtResource("12_y3ns7")
 
@@ -379,6 +350,54 @@ visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("17_gyg3i")
+
+[node name="ChapterEndControl" type="TextureRect" parent="UI"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -87.5
+offset_right = 150.0
+offset_bottom = 87.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_utp6f")
+
+[node name="ChapterEndButton" type="TextureButton" parent="UI/ChapterEndControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = 6.5
+offset_right = 32.0
+offset_bottom = 19.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("19_8d3qr")
+texture_hover = ExtResource("20_eux28")
+texture_focused = ExtResource("20_eux28")
+script = ExtResource("8_fkc47")
+
+[node name="PauseMenu" type="TextureRect" parent="UI"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.0
+offset_top = -55.5
+offset_right = 106.0
+offset_bottom = 55.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("22_y17e8")
 
 [node name="ActionWindow" type="Control" parent="."]
 layout_mode = 3
@@ -520,8 +539,8 @@ frame_progress = 0.70035
 
 [connection signal="accept_pressed" from="GameBoard/Cursor" to="GameBoard" method="_on_Cursor_accept_pressed"]
 [connection signal="moved" from="GameBoard/Cursor" to="GameBoard" method="_on_Cursor_moved"]
-[connection signal="pressed" from="UI/ChapterEndControl/ChapterEndButton" to="UI/ChapterEndControl/ChapterEndButton" method="_on_pressed"]
 [connection signal="timeout" from="UI/UITimer" to="GameBoard" method="_on_ui_timer_timeout"]
+[connection signal="pressed" from="UI/ChapterEndControl/ChapterEndButton" to="UI/ChapterEndControl/ChapterEndButton" method="_on_pressed"]
 [connection signal="mouse_entered" from="ActionWindow/Buttons/Action" to="ActionWindow" method="_on_action_mouse_entered"]
 [connection signal="mouse_exited" from="ActionWindow/Buttons/Action" to="ActionWindow" method="_on_action_mouse_exited"]
 [connection signal="pressed" from="ActionWindow/Buttons/Action" to="ActionWindow" method="_on_action_pressed"]

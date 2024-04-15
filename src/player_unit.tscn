@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bw3qkfwwv04o8" path="res://assets/icon.svg" id="5_egpnx"]
 [ext_resource type="Texture2D" uid="uid://celycusapsiae" path="res://assets/CombatUI/8-HealthBar_Border.png" id="8_u5v2g"]
 [ext_resource type="Texture2D" uid="uid://bj1idskr6gk4y" path="res://assets/CombatUI/8-HealthBar_Health.png" id="9_ev36i"]
-[ext_resource type="FontFile" uid="uid://d3xknqxa16oqj" path="res://assets/fonts/dogica.ttf" id="9_ps3ld"]
+[ext_resource type="FontFile" uid="uid://bv4wc7c2ird3k" path="res://assets/fonts/warstarsfont.ttf" id="9_npiqc"]
 
 [sub_resource type="Animation" id="Animation_65a1p"]
 length = 0.001
@@ -313,12 +313,11 @@ libraries = {
 
 [node name="DamageDisplay" type="Label" parent="."]
 visible = false
-offset_left = 6.0
-offset_top = -10.0
-offset_right = 30.0
-offset_bottom = -3.0
+offset_left = 7.0
+offset_top = -8.0
+offset_right = 31.0
 theme_override_colors/font_color = Color(1, 1, 0, 1)
 theme_override_constants/outline_size = 0
-theme_override_fonts/font = ExtResource("9_ps3ld")
+theme_override_fonts/font = ExtResource("9_npiqc")
 theme_override_font_sizes/font_size = 8
 text = "-99"

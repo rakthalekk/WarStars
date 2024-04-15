@@ -407,6 +407,9 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 			var unit = _units[new_cell] as Unit
 			combat_ui.get_node("HealthBar").frame = 17 - unit.health
 			combat_ui.get_node("Name").text = unit.name
+			display_unit_weapons(unit, unit.weapons[0], combat_ui.get_node("Weapon1"))
+			if unit.weapons.size() > 1:
+				display_unit_weapons(unit, unit.weapons[1], combat_ui.get_node("Weapon2"))
 			
 			combat_ui.show()
 		else:
@@ -415,6 +418,20 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 		_unit_path.show()
 		_unit_path.draw(_active_unit.cell, new_cell)
 
+
+func display_unit_weapons(unit: Unit, weapon: Weapon, image: TextureRect):
+	var weapon_name = "WS_Emprie_" if unit is EnemyUnit else "WS_Troupe_"
+	match weapon.name:
+		"Laser":
+			weapon_name += "Pistol.png"
+		"Shotgun":
+			weapon_name += "Shotty.png"
+		"Melee":
+			weapon_name += "Lance.png"
+		_:
+			weapon_name += weapon.name + ".png"
+	
+	image.texture = load("res://assets/Weapons & Gear/" + weapon_name)
 
 func cancel_action():
 	$Cursor.active = true
@@ -470,6 +487,8 @@ func check_acted(units):
 
 func chapter_end():
 	GameManager.chapter_complete = true
+	chapter_end_ui.get_node("ChapterEndButton").grab_focus()
+	$Cursor.active = false
 	chapter_end_ui.show()
 
 
