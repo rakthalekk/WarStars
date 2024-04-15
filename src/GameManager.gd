@@ -17,7 +17,9 @@ var currentContract: ContractData = null:
 		currentContract = newContract
 	get:
 		return currentContract
-	
+
+var controller = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var file = FileAccess.open("res://assets/AlienNames.txt", FileAccess.READ)
