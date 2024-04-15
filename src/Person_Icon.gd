@@ -8,6 +8,7 @@ extends Control
 @export var sleep_icon: Control
 @export var default_color: Color = Color.WHITE
 @export var warband_color: Color = Color.FIREBRICK
+@export var is_army: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,6 +18,15 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+	
+
+func check_visuals():
+	if(person.resting):
+		set_sleep()
+	elif(person.fighting):
+		set_war()
+	else:
+		set_active()
 
 func set_active():
 	icon.modulate = default_color
@@ -70,7 +80,8 @@ func _on_gui_input(event):
 		var drag = drag_icon.duplicate()
 		drag.person_icon = self
 		drag.modulate.a = .5
-		MouseDrag.set_drag(drag)
+		drag.is_army = is_army
+		MouseDrag.set_drag(drag, self)
 		#add_child(drag)
 		#drag.move_to_front()
 

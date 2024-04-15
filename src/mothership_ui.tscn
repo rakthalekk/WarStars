@@ -1,13 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://er246y3denep"]
+[gd_scene load_steps=9 format=3 uid="uid://er246y3denep"]
 
 [ext_resource type="Script" path="res://src/Mothership_UI.gd" id="1_t10ip"]
 [ext_resource type="Texture2D" uid="uid://d0p6c3xmg0jww" path="res://assets/FleetUI/BackButton.png" id="2_i0mnv"]
 [ext_resource type="Texture2D" uid="uid://crm8k14ei2hgm" path="res://assets/FleetUI/BackButtonHover.png" id="3_nhgul"]
+[ext_resource type="Script" path="res://src/Army_Drop_Area.gd" id="4_r1vmg"]
+[ext_resource type="PackedScene" uid="uid://bpt0fhuqt7wvt" path="res://src/person_icon.tscn" id="5_esohi"]
+[ext_resource type="PackedScene" uid="uid://cddgbv7vtuu7u" path="res://src/army_person_icon.tscn" id="6_tijfb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_n1xy2"]
 font_size = 20
 
-[node name="Mothership_UI" type="Control"]
+[sub_resource type="LabelSettings" id="LabelSettings_yma8u"]
+
+[node name="Mothership_UI" type="Control" node_paths=PackedStringArray("army_container", "base_icon", "icon_holder")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +22,9 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_t10ip")
+army_container = NodePath("MarginContainer/ColorRect/ColorRect")
+base_icon = NodePath("Army_Person_Icon")
+icon_holder = NodePath("MarginContainer/ColorRect/ColorRect/ScrollContainer/GridContainer")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -28,6 +36,7 @@ grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer"]
 layout_mode = 2
+color = Color(0.643137, 0.858824, 0.956863, 0.52549)
 
 [node name="Label" type="Label" parent="MarginContainer/ColorRect"]
 layout_mode = 1
@@ -40,6 +49,7 @@ offset_bottom = 28.0
 grow_horizontal = 2
 text = "Command"
 label_settings = SubResource("LabelSettings_n1xy2")
+horizontal_alignment = 1
 
 [node name="TextureButton2" type="TextureButton" parent="MarginContainer/ColorRect"]
 layout_mode = 1
@@ -54,3 +64,71 @@ texture_normal = ExtResource("2_i0mnv")
 texture_hover = ExtResource("3_nhgul")
 ignore_texture_size = true
 stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("mothership")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.0
+offset_top = -52.5
+offset_right = 112.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_r1vmg")
+mothership = NodePath("../../..")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/ColorRect/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+horizontal_scroll_mode = 0
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/ColorRect/ColorRect/ScrollContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 7
+
+[node name="Label2" type="Label" parent="MarginContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -137.0
+offset_top = 37.0
+offset_right = -94.0
+offset_bottom = 60.0
+grow_horizontal = 0
+text = "16/16"
+label_settings = SubResource("LabelSettings_yma8u")
+horizontal_alignment = 2
+
+[node name="Person_Icon" parent="." instance=ExtResource("5_esohi")]
+visible = false
+layout_mode = 1
+is_army = true
+
+[node name="Army_Person_Icon" parent="." node_paths=PackedStringArray("mothership_ui") instance=ExtResource("6_tijfb")]
+visible = false
+layout_mode = 1
+mouse_filter = 1
+mothership_ui = NodePath("..")
+is_army = true
+
+[connection signal="pressed" from="MarginContainer/ColorRect/TextureButton2" to="." method="on_close_ui"]
+[connection signal="mouse_entered" from="MarginContainer/ColorRect/ColorRect" to="MarginContainer/ColorRect/ColorRect" method="start_overlap"]
+[connection signal="mouse_exited" from="MarginContainer/ColorRect/ColorRect" to="MarginContainer/ColorRect/ColorRect" method="end_overlap"]

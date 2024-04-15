@@ -45,7 +45,7 @@ mothership_menu = NodePath("FleetUI/Background/Mothership_UI")
 
 [node name="FleetStructureManager" parent="." node_paths=PackedStringArray("reserves", "structures", "black_market", "healing_vats", "rift", "mothership") instance=ExtResource("2_c0d5s")]
 reserves = NodePath("../Reserve")
-structures = [NodePath("Black_Market"), NodePath("Healing_Vats"), NodePath("Mothership"), NodePath("Rift")]
+structures = [NodePath("Black_Market"), NodePath("Healing_Vats"), null, NodePath("Rift")]
 black_market = NodePath("Black_Market")
 healing_vats = NodePath("Healing_Vats")
 rift = NodePath("Rift")
@@ -161,10 +161,9 @@ layout_mode = 1
 healing_vats_script = NodePath("../../../FleetStructureManager/Healing_Vats")
 main_ui = NodePath("../../..")
 
-[node name="Mothership_UI" parent="FleetUI/Background" node_paths=PackedStringArray("mothership_script", "main_ui") instance=ExtResource("10_wxysv")]
+[node name="Mothership_UI" parent="FleetUI/Background" node_paths=PackedStringArray("main_ui") instance=ExtResource("10_wxysv")]
 visible = false
 layout_mode = 1
-mothership_script = NodePath("../../../FleetStructureManager/Mothership")
 main_ui = NodePath("../../..")
 
 [node name="Rift_UI" parent="FleetUI/Background" node_paths=PackedStringArray("rift_script", "main_ui") instance=ExtResource("11_eiixp")]

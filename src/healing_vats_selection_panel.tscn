@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://src/healing_vats_selection_panel.gd" id="1_l0p7j"]
 [ext_resource type="Texture2D" uid="uid://dbcomdwxg6fts" path="res://assets/FleetUI/LargeContainerMiddle.png" id="2_uer7f"]
 [ext_resource type="Texture2D" uid="uid://h7nsqdept6f0" path="res://assets/FleetUI/FleetSubmenu_smallcontainer.png" id="3_risx8"]
+[ext_resource type="Script" path="res://src/Healing_Drop_Area.gd" id="4_dw1jf"]
 [ext_resource type="Texture2D" uid="uid://b53qxbulfchgb" path="res://assets/FleetUI/MoneySymbol.png" id="4_joa28"]
-[ext_resource type="Script" path="res://src/Drop_Area.gd" id="5_p062q"]
 
 [node name="Healing_Vats_Selection_Panel" type="Control" node_paths=PackedStringArray("main_select_button", "main_image", "main_text", "gold_text")]
 layout_mode = 3
@@ -99,15 +99,15 @@ grow_vertical = 0
 texture = ExtResource("4_joa28")
 expand_mode = 2
 
-[node name="TextureButton2" type="TextureButton" parent="." node_paths=PackedStringArray("heal_vat_selection")]
+[node name="TextureButton2" type="TextureButton" parent="." node_paths=PackedStringArray("heal_vat")]
 visible = false
 layout_mode = 0
 offset_left = -105.0
 offset_top = -19.0
 offset_right = 105.0
 offset_bottom = 14.0
-script = ExtResource("5_p062q")
-heal_vat_selection = NodePath("..")
+script = ExtResource("4_dw1jf")
+heal_vat = NodePath("..")
 
 [connection signal="mouse_entered" from="TextureButton" to="TextureButton2" method="start_overlap"]
 [connection signal="mouse_exited" from="TextureButton" to="TextureButton2" method="end_overlap"]
