@@ -42,6 +42,7 @@ func add_effect_to_target(unit: Unit):
 	var existing_effect = get_node(str(target.get_path(), "/", name))
 	if existing_effect == null:
 		target = unit
+		unit.add_child(self)
 		target.end_unit_action.connect(on_action_end)
 		_save_stat()
 	else:

@@ -57,10 +57,10 @@ var acted := false:
 		else:
 			$AnimationPlayer.play(idle_anim)
 
-var weapons: Array[Weapon]
-var active_weapon: Weapon
+var weapons: Array[Equipment]
+var active_weapon: Equipment
 
-var gear_list: Array[Gear]
+#var gear_list: Array[Gear]
 var armor: int
 
 @onready var _path_follow: PathFollow2D = $PathFollow2D
@@ -126,7 +126,11 @@ func damage(dmg: int):
 		emit_signal("die", self)
 		
 func switch_weapons(index: int):
-	active_weapon = weapons[index]
+	if index >= 0 and index <= 3:
+		active_weapon = weapons[index]
 	
 func end_action():
 	end_unit_action.emit()
+
+#func use_gear(index: int, target):
+#	gear_list[index].use_active(target)

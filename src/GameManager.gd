@@ -17,7 +17,32 @@ var currentContract: ContractData = null:
 		currentContract = newContract
 	get:
 		return currentContract
+
+var current_turn: int = 0:
+	get:
+		return current_turn
+
+var chapter_complete: bool = false:
+	set(newChapterComplete):
+		chapter_complete = newChapterComplete
+	get:
+		return chapter_complete
+
+func incrementTurns():
+	current_turn += 1
 	
+func resetTurns():
+	current_turn = 0
+
+var controller = true
+
+var capture_tile: Vector2:
+	set(newCaptureTile):
+		capture_tile = newCaptureTile
+	get:
+		return capture_tile
+		
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var file = FileAccess.open("res://assets/AlienNames.txt", FileAccess.READ)
@@ -52,8 +77,12 @@ class ContractData:
 	var reward: int:
 		get:
 			return reward
+	var defend_turns: int:
+		get:
+			return defend_turns
 	
 	func _init(newContract: Contract):
 		type = newContract.type
 		difficulty_stars = newContract.difficulty_stars
 		reward = newContract.reward
+		defend_turns = newContract.defend_turns

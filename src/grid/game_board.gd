@@ -24,19 +24,23 @@ var player_turn = false
 
 var ui_up = false
 
+
 @onready var action_window = get_parent().get_node("ActionWindow")
 @onready var animation_player = get_parent().get_node("AnimationPlayer")
 
 @onready var _unit_overlay: UnitOverlay = $UnitOverlay
+@onready var _unit_attack_range: UnitOverlay = $UnitAttackRange
 @onready var _unit_path: UnitPath = $UnitPath
 
 @onready var map: TileMap = get_parent().get_node("Map")
 @onready var camera: Camera2D = get_parent().get_node("Camera2D")
 @onready var combat_ui: Control = get_parent().get_node("UI/CombatUI")
+@onready var chapter_end_ui: Control = get_parent().get_node("UI/ChapterEndControl")
 
 func _ready() -> void:
 	_reinitialize()
 	change_turn()
+	chapter_end_ui.hide()
 
 
 func _process(delta):
@@ -44,15 +48,30 @@ func _process(delta):
 		if attacking:
 			highlight_targets(false)
 			action_window.display()
+			$Cursor.active = false
 			attacking = false
 		elif !_active_unit._is_walking:
-			cancel_action()
+			if action_window.get_node("Submenu").visible:
+				action_window._on_action_cancel_pressed()
+			else:
+				cancel_action()
 	
-	var camera_pan = get_local_mouse_position() - camera.position
-	camera_pan = Vector2(camera_pan.x / 200.0, camera_pan.y / 112.0)
-	
-	if _active_unit == null && camera_pan.length() > .8:
-		camera.position += camera_pan
+	if GameManager.controller:
+		var cursor_to_camera = $Cursor.position - camera.position
+		if cursor_to_camera.x < -100:
+			camera.position += Vector2(-1.25, 0)
+		elif cursor_to_camera.x > 100:
+			camera.position += Vector2(1.25, 0)
+		if cursor_to_camera.y < -60:
+			camera.position += Vector2(0, -1.25)
+		elif cursor_to_camera.y > 60:
+			camera.position += Vector2(0, 1.25)
+	else:
+		var camera_pan = get_local_mouse_position() - camera.position
+		camera_pan = Vector2(camera_pan.x / 200.0, camera_pan.y / 112.0)
+		
+		if _active_unit == null && camera_pan.length() > .8:
+			camera.position += camera_pan
 
 
 func _get_configuration_warning() -> String:
@@ -69,7 +88,7 @@ func is_occupied(cell: Vector2) -> bool:
 
 ## Returns an array of cells a given unit can walk using the flood fill algorithm.
 func get_walkable_cells(unit: Unit) -> Array:
-	return _flood_fill(unit.cell, unit.move_range)
+	return _flood_fill(unit.cell, unit.move_range, false, unit is PlayerUnit)
 
 
 ## Clears, and refills the `_units` dictionary with game objects that are on the board.
@@ -91,7 +110,7 @@ func _reinitialize() -> void:
 
 
 ## Returns an array with all the coordinates of walkable cells based on the `max_distance`.
-func _flood_fill(cell: Vector2, max_distance: int, attack_range = false) -> Array:
+func _flood_fill(cell: Vector2, max_distance: int, attack_range: bool, is_player: bool) -> Array:
 	var walkable_ish_grid = []
 	var upper_left = Vector2(cell.x - max_distance - 1, cell.y - max_distance)
 	for x in range(upper_left.x, upper_left.x + max_distance * 2 + 1):
@@ -103,7 +122,7 @@ func _flood_fill(cell: Vector2, max_distance: int, attack_range = false) -> Arra
 			
 			var vector = Vector2(x, y)
 			var walkable = map.get_cell_tile_data(0, vector).get_custom_data("walkable")
-			if walkable:
+			if !attack_range && walkable:
 				walkable_ish_grid.append(vector)
 	
 	var _pathfinder = PathFinder.new(walkable_ish_grid)
@@ -122,9 +141,16 @@ func _flood_fill(cell: Vector2, max_distance: int, attack_range = false) -> Arra
 		if distance > max_distance:
 			continue
 		
-		var path_size = _pathfinder.calculate_point_path(cell, current).size()
+		var path_length = 0
+		var path = _pathfinder.calculate_point_path(cell, current)
+		for pos in path:
+			var forest = map.get_cell_tile_data(0, pos).get_custom_data("forest")
+			if forest:
+				path_length += 2
+			else:
+				path_length += 1
 		
-		if path_size > max_distance + 1:
+		if path_length > max_distance + 1:
 			continue
 		
 		array.append(current)
@@ -139,7 +165,11 @@ func _flood_fill(cell: Vector2, max_distance: int, attack_range = false) -> Arra
 			
 			var walkable = map.get_cell_tile_data(0, coordinates).get_custom_data("walkable")
 			
-			if !attack_range && (is_occupied(coordinates) || !walkable):
+			if !attack_range && is_occupied(coordinates):
+				if is_player && _units[coordinates] is EnemyUnit || !is_player && _units[coordinates] is PlayerUnit:
+					continue
+			
+			if !attack_range && !walkable:
 				continue
 			
 			# Minor optimization: If this neighbor is already queued
@@ -161,6 +191,8 @@ func _move_active_unit(new_cell: Vector2) -> void:
 	
 	if is_occupied(new_cell) or not new_cell in _walkable_cells:
 		return
+	
+	$Cursor.active = false
 	
 	# warning-ignore:return_value_discarded
 	_units.erase(_active_unit.cell)
@@ -231,26 +263,46 @@ func _popup_action_window(pos: Vector2):
 	action_window.update_buttons()
 	
 	action_window.position = pos + Vector2(10, -20)
-	action_window.visible = true
+	action_window.display()
+	$Cursor.active = false
 
 
 func find_attack_targets():
 	var range = _active_unit.active_weapon.range
-	var cells = _flood_fill(_active_unit.cell, range, true)
+	var cells = _flood_fill(_active_unit.cell, range, true, true)
 	
 	attack_targets.clear()
 	
+	var cells2 = cells.duplicate()
+	
 	for cell in cells:
+		var attackable = map.get_cell_tile_data(0, cell).get_custom_data("attackable")
+		if !attackable && cell.distance_to(_active_unit.cell) > 1:
+			cells2.erase(cell)
+			continue
+		
 		if _units.has(cell):
 			var unit = _units[cell]
 			if unit is EnemyUnit:
 				attack_targets.append(unit)
+		
+	_unit_attack_range.draw(cells2)
 
 
 func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
-	if _units.has(cell):
+	if _units.has(cell) and (initiator.active_weapon is Weapon 
+		or (initiator.active_weapon is Gear and (initiator.active_weapon.use_type == Gear.USE_TYPE.ENEMY))):
 		var unit = _units[cell]
+		
+		var attackable = map.get_cell_tile_data(0, cell).get_custom_data("attackable")
+		
+		if !attackable && cell.distance_to(initiator.cell) > 1:
+			return
+		
 		if initiator is PlayerUnit && unit is EnemyUnit:
+			if not unit in attack_targets:
+				return
+			
 			unit.damage(initiator.active_weapon.damage)
 			initiator.active_weapon.perform_specialty(unit)
 			attacking = false
@@ -267,13 +319,16 @@ func remove_unit(unit: Unit):
 		player_units.erase(unit)
 	elif unit in enemy_units:
 		enemy_units.erase(unit)
+		# Completes level if all enemies are defeated if either the defend or route contracts are selected
+		if GameManager.currentContract && (GameManager.currentContract.type == GameManager.Contract_Type.DEFEND || GameManager.currentContract.type == GameManager.Contract_Type.ROUTE) && enemy_units.size() == 0:
+			chapter_end()
 	
 	unit.queue_free()
 
 
 ## Selects or moves a unit based on where the cursor is.
 func _on_Cursor_accept_pressed(cell: Vector2) -> void:
-	if !player_turn:
+	if !player_turn || action_window.visible:
 		return
 	
 	if attacking:
@@ -293,14 +348,20 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 	
 	if !_active_unit:
 		if _units.has(new_cell):
+			var unit = _units[new_cell] as Unit
+			combat_ui.get_node("HealthBar").frame = 17 - unit.health
+			combat_ui.get_node("Name").text = unit.name
+			
 			combat_ui.show()
 		else:
 			combat_ui.hide()
 	elif _active_unit.is_selected and !unit_moved:
+		_unit_path.show()
 		_unit_path.draw(_active_unit.cell, new_cell)
 
 
 func cancel_action():
+	$Cursor.active = true
 	_units.erase(_active_unit.cell)
 	_units[_origin_cell] = _active_unit
 	_active_unit.set_grid_position(_origin_cell)
@@ -310,21 +371,28 @@ func cancel_action():
 	_clear_active_unit()
 	action_window.hide()
 	_unit_overlay.clear()
+	_unit_attack_range.clear()
 	highlight_targets(false)
 
 
 func end_action():
+	if GameManager.currentContract && GameManager.currentContract.type == GameManager.Contract_Type.CAPTURE && _active_unit.cell == GameManager.capture_tile:
+		chapter_end()
+	$Cursor.active = true
 	_active_unit.acted = true
 	_active_unit.end_action()
 	_deselect_active_unit()
 	_clear_active_unit()
 	action_window.hide()
 	_unit_overlay.clear()
+	_unit_attack_range.clear()
 	highlight_targets(false)
 	
 	attack_targets.clear()
 	
 	check_end_turn()
+	
+	
 
 
 func check_end_turn():
@@ -344,6 +412,10 @@ func check_acted(units):
 	if !any_active:
 		change_turn()
 
+func chapter_end():
+	GameManager.chapter_complete = true
+	chapter_end_ui.show()
+	
 
 func change_turn():
 	player_turn = !player_turn
@@ -354,13 +426,24 @@ func change_turn():
 	for unit in _units.values():
 		unit.acted = false
 	
-	for unit in player_units:
-		unit.acted = false
-	
 	if player_turn:
+		# Completes the chapter if the player selected a defend contract and they have defended for the necessary amount of turns
+		if GameManager.currentContract && GameManager.currentContract.type == GameManager.Contract_Type.DEFEND && GameManager.currentContract.defend_turns == GameManager.current_turn:
+			chapter_end()
+			return
+		GameManager.incrementTurns()
 		animation_player.play("player_turn_start")
+		for unit in player_units:
+			var damaging = map.get_cell_tile_data(0, unit.cell).get_custom_data("damaging")
+			if damaging:
+				unit.damage(2)
 	else:
 		animation_player.play("enemy_turn_start")
+		for unit in enemy_units:
+			var damaging = map.get_cell_tile_data(0, unit.cell).get_custom_data("damaging")
+			if damaging:
+				unit.damage(2)
+		
 		await animation_player.animation_finished
 		enemy_turn()
 
@@ -375,12 +458,17 @@ func enemy_turn():
 
 
 func check_enemy_range(enemy: EnemyUnit):
-	var movement_options = _flood_fill(enemy.cell, enemy.move_range)
+	var movement_options = _flood_fill(enemy.cell, enemy.move_range, false, false)
 	for destination in movement_options:
-		var possible_targets = _flood_fill(destination, enemy.active_weapon.range, true)
+		var possible_targets = _flood_fill(destination, enemy.active_weapon.range, true, false)
 		for target in possible_targets:
 			if _units.has(target):
 				if _units[target] is PlayerUnit:
+					# If the opponent is in grass, make sure the path is 1 away
+					var attackable = map.get_cell_tile_data(0, target).get_custom_data("attackable")
+					if !attackable && target.distance_to(destination) > 1:
+						continue
+					
 					_unit_path.update_path(enemy.cell, destination)
 					
 					# destination and target
@@ -390,5 +478,6 @@ func check_enemy_range(enemy: EnemyUnit):
 
 
 func highlight_targets(highlight):
+	$Cursor.active = true
 	for target in attack_targets:
 		target._highlighted = highlight

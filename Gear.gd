@@ -1,6 +1,9 @@
 class_name Gear
 extends Equipment
 
+enum USE_TYPE {NONE, ENEMY, SELF, TERRAIN}
+
+@export var use_type: USE_TYPE = USE_TYPE.NONE
 @export var num_uses: int = -1
 var uses_left: int = 0
 @export var use_cooldown: int = 0
@@ -15,12 +18,14 @@ var cooldown_counter: int = 0
 func can_use_active():
 	return super.can_use_active() && cooldown_counter <= 0 && (num_uses < 0 || uses_left > 0)
 
-func use_active() -> bool:
+func use_active(target = null) -> bool:
 	
 	if(!can_use_active()):
 		return false
-		
+	
 	#actually use the active ability
+	_active_ability(target)
+	
 	cooldown_counter = use_cooldown
 	
 	# Decrement remaining uses, if applicable
@@ -29,6 +34,8 @@ func use_active() -> bool:
 	
 	return true
 	
+func _active_ability(target):
+	pass
 	
 func apply_stat_changes(person: Person):
 	super.apply_stat_changes(person)
