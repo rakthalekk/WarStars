@@ -4,3 +4,19 @@
 
 [node name="StimPack" type="Node"]
 script = ExtResource("1_dfcp8")
+use_type = null
+num_uses = null
+use_cooldown = null
+uses_action = null
+passive_hp_buff = null
+passive_move_buff = null
+passive_armor = null
+cost = null
+is_consumable = null
+equipment_description = null
+rarity = null
+weight = null
+has_active = null
+has_passive = null
+equip_type = null
+range = null

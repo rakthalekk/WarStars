@@ -211,6 +211,15 @@ script = ExtResource("2_2gqiw")
 [node name="Cursor" parent="GameBoard" instance=ExtResource("3_yqmtd")]
 position = Vector2(8, 8)
 
+[node name="DangerArea" parent="GameBoard" instance=ExtResource("7_sw4l4")]
+modulate = Color(0.392157, 0, 0.231373, 0.741176)
+
+[node name="EnemyUnitOverlay" parent="GameBoard" instance=ExtResource("6_tiuqn")]
+modulate = Color(0.792157, 0, 0.521569, 1)
+
+[node name="EnemyAttackRange" parent="GameBoard" instance=ExtResource("6_tiuqn")]
+modulate = Color(0.34902, 0, 0, 1)
+
 [node name="UnitOverlay" parent="GameBoard" instance=ExtResource("6_tiuqn")]
 
 [node name="UnitPath" parent="GameBoard" instance=ExtResource("5_sgnn1")]

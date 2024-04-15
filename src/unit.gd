@@ -131,6 +131,21 @@ func switch_weapons(index: int):
 	
 func end_action():
 	end_unit_action.emit()
+	
+func add_status_effect(effect: Status_Effect):
+	effect.target = self
+	var existing_effect = get_node(str(effect.name))
+	if existing_effect == null:
+		effect.target = self
+		add_child(effect)
+		end_unit_action.connect(effect.on_action_end)
+		effect._save_stat()
+	else:
+		existing_effect.magnitude = max(existing_effect.magnitude + effect.magnitude, effect.max_magnitude)
+		existing_effect.duration = (effect.duration + existing_effect.duration) / 2
+		
+	if not effect.applied_every_turn:
+		effect._apply_effect()
 
 #func use_gear(index: int, target):
 #	gear_list[index].use_active(target)
