@@ -12,8 +12,8 @@ const ENEMY_UNIT = preload("res://src/enemy_unit.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	ChunkDatabase.size = chunk_grid_size * 8
-	camera.limit_bottom = ChunkDatabase.size.x * ChunkDatabase.cell_size.x
-	camera.limit_right = ChunkDatabase.size.y * ChunkDatabase.cell_size.y
+	camera.limit_bottom = ChunkDatabase.size.y * ChunkDatabase.cell_size.x + 96
+	camera.limit_right = ChunkDatabase.size.x * ChunkDatabase.cell_size.y + 96
 	
 	for i in range(chunk_grid_size.x):
 		for j in range(chunk_grid_size.y):

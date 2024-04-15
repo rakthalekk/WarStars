@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4ro2ttr7unv4"]
+
+[ext_resource type="PackedScene" uid="uid://rrd285mtrnui" path="res://src/healing_vats_selection_panel.tscn" id="1_l2ox2"]
+[ext_resource type="Texture2D" uid="uid://b7mthlqlxwgh5" path="res://assets/FleetUI/LargeContainerBottom.png" id="2_3ox47"]
+
+[node name="Healing_Vats_Bottom_Selection_Panel" instance=ExtResource("1_l2ox2")]
+
+[node name="TextureButton" parent="." index="0"]
+custom_minimum_size = Vector2(212, 43)
+texture_normal = ExtResource("2_3ox47")
+texture_disabled = ExtResource("2_3ox47")
+
+[node name="TextureRect" parent="TextureButton" index="0"]
+offset_left = 2.0
+offset_top = -20.5
+offset_right = 34.0
+offset_bottom = 11.5
+
+[node name="Label" parent="TextureButton" index="1"]
+offset_top = -15.5
+offset_bottom = 7.5
+
+[node name="Label2" parent="TextureButton" index="2"]
+offset_left = -41.0
+offset_top = -31.0
+offset_right = -1.0
+offset_bottom = -8.0
+
+[node name="TextureRect2" parent="TextureButton" index="3"]
+offset_left = -56.0
+offset_top = -28.0
+offset_right = -40.0
+offset_bottom = -12.0

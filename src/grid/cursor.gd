@@ -98,7 +98,3 @@ func handle_button_input():
 	else:
 		move_held = false
 
-
-func _draw() -> void:
-	draw_rect(Rect2(-ChunkDatabase.cell_size / 2, ChunkDatabase.cell_size), Color.ALICE_BLUE, false, 2.0)
-

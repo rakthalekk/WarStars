@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsgso0i5c65c5"
-path="res://.godot/imported/WS_Emprie_Glaive.png-3a3f47b75f0529d769fac1b7ed72c1c7.ctex"
+uid="uid://h7nsqdept6f0"
+path="res://.godot/imported/FleetSubmenu_smallcontainer.png-d9cc8a3f89053e0eaa07dfabc1ff43b0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Weapons & Gear/WS_Emprie_Glaive.png"
-dest_files=["res://.godot/imported/WS_Emprie_Glaive.png-3a3f47b75f0529d769fac1b7ed72c1c7.ctex"]
+source_file="res://assets/FleetUI/FleetSubmenu_smallcontainer.png"
+dest_files=["res://.godot/imported/FleetSubmenu_smallcontainer.png-d9cc8a3f89053e0eaa07dfabc1ff43b0.ctex"]
 
 [params]
 

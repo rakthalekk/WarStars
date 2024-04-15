@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://8hyqtpna0t41"]
+[gd_scene load_steps=25 format=3 uid="uid://8hyqtpna0t41"]
 
 [ext_resource type="Script" path="res://Fleet.gd" id="1_arvdr"]
 [ext_resource type="PackedScene" uid="uid://bq04wip4d1kki" path="res://src/fleet_structure_manager.tscn" id="2_c0d5s"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dmpjfqqf8wd06" path="res://assets/FleetUI/FleetUIBackground.png" id="8_gpoo2"]
 [ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="9_4hehf"]
 [ext_resource type="PackedScene" uid="uid://dkwpke6vc60yr" path="res://src/healing_vats_ui.tscn" id="9_nj6yi"]
+[ext_resource type="Script" path="res://src/Drop_Area.gd" id="10_6gl0v"]
 [ext_resource type="Texture2D" uid="uid://cfpkwdhg5srs7" path="res://assets/FleetUI/Rift.png" id="10_hlgw0"]
 [ext_resource type="PackedScene" uid="uid://er246y3denep" path="res://src/mothership_ui.tscn" id="10_wxysv"]
 [ext_resource type="Texture2D" uid="uid://cdd2j4js5k2vb" path="res://assets/FleetUI/Rift-hover.png" id="11_5isbh"]
@@ -83,10 +84,12 @@ layout_mode = 2
 texture = ExtResource("8_gpoo2")
 
 [node name="ContractButton" type="TextureButton" parent="FleetUI/Background"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture_normal = ExtResource("9_4hehf")
+script = ExtResource("10_6gl0v")
 
 [node name="RiftButton" type="TextureButton" parent="FleetUI/Background"]
 layout_mode = 1
@@ -154,11 +157,13 @@ grow_vertical = 2
 
 [node name="Healing_Vats_UI" parent="FleetUI/Background" node_paths=PackedStringArray("healing_vats_script", "main_ui") instance=ExtResource("9_nj6yi")]
 visible = false
+layout_mode = 1
 healing_vats_script = NodePath("../../../FleetStructureManager/Healing_Vats")
 main_ui = NodePath("../../..")
 
 [node name="Mothership_UI" parent="FleetUI/Background" node_paths=PackedStringArray("main_ui") instance=ExtResource("10_wxysv")]
 visible = false
+layout_mode = 1
 main_ui = NodePath("../../..")
 
 [node name="Rift_UI" parent="FleetUI/Background" node_paths=PackedStringArray("rift_script", "main_ui") instance=ExtResource("11_eiixp")]
@@ -184,7 +189,11 @@ healing_vats_UI = NodePath("../Healing_Vats_UI")
 
 [node name="Party_Menu" parent="FleetUI/Background" instance=ExtResource("23_ptk4h")]
 layout_mode = 1
-offset_left = 363.0
+anchors_preset = 6
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 0.5
+offset_bottom = 0.5
 
 [connection signal="pressed" from="FleetUI/Background/RiftButton" to="." method="open_rift_menu"]
 [connection signal="pressed" from="FleetUI/Background/BlackMarketButton" to="." method="open_black_market_menu"]

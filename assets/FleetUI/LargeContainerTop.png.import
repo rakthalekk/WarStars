@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://63mqn44jd0o"
-path="res://.godot/imported/WS_Troupe_Glaive.png-c95da3b175a5323f6401192d68463c1d.ctex"
+uid="uid://cbtyncs2yp6bu"
+path="res://.godot/imported/LargeContainerTop.png-da5b4f0c6b42f19abc859b16b596784f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Weapons & Gear/WS_Troupe_Glaive.png"
-dest_files=["res://.godot/imported/WS_Troupe_Glaive.png-c95da3b175a5323f6401192d68463c1d.ctex"]
+source_file="res://assets/FleetUI/LargeContainerTop.png"
+dest_files=["res://.godot/imported/LargeContainerTop.png-da5b4f0c6b42f19abc859b16b596784f.ctex"]
 
 [params]
 
