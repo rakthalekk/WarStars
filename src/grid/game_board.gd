@@ -20,6 +20,8 @@ var attack_targets: Array[Unit]
 
 var attacking = false
 
+var self_targeting = false
+
 var player_turn = false
 
 var ui_up = false
@@ -45,6 +47,10 @@ func _process(delta):
 			highlight_targets(false)
 			action_window.display()
 			attacking = false
+		elif self_targeting:
+			highlight_self(false)
+			action_window.display()
+			self_targeting = false
 		elif !_active_unit._is_walking:
 			cancel_action()
 	
@@ -248,16 +254,16 @@ func find_attack_targets():
 
 
 func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
-	if _units.has(cell) and (_active_unit.active_weapon is Weapon 
-		or (_active_unit.active_weapon is Gear and (_active_unit.active_weapon.use_type == Gear.USE_TYPE.ENEMY))):
+	if _units.has(cell) and (initiator.active_weapon is Weapon 
+		or (initiator.active_weapon is Gear and (initiator.active_weapon.use_type == Gear.USE_TYPE.ENEMY))):
 		var unit = _units[cell]
 		if initiator is PlayerUnit && unit is EnemyUnit:
 			initiator.active_weapon.use_active(unit)
 			attacking = false
 			end_action()
 		elif initiator is EnemyUnit && unit is PlayerUnit:
-			unit.damage(initiator.active_weapon.damage)
-			initiator.active_weapon.perform_specialty(unit)
+			initiator.active_weapon.use_active(unit)
+			
 
 
 func remove_unit(unit: Unit):
@@ -283,7 +289,11 @@ func _on_Cursor_accept_pressed(cell: Vector2) -> void:
 	elif _active_unit.is_selected && !unit_moved:
 		_move_active_unit(cell)
 	elif _active_unit.cell == cell:
-		end_action()
+		if _active_unit.active_weapon is Gear and _active_unit.active_weapon.use_type == Gear.USE_TYPE.SELF:
+			_active_unit.active_weapon.use_active(_active_unit)
+			end_action()
+		else:
+			end_action()
 
 
 ## Updates the interactive path's drawing if there's an active and selected unit.
@@ -306,6 +316,7 @@ func cancel_action():
 	_active_unit.set_grid_position(_origin_cell)
 	_unit_path.hide()
 	
+	highlight_self(false)
 	_deselect_active_unit()
 	_clear_active_unit()
 	action_window.hide()
@@ -316,6 +327,7 @@ func cancel_action():
 func end_action():
 	_active_unit.acted = true
 	_active_unit.end_action()
+	highlight_self(false)
 	_deselect_active_unit()
 	_clear_active_unit()
 	action_window.hide()
@@ -392,3 +404,6 @@ func check_enemy_range(enemy: EnemyUnit):
 func highlight_targets(highlight):
 	for target in attack_targets:
 		target._highlighted = highlight
+		
+func highlight_self(highlight):
+	_active_unit._highlighted = highlight

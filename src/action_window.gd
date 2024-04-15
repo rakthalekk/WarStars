@@ -99,17 +99,16 @@ func _on_ability_2_button_pressed():
 	var unit = game_board._active_unit
 	unit.switch_weapons(3)
 	_use_gear(unit)
-	game_board.highlight_targets(true)
 	hide()
 	$Submenu.hide()
 
 func _use_gear(unit):
-	match(unit.active_weapon):
+	match(unit.active_weapon.use_type):
 		(Gear.USE_TYPE.ENEMY):
 			game_board.attacking = true
 			game_board.highlight_targets(true)
 		(Gear.USE_TYPE.SELF):
-			# TODO make some kind of confirm popup
+			game_board.highlight_self(true)
 			unit.active_weapon.use_active(unit)
 		(Gear.USE_TYPE.TERRAIN):
 			# TODO make some kind of confirm popup and do the effect
