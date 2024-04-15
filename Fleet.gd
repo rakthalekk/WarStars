@@ -14,6 +14,7 @@ var last_menu: Fleet_Structure_UI = null
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
+	#reserves.add_money(GameManager.currentContract.reward)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -25,7 +26,7 @@ func open_rift_menu():
 	menu_opened(rift_menu)
 
 func open_black_market_menu():
-	print("button")
+	#print("button")
 	menu_opened(black_market_menu)
 
 func open_healing_vats_menu():

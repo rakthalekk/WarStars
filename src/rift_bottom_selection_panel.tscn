@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://xm04iwl4517d"]
+
+[ext_resource type="PackedScene" uid="uid://2xpvkl0nlncf" path="res://src/rift_selection_panel.tscn" id="1_ynwo5"]
+[ext_resource type="Texture2D" uid="uid://b7mthlqlxwgh5" path="res://assets/FleetUI/LargeContainerBottom.png" id="2_4bp24"]
+
+[node name="Rift_Bottom_Selection_Panel" instance=ExtResource("1_ynwo5")]
+id = 5
+
+[node name="TextureButton" parent="." index="2"]
+custom_minimum_size = Vector2(212, 43)
+texture_normal = ExtResource("2_4bp24")
+
+[node name="TextureRect" parent="TextureButton" index="0"]
+offset_left = 2.0
+offset_top = -20.5
+offset_right = 34.0
+offset_bottom = 11.5
+
+[node name="Label" parent="TextureButton" index="1"]
+offset_top = -15.5
+offset_bottom = 7.5
+
+[node name="Label2" parent="TextureButton" index="2"]
+offset_left = -41.0
+offset_top = -31.0
+offset_right = -1.0
+offset_bottom = -8.0
+
+[node name="TextureRect2" parent="TextureButton" index="3"]
+offset_left = -56.0
+offset_top = -28.0
+offset_right = -40.0
+offset_bottom = -12.0

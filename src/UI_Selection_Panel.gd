@@ -9,9 +9,11 @@ extends Control
 @export var normal_gold_color: Color = Color.GOLD
 @export var insufficient_gold_color: Color = Color.RED
 @export var price: int
+@export var default_image: Texture
 
 func on_hover():
 	pass
 
 func on_click():
 	pass
+

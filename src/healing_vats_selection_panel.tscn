@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://8p5eomm4bfei"]
+[gd_scene load_steps=6 format=3 uid="uid://rrd285mtrnui"]
 
-[ext_resource type="Script" path="res://src/Black_Market_Selection_Panel.gd" id="1_fiie1"]
-[ext_resource type="Texture2D" uid="uid://dbcomdwxg6fts" path="res://assets/FleetUI/LargeContainerMiddle.png" id="2_4gfwd"]
-[ext_resource type="Texture2D" uid="uid://h7nsqdept6f0" path="res://assets/FleetUI/FleetSubmenu_smallcontainer.png" id="3_o8dba"]
-[ext_resource type="Texture2D" uid="uid://b53qxbulfchgb" path="res://assets/FleetUI/MoneySymbol.png" id="4_jdd5w"]
+[ext_resource type="Script" path="res://src/healing_vats_selection_panel.gd" id="1_l0p7j"]
+[ext_resource type="Texture2D" uid="uid://dbcomdwxg6fts" path="res://assets/FleetUI/LargeContainerMiddle.png" id="2_uer7f"]
+[ext_resource type="Texture2D" uid="uid://h7nsqdept6f0" path="res://assets/FleetUI/FleetSubmenu_smallcontainer.png" id="3_risx8"]
+[ext_resource type="Texture2D" uid="uid://b53qxbulfchgb" path="res://assets/FleetUI/MoneySymbol.png" id="4_joa28"]
+[ext_resource type="Script" path="res://src/Drop_Area.gd" id="5_p062q"]
 
-[node name="Black_Market_Selection_Panel" type="Control" node_paths=PackedStringArray("main_select_button", "main_image", "main_text", "gold_text")]
+[node name="Healing_Vats_Selection_Panel" type="Control" node_paths=PackedStringArray("main_select_button", "main_image", "main_text", "gold_text")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -16,28 +17,12 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-script = ExtResource("1_fiie1")
+script = ExtResource("1_l0p7j")
 main_select_button = NodePath("TextureButton")
 main_image = NodePath("TextureButton/TextureRect")
 main_text = NodePath("TextureButton/Label")
 gold_text = NodePath("TextureButton/Label2")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Button" type="TextureButton" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+default_image = ExtResource("3_risx8")
 
 [node name="TextureButton" type="TextureButton" parent="."]
 custom_minimum_size = Vector2(210, 34)
@@ -47,9 +32,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -105.0
+offset_top = -20.0
+offset_right = 105.0
+offset_bottom = 14.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("2_4gfwd")
+texture_normal = ExtResource("2_uer7f")
 
 [node name="TextureRect" type="TextureRect" parent="TextureButton"]
 layout_mode = 1
@@ -58,10 +47,11 @@ anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 1.0
 offset_top = -16.5
-offset_right = 56.0
+offset_right = 33.0
 offset_bottom = 15.5
 grow_vertical = 2
-texture = ExtResource("3_o8dba")
+texture = ExtResource("3_risx8")
+expand_mode = 1
 stretch_mode = 4
 
 [node name="Label" type="Label" parent="TextureButton"]
@@ -77,7 +67,7 @@ offset_right = 70.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "Name Here"
+text = "Open"
 
 [node name="Label2" type="Label" parent="TextureButton"]
 layout_mode = 1
@@ -106,8 +96,20 @@ offset_right = -39.0
 offset_bottom = -3.5
 grow_horizontal = 0
 grow_vertical = 0
-texture = ExtResource("4_jdd5w")
+texture = ExtResource("4_joa28")
 expand_mode = 2
 
-[connection signal="pressed" from="Button" to="." method="on_button_click"]
-[connection signal="pressed" from="TextureButton" to="." method="on_button_click"]
+[node name="TextureButton2" type="TextureButton" parent="." node_paths=PackedStringArray("heal_vat_selection")]
+visible = false
+layout_mode = 0
+offset_left = -105.0
+offset_top = -19.0
+offset_right = 105.0
+offset_bottom = 14.0
+script = ExtResource("5_p062q")
+heal_vat_selection = NodePath("..")
+
+[connection signal="mouse_entered" from="TextureButton" to="TextureButton2" method="start_overlap"]
+[connection signal="mouse_exited" from="TextureButton" to="TextureButton2" method="end_overlap"]
+[connection signal="mouse_entered" from="TextureButton2" to="TextureButton2" method="start_overlap"]
+[connection signal="mouse_exited" from="TextureButton2" to="TextureButton2" method="end_overlap"]
