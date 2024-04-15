@@ -36,6 +36,13 @@ func resetTurns():
 
 var controller = false
 
+var capture_tile: Vector2:
+	set(newCaptureTile):
+		capture_tile = newCaptureTile
+	get:
+		return capture_tile
+		
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var file = FileAccess.open("res://assets/AlienNames.txt", FileAccess.READ)

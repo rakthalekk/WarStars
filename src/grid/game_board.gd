@@ -368,6 +368,8 @@ func cancel_action():
 
 
 func end_action():
+	if GameManager.currentContract && GameManager.currentContract.type == GameManager.Contract_Type.CAPTURE && _active_unit.cell == GameManager.capture_tile:
+		chapter_end()
 	$Cursor.active = true
 	_active_unit.acted = true
 	_active_unit.end_action()
@@ -381,6 +383,8 @@ func end_action():
 	attack_targets.clear()
 	
 	check_end_turn()
+	
+	
 
 
 func check_end_turn():
