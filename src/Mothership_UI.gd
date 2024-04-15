@@ -8,11 +8,30 @@ extends Fleet_Structure_UI
 @export var army_container: ColorRect
 @export var base_icon: Person_Icon
 @export var icon_holder: Control
+@export var capacity_label: Label
+@export var capacity_bar: Mothership_Unit_Capacity_UI
+
+func _ready():
+	refresh()
+
+func open_ui():
+	refresh_visuals()
 
 func refresh():
+	for item in current_platoon:
+		item.queue_free()
+	current_platoon.clear()
+	for unit in mothership_script.troops:
+		spawn_new_soldier(unit)
+	refresh_visuals()
+	capacity_bar.reset()
+	capacity_bar.set_tier(1)
+
+func refresh_visuals():
 	current_platoon = current_platoon.filter(func(unit): return unit != null && unit.person != null && unit.person.health > 0)
 	for unit in current_platoon:
 		unit.check_visuals()
+	update_label()
 	#update contracts
 	#update visuals for army area
 
@@ -32,9 +51,12 @@ func highlight_army(highlight: bool):
 		
 
 func remove_unit(person: Person):
-	current_platoon.erase(person)
+	#current_platoon.erase(person)
 	mothership_script.remove_person(person)
-	
+	current_platoon = current_platoon.filter(func(unit):return unit != null)
+	update_label()
+
+
 
 func spawn_new_soldier(person: Person):
 	var new_icon:Person_Icon = base_icon.duplicate()
@@ -43,4 +65,8 @@ func spawn_new_soldier(person: Person):
 	current_platoon.append(new_icon)
 	icon_holder.add_child(new_icon)
 	print("new icon: ", new_icon)
+	update_label()
 
+func update_label():
+	capacity_label.text = str(mothership_script.troops.size()) + "/" + str(mothership_script.capacity)
+	capacity_bar.display_capacity(mothership_script.troops.size(), mothership_script.capacity)

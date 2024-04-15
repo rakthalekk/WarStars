@@ -6,6 +6,5 @@
 [node name="Army_Person_Icon" instance=ExtResource("1_xsxkd")]
 script = ExtResource("2_bo2yc")
 sleep_color = Color(0.411765, 0.411765, 0.411765, 1)
-default_color = Color(1, 1, 1, 1)
 warband_color = Color(0.698039, 0.133333, 0.133333, 1)
 is_army = false
