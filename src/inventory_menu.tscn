@@ -1,0 +1,74 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfl04oknyy6x8"]
+
+[ext_resource type="Script" path="res://src/inventory_menu.gd" id="1_y4dkt"]
+[ext_resource type="Texture2D" uid="uid://h7nsqdept6f0" path="res://assets/FleetUI/FleetSubmenu_smallcontainer.png" id="2_mg3se"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_rbiq1"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_sdey4"]
+font_size = 10
+
+[node name="Inventory_Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_y4dkt")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_right = -200.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.337255, 0.690196, 0.839216, 0.313726)
+
+[node name="Label" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.5
+offset_right = 37.5
+offset_bottom = 28.0
+grow_horizontal = 2
+text = "Inventory
+"
+label_settings = SubResource("LabelSettings_rbiq1")
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect"]
+layout_mode = 1
+offset_left = 28.0
+offset_top = 28.0
+offset_right = 60.0
+offset_bottom = 60.0
+texture = ExtResource("2_mg3se")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/TextureRect"]
+layout_mode = 0
+offset_top = 32.0
+offset_right = 40.0
+offset_bottom = 55.0
+text = "hp"
+label_settings = SubResource("LabelSettings_sdey4")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 115.0
+offset_right = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.337255, 0.690196, 0.839216, 0.313726)

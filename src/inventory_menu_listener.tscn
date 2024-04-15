@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://drdew334ll3gl"]
+
+[ext_resource type="Script" path="res://src/Inventory_Menu_Listener.gd" id="1_yirmb"]
+
+[node name="Inventory_Menu_Listener" type="Node"]
+script = ExtResource("1_yirmb")
