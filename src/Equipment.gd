@@ -3,9 +3,11 @@ extends Node
 
 enum Equip_Type {WEAPON, CONSUMABLE, GEAR}
 
-@export var equipment_name: String
+@export var equipment_description: String
+@export var image: Texture
+
 @export var rarity: int = 1
-@export var weight: int
+@export var weight: int = 0
 @export var has_active: bool
 @export var has_passive: bool
 @export var equip_type: Equip_Type
@@ -19,15 +21,15 @@ func _ready():
 func _process(delta):
 	pass
 	
-func use_active() -> bool:
+func use_active(target = null) -> bool:
 	return false
 	
 func can_use_active():
 	return has_active
 
 #make this take a player parameter
-func use_passive():
-	pass
+func apply_stat_changes(person: Person):
+	person.speed -= weight
 
 func rest():
 	pass

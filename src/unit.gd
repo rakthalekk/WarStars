@@ -9,8 +9,6 @@ signal walk_finished
 
 signal die(unit: Unit)
 
-## Shared resource of type Grid, used to calculate map coordinates.
-@export var grid: Resource
 ## Distance to which the unit can walk in cells.
 @export var move_range := 6
 ## The unit's move speed when it's moving along a path.
@@ -20,18 +18,22 @@ signal die(unit: Unit)
 ## The unit's tier
 @export var tier := 1
 
+var person_source: Person
+
 @export var weapon_names: Array[String]
 
 var health: int
 
 var idle_anim = "idle"
 
+signal end_unit_action(unit: Unit)
+
 ## Coordinates of the current cell the cursor moved to.
 var cell := Vector2.ZERO:
 	set(value):
 		# When changing the cell's value, we don't want to allow coordinates outside
 		#	the grid, so we clamp them
-		cell = grid.grid_clamp(value)
+		cell = ChunkDatabase.grid_clamp(value)
 ## Toggles the "selected" animation on the unit.
 var is_selected := false:
 	set(value):
@@ -55,8 +57,11 @@ var acted := false:
 		else:
 			$AnimationPlayer.play(idle_anim)
 
-var weapons: Array[WeaponData]
-var active_weapon: WeaponData
+var weapons: Array[Equipment]
+var active_weapon: Equipment
+
+#var gear_list: Array[Gear]
+var armor: int
 
 @onready var _path_follow: PathFollow2D = $PathFollow2D
 @onready var health_bar = $PathFollow2D/HealthBar/Health as TextureProgressBar
@@ -66,8 +71,8 @@ func _ready() -> void:
 	set_process(false)
 	_path_follow.rotates = false
 
-	cell = grid.calculate_grid_coordinates(position)
-	position = grid.calculate_map_position(cell)
+	cell = ChunkDatabase.calculate_grid_coordinates(position)
+	position = ChunkDatabase.calculate_map_position(cell)
 	
 	health = max_health
 	health_bar.max_value = max_health
@@ -90,14 +95,14 @@ func _process(delta: float) -> void:
 		_is_walking = false
 		# Setting this value to 0.0 causes a Zero Length Interval error
 		_path_follow.progress = 0.00001
-		position = grid.calculate_map_position(cell)
+		position = ChunkDatabase.calculate_map_position(cell)
 		curve.clear_points()
 		emit_signal("walk_finished")
 
 
 func set_grid_position(pos: Vector2):
 	cell = pos
-	position = grid.calculate_map_position(cell)
+	position = ChunkDatabase.calculate_map_position(cell)
 
 
 ## Starts walking along the `path`.
@@ -108,13 +113,24 @@ func walk_along(path: PackedVector2Array) -> void:
 
 	curve.add_point(Vector2.ZERO)
 	for point in path:
-		curve.add_point(grid.calculate_map_position(point) - position)
+		curve.add_point(ChunkDatabase.calculate_map_position(point) - position)
 	cell = path[-1]
 	_is_walking = true
 
 
 func damage(dmg: int):
+	dmg = max(0, dmg - armor)
 	health = max(0, health - dmg)
 	health_bar.value = health
 	if health == 0:
 		emit_signal("die", self)
+		
+func switch_weapons(index: int):
+	if index >= 0 and index <= 3:
+		active_weapon = weapons[index]
+	
+func end_action():
+	end_unit_action.emit()
+
+#func use_gear(index: int, target):
+#	gear_list[index].use_active(target)

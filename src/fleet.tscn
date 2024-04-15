@@ -1,6 +1,169 @@
-[gd_scene load_steps=2 format=3 uid="uid://8hyqtpna0t41"]
+[gd_scene load_steps=14 format=3 uid="uid://8hyqtpna0t41"]
 
 [ext_resource type="Script" path="res://Fleet.gd" id="1_arvdr"]
+[ext_resource type="PackedScene" uid="uid://bq04wip4d1kki" path="res://src/fleet_structure_manager.tscn" id="2_c0d5s"]
+[ext_resource type="PackedScene" uid="uid://cqco4ebwlryy0" path="res://src/reserve.tscn" id="3_k0ck3"]
+[ext_resource type="PackedScene" uid="uid://mun6wl4r5g3b" path="res://src/black_market.tscn" id="3_xw7ne"]
+[ext_resource type="PackedScene" uid="uid://un7xbdajvrq8" path="res://src/healing_vats.tscn" id="4_acte8"]
+[ext_resource type="PackedScene" uid="uid://bs2s4bmlbc2oc" path="res://src/mothership.tscn" id="5_mfnvs"]
+[ext_resource type="PackedScene" uid="uid://sqsy230be2vj" path="res://src/rift.tscn" id="6_wq3md"]
+[ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="9_4hehf"]
+[ext_resource type="PackedScene" uid="uid://dkwpke6vc60yr" path="res://src/healing_vats_ui.tscn" id="9_nj6yi"]
+[ext_resource type="PackedScene" uid="uid://er246y3denep" path="res://src/mothership_ui.tscn" id="10_wxysv"]
+[ext_resource type="PackedScene" uid="uid://c0cod6kjly8hs" path="res://src/rift_ui.tscn" id="11_eiixp"]
+[ext_resource type="PackedScene" uid="uid://c7u2o2qoxbsrs" path="res://src/black_market_ui.tscn" id="12_ee51x"]
+[ext_resource type="PackedScene" uid="uid://birl181fhw3cc" path="res://src/mini_menu.tscn" id="13_66cch"]
 
-[node name="Fleet" type="Node2D"]
+[node name="Fleet" type="Control" node_paths=PackedStringArray("fleet_manager", "reserves", "quick_menu", "rift_menu", "healing_vats_menu", "black_market_menu", "mothership_menu")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_arvdr")
+fleet_manager = NodePath("FleetStructureManager")
+reserves = NodePath("Reserve")
+quick_menu = NodePath("FleetUI/Background/Mini Menu")
+rift_menu = NodePath("FleetUI/Background/Rift_UI")
+healing_vats_menu = NodePath("FleetUI/Background/Healing_Vats_UI")
+black_market_menu = NodePath("FleetUI/Background/Black_Market_UI")
+mothership_menu = NodePath("FleetUI/Background/Mothership_UI")
+
+[node name="FleetStructureManager" parent="." node_paths=PackedStringArray("reserves", "structures", "black_market", "healing_vats", "rift", "mothership") instance=ExtResource("2_c0d5s")]
+reserves = NodePath("../Reserve")
+structures = [NodePath("Black_Market"), NodePath("Healing_Vats"), NodePath("Mothership"), NodePath("Rift")]
+black_market = NodePath("Black_Market")
+healing_vats = NodePath("Healing_Vats")
+rift = NodePath("Rift")
+mothership = NodePath("Mothership")
+
+[node name="Black_Market" parent="FleetStructureManager" node_paths=PackedStringArray("ui", "manager") instance=ExtResource("3_xw7ne")]
+ui = NodePath("../../FleetUI/Background/Black_Market_UI")
+manager = NodePath("..")
+
+[node name="Healing_Vats" parent="FleetStructureManager" node_paths=PackedStringArray("vats_ui", "manager") instance=ExtResource("4_acte8")]
+vats_ui = NodePath("../../FleetUI/Background/Healing_Vats_UI")
+manager = NodePath("..")
+
+[node name="Mothership" parent="FleetStructureManager" node_paths=PackedStringArray("mothership_ui", "manager") instance=ExtResource("5_mfnvs")]
+mothership_ui = NodePath("../../FleetUI/Background/Mothership_UI")
+manager = NodePath("..")
+
+[node name="Rift" parent="FleetStructureManager" node_paths=PackedStringArray("ui", "manager") instance=ExtResource("6_wq3md")]
+ui = NodePath("../../FleetUI/Background/Rift_UI")
+manager = NodePath("..")
+
+[node name="Reserve" parent="." instance=ExtResource("3_k0ck3")]
+money = 300
+
+[node name="FleetUI" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="FleetUI"]
+layout_mode = 2
+texture = ExtResource("9_4hehf")
+
+[node name="ContractButton" type="TextureButton" parent="FleetUI/Background"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("9_4hehf")
+
+[node name="RiftButton" type="TextureButton" parent="FleetUI/Background"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -128.0
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("9_4hehf")
+
+[node name="BlackMarketButton" type="TextureButton" parent="FleetUI/Background"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -128.0
+offset_bottom = 128.0
+grow_horizontal = 0
+texture_normal = ExtResource("9_4hehf")
+
+[node name="HealingVatsButton" type="TextureButton" parent="FleetUI/Background"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -128.0
+offset_right = 128.0
+grow_vertical = 0
+texture_normal = ExtResource("9_4hehf")
+
+[node name="MothershipButton" type="TextureButton" parent="FleetUI/Background"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -128.0
+offset_right = 64.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("9_4hehf")
+
+[node name="FleetMenus" type="Control" parent="FleetUI/Background"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Healing_Vats_UI" parent="FleetUI/Background" node_paths=PackedStringArray("healing_vats_script", "main_ui") instance=ExtResource("9_nj6yi")]
+visible = false
+healing_vats_script = NodePath("../../../FleetStructureManager/Healing_Vats")
+main_ui = NodePath("../../..")
+
+[node name="Mothership_UI" parent="FleetUI/Background" node_paths=PackedStringArray("main_ui") instance=ExtResource("10_wxysv")]
+visible = false
+main_ui = NodePath("../../..")
+
+[node name="Rift_UI" parent="FleetUI/Background" node_paths=PackedStringArray("rift_script", "main_ui") instance=ExtResource("11_eiixp")]
+visible = false
+layout_mode = 1
+rift_script = NodePath("../../../FleetStructureManager/Rift")
+main_ui = NodePath("../../..")
+
+[node name="Black_Market_UI" parent="FleetUI/Background" node_paths=PackedStringArray("black_market_script", "main_ui") instance=ExtResource("12_ee51x")]
+visible = false
+layout_mode = 1
+black_market_script = NodePath("../../../FleetStructureManager/Black_Market")
+main_ui = NodePath("../../..")
+
+[node name="Mini Menu" parent="FleetUI/Background" node_paths=PackedStringArray("fleet", "mothership_UI", "rift_UI", "black_market_UI", "healing_vats_UI") instance=ExtResource("13_66cch")]
+visible = false
+layout_mode = 1
+fleet = NodePath("../../..")
+mothership_UI = NodePath("../Mothership_UI")
+rift_UI = NodePath("../Rift_UI")
+black_market_UI = NodePath("../Black_Market_UI")
+healing_vats_UI = NodePath("../Healing_Vats_UI")
+
+[connection signal="pressed" from="FleetUI/Background/RiftButton" to="." method="open_rift_menu"]
+[connection signal="pressed" from="FleetUI/Background/BlackMarketButton" to="." method="open_black_market_menu"]
+[connection signal="pressed" from="FleetUI/Background/HealingVatsButton" to="." method="open_healing_vats_menu"]
+[connection signal="pressed" from="FleetUI/Background/MothershipButton" to="." method="open_mothership_menu"]

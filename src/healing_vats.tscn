@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://un7xbdajvrq8"]
+
+[ext_resource type="Script" path="res://src/Healing_Vats.gd" id="1_ifuru"]
+
+[node name="Healing_Vats" type="Node"]
+script = ExtResource("1_ifuru")

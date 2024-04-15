@@ -3,10 +3,15 @@ extends Node
 
 @export var reserves: Reserve
 @export var structures: Array[Fleet_Structure]
+@export var black_market: Black_Market
+@export var healing_vats: Healing_Vats
+@export var rift: Rift
+@export var mothership: Mothership
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	for structure: Fleet_Structure in structures:
+		structure.refresh()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
