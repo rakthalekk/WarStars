@@ -88,20 +88,32 @@ func _on_weapon_2_button_pressed():
 
 
 func _on_ability_1_button_pressed():
-	game_board._active_unit.switch_weapons(2)
-	game_board.attacking = true
-	game_board.highlight_targets(true)
+	var unit = game_board._active_unit
+	unit.switch_weapons(2)
+	_use_gear(unit)
 	hide()
 	$Submenu.hide()
 
 
 func _on_ability_2_button_pressed():
-	game_board._active_unit.switch_weapons(3)
-	game_board.attacking = true
+	var unit = game_board._active_unit
+	unit.switch_weapons(3)
+	_use_gear(unit)
 	game_board.highlight_targets(true)
 	hide()
 	$Submenu.hide()
 
+func _use_gear(unit):
+	match(unit.active_weapon):
+		(Gear.USE_TYPE.ENEMY):
+			game_board.attacking = true
+			game_board.highlight_targets(true)
+		(Gear.USE_TYPE.SELF):
+			# TODO make some kind of confirm popup
+			unit.active_weapon.use_active(unit)
+		(Gear.USE_TYPE.TERRAIN):
+			# TODO make some kind of confirm popup and do the effect
+			pass
 
 func _on_weapon_1_button_mouse_entered():
 	$Submenu/SubmenuCursor.position = $Submenu/Weapon1.position + Vector2(1, 6)
