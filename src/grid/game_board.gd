@@ -48,15 +48,27 @@ func _process(delta):
 		if attacking:
 			highlight_targets(false)
 			action_window.display()
+			$Cursor.active = false
 			attacking = false
 		elif !_active_unit._is_walking:
 			cancel_action()
 	
-	var camera_pan = get_local_mouse_position() - camera.position
-	camera_pan = Vector2(camera_pan.x / 200.0, camera_pan.y / 112.0)
-	
-	if _active_unit == null && camera_pan.length() > .8:
-		camera.position += camera_pan
+	if GameManager.controller:
+		var cursor_to_camera = $Cursor.position - camera.position
+		if cursor_to_camera.x < -100:
+			camera.position += Vector2(-1, 0)
+		elif cursor_to_camera.x > 100:
+			camera.position += Vector2(1, 0)
+		if cursor_to_camera.y < -60:
+			camera.position += Vector2(0, -1)
+		elif cursor_to_camera.y > 60:
+			camera.position += Vector2(0, 1)
+	else:
+		var camera_pan = get_local_mouse_position() - camera.position
+		camera_pan = Vector2(camera_pan.x / 200.0, camera_pan.y / 112.0)
+		
+		if _active_unit == null && camera_pan.length() > .8:
+			camera.position += camera_pan
 
 
 func _get_configuration_warning() -> String:
@@ -177,6 +189,8 @@ func _move_active_unit(new_cell: Vector2) -> void:
 	if is_occupied(new_cell) or not new_cell in _walkable_cells:
 		return
 	
+	$Cursor.active = false
+	
 	# warning-ignore:return_value_discarded
 	_units.erase(_active_unit.cell)
 	_units[new_cell] = _active_unit
@@ -246,7 +260,8 @@ func _popup_action_window(pos: Vector2):
 	action_window.update_buttons()
 	
 	action_window.position = pos + Vector2(10, -20)
-	action_window.visible = true
+	action_window.display()
+	$Cursor.active = false
 
 
 func find_attack_targets():
@@ -272,7 +287,8 @@ func find_attack_targets():
 
 
 func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
-	if _units.has(cell):
+	if _units.has(cell) and (_active_unit.active_weapon is Weapon 
+		or (_active_unit.active_weapon is Gear and (_active_unit.active_weapon.use_type == Gear.USE_TYPE.ENEMY))):
 		var unit = _units[cell]
 		
 		var attackable = map.get_cell_tile_data(0, cell).get_custom_data("attackable")
@@ -309,7 +325,7 @@ func remove_unit(unit: Unit):
 
 ## Selects or moves a unit based on where the cursor is.
 func _on_Cursor_accept_pressed(cell: Vector2) -> void:
-	if !player_turn:
+	if !player_turn || action_window.visible:
 		return
 	
 	if attacking:
@@ -337,6 +353,7 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 
 
 func cancel_action():
+	$Cursor.active = true
 	_units.erase(_active_unit.cell)
 	_units[_origin_cell] = _active_unit
 	_active_unit.set_grid_position(_origin_cell)
@@ -351,6 +368,7 @@ func cancel_action():
 
 
 func end_action():
+	$Cursor.active = true
 	_active_unit.acted = true
 	_active_unit.end_action()
 	_deselect_active_unit()
@@ -448,5 +466,6 @@ func check_enemy_range(enemy: EnemyUnit):
 
 
 func highlight_targets(highlight):
+	$Cursor.active = true
 	for target in attack_targets:
 		target._highlighted = highlight
