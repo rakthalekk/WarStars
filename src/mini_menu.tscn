@@ -1,7 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://birl181fhw3cc"]
+[gd_scene load_steps=11 format=3 uid="uid://birl181fhw3cc"]
 
 [ext_resource type="Script" path="res://src/Mini Menu.gd" id="1_p4sm8"]
-[ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="2_og0c0"]
+[ext_resource type="Texture2D" uid="uid://k0x04vu4et4b" path="res://assets/FleetUI/Submenu-menuselect.png" id="2_hbptx"]
+[ext_resource type="Texture2D" uid="uid://qyrfoxavje7x" path="res://assets/FleetUI/MiniMothership.png" id="3_kb2uh"]
+[ext_resource type="Texture2D" uid="uid://bjwksoyc3rtn1" path="res://assets/FleetUI/MiniMothership-hover.png" id="4_833cq"]
+[ext_resource type="Texture2D" uid="uid://cfiiahwt7dmun" path="res://assets/FleetUI/MiniRift.png" id="5_10w6l"]
+[ext_resource type="Texture2D" uid="uid://gtm7kdktctml" path="res://assets/FleetUI/MiniRift-hover.png" id="6_bhnve"]
+[ext_resource type="Texture2D" uid="uid://y3gupfkvo0hj" path="res://assets/FleetUI/MiniMarket.png" id="7_rsts2"]
+[ext_resource type="Texture2D" uid="uid://dm5fyn23kqaq2" path="res://assets/FleetUI/MiniMarket-hover.png" id="8_6xuu6"]
+[ext_resource type="Texture2D" uid="uid://g41dihd6hre" path="res://assets/FleetUI/MiniMedship.png" id="9_8yj3k"]
+[ext_resource type="Texture2D" uid="uid://d3w53u0dlcfp4" path="res://assets/FleetUI/MiniMedship-hover.png" id="10_g52it"]
 
 [node name="Mini Menu" type="Control" node_paths=PackedStringArray("mothership_button", "rift_button", "black_market_button", "healing_vats_button")]
 layout_mode = 3
@@ -11,59 +19,70 @@ grow_vertical = 2
 size_flags_horizontal = 2
 size_flags_vertical = 3
 script = ExtResource("1_p4sm8")
-mothership_button = NodePath("MarginContainer/ColorRect/MothershipButton")
-rift_button = NodePath("MarginContainer/ColorRect/RiftButton")
-black_market_button = NodePath("MarginContainer/ColorRect/BlackMarketButton")
-healing_vats_button = NodePath("MarginContainer/ColorRect/HealingVatsButton")
+mothership_button = NodePath("MarginContainer/TextureRect/MothershipButton")
+rift_button = NodePath("MarginContainer/TextureRect/RiftButton")
+black_market_button = NodePath("MarginContainer/TextureRect/BlackMarketButton")
+healing_vats_button = NodePath("MarginContainer/TextureRect/HealingVatsButton")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_right = 40.0
-offset_bottom = -65.0
+offset_right = 45.0
+offset_bottom = -72.0
 grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer"]
 layout_mode = 2
 color = Color(1, 1, 1, 0)
 
-[node name="MothershipButton" type="TextureButton" parent="MarginContainer/ColorRect"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture_normal = ExtResource("2_og0c0")
-ignore_texture_size = true
-stretch_mode = 0
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = ExtResource("2_hbptx")
+expand_mode = 1
 
-[node name="RiftButton" type="TextureButton" parent="MarginContainer/ColorRect"]
+[node name="MothershipButton" type="TextureButton" parent="MarginContainer/TextureRect"]
 layout_mode = 0
-offset_top = 40.0
-offset_right = 40.0
-offset_bottom = 80.0
-texture_normal = ExtResource("2_og0c0")
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 33.0
+offset_bottom = 34.0
+texture_normal = ExtResource("3_kb2uh")
+texture_hover = ExtResource("4_833cq")
 ignore_texture_size = true
-stretch_mode = 0
 
-[node name="BlackMarketButton" type="TextureButton" parent="MarginContainer/ColorRect"]
+[node name="RiftButton" type="TextureButton" parent="MarginContainer/TextureRect"]
 layout_mode = 0
-offset_top = 80.0
-offset_right = 40.0
-offset_bottom = 120.0
-texture_normal = ExtResource("2_og0c0")
+offset_left = 1.0
+offset_top = 37.0
+offset_right = 33.0
+offset_bottom = 69.0
+texture_normal = ExtResource("5_10w6l")
+texture_hover = ExtResource("6_bhnve")
 ignore_texture_size = true
-stretch_mode = 0
 
-[node name="HealingVatsButton" type="TextureButton" parent="MarginContainer/ColorRect"]
+[node name="BlackMarketButton" type="TextureButton" parent="MarginContainer/TextureRect"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 0
-offset_top = 120.0
-offset_right = 40.0
-offset_bottom = 160.0
-texture_normal = ExtResource("2_og0c0")
+offset_left = 2.0
+offset_top = 74.0
+offset_right = 34.0
+offset_bottom = 106.0
+texture_normal = ExtResource("7_rsts2")
+texture_hover = ExtResource("8_6xuu6")
 ignore_texture_size = true
-stretch_mode = 0
 
-[connection signal="pressed" from="MarginContainer/ColorRect/MothershipButton" to="." method="on_press_mothership_button"]
-[connection signal="pressed" from="MarginContainer/ColorRect/RiftButton" to="." method="on_press_rift_button"]
-[connection signal="pressed" from="MarginContainer/ColorRect/BlackMarketButton" to="." method="on_press_black_market_button"]
-[connection signal="pressed" from="MarginContainer/ColorRect/HealingVatsButton" to="." method="on_press_vats_button"]
+[node name="HealingVatsButton" type="TextureButton" parent="MarginContainer/TextureRect"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_left = 2.0
+offset_top = 110.0
+offset_right = 34.0
+offset_bottom = 142.0
+texture_normal = ExtResource("9_8yj3k")
+texture_hover = ExtResource("10_g52it")
+
+[connection signal="pressed" from="MarginContainer/TextureRect/MothershipButton" to="." method="on_press_mothership_button"]
+[connection signal="pressed" from="MarginContainer/TextureRect/RiftButton" to="." method="on_press_rift_button"]
+[connection signal="pressed" from="MarginContainer/TextureRect/BlackMarketButton" to="." method="on_press_black_market_button"]
+[connection signal="pressed" from="MarginContainer/TextureRect/HealingVatsButton" to="." method="on_press_vats_button"]

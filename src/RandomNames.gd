@@ -19,19 +19,19 @@ func _process(delta):
 		#print(name)
 	pass
 
-func get_random_name() -> String:
-	var rng = RandomNumberGenerator.new()
-	if (rng.randi_range(1, 4192) == 1):
-		if (GameManager.devList.size() == 0):
-			get_tree().change_scene_to_file("res://src/ErrorScene.tscn")
-			return ""
-		var devIndex = rng.randi_range(0, GameManager.devList.size() - 1)
-		var devElement = GameManager.devList[devIndex]
-		GameManager.devList.remove_at(devIndex)
-		return devElement
-	if (GameManager.alienList.size() == 0):
-		return ""
-	var alienIndex = rng.randi_range(0, GameManager.alienList.size() - 1)
-	var alienElement = GameManager.alienList[alienIndex]
-	GameManager.alienList.remove_at(alienIndex)
-	return alienElement
+#func get_random_name() -> String:
+	#var rng = RandomNumberGenerator.new()
+	#if (rng.randi_range(1, 4192) == 1):
+		#if (GameManager.devList.size() == 0):
+			#get_tree().change_scene_to_file("res://src/ErrorScene.tscn")
+			#return ""
+		#var devIndex = rng.randi_range(0, GameManager.devList.size() - 1)
+		#var devElement = GameManager.devList[devIndex]
+		#GameManager.devList.remove_at(devIndex)
+		#return devElement
+	#if (GameManager.alienList.size() == 0):
+		#return ""
+	#var alienIndex = rng.randi_range(0, GameManager.alienList.size() - 1)
+	#var alienElement = GameManager.alienList[alienIndex]
+	#GameManager.alienList.remove_at(alienIndex)
+	#return alienElement

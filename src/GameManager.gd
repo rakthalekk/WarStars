@@ -51,7 +51,6 @@ func _ready():
 	file.close()
 	alienList.remove_at(alienList.size() - 1)
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
@@ -64,6 +63,24 @@ func removeAlien(alienIndex: int):
 # Adds contract difficulty to the dictionary of difficulties with the index of the type of contract and value of the difficulty 
 func addContractDifficulty(index: int, value: int):
 	contractDifficulties[index] = value
+
+# Generates a random name
+func get_random_name() -> String:
+	var rng = RandomNumberGenerator.new()
+	if (rng.randi_range(1, 4192) == 1):
+		if (devList.size() == 0):
+			get_tree().change_scene_to_file("res://src/ErrorScene.tscn")
+			return ""
+		var devIndex = rng.randi_range(0, devList.size() - 1)
+		var devElement = devList[devIndex]
+		devList.remove_at(devIndex)
+		return devElement
+	if (alienList.size() == 0):
+		return ""
+	var alienIndex = rng.randi_range(0, alienList.size() - 1)
+	var alienElement = alienList[alienIndex]
+	alienList.remove_at(alienIndex)
+	return alienElement
 	
 # Inner class storing the contract data
 class ContractData:
