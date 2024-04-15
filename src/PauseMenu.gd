@@ -1,9 +1,6 @@
 extends TextureRect
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+@onready var button_click = get_parent().get_parent().get_node("ButtonClick") as AudioStreamPlayer
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,7 +19,9 @@ func _process(delta):
 func _on_back_to_game_pressed():
 	hide()
 	get_tree().paused = false
+	button_click.play()
 
 
 func _on_quit_pressed():
+	button_click.play()
 	get_tree().quit()

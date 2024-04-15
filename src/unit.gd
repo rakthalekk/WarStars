@@ -22,7 +22,9 @@ var person_source: Person
 
 @export var weapon_names: Array[String]
 
-var death_sounds = [load("res://assets/sounds/DEATH 1.mp3"), load("res://assets/sounds/DEATH 1.mp3")]
+var death_sounds = [preload("res://assets/sounds/DEATH 1.mp3"), preload("res://assets/sounds/DEATH 1.mp3")]
+var footstep_sounds = [preload("res://assets/sounds/Footstep 1.mp3"), preload("res://assets/sounds/Footstep 2.mp3"), preload("res://assets/sounds/Footstep 3.mp3")]
+var damage_sounds = [preload("res://assets/sounds/DMG 1.mp3"), preload("res://assets/sounds/DMG 2.mp3"), preload("res://assets/sounds/DMG 3.mp3"), preload("res://assets/sounds/DMG 4.mp3")]
 
 var health: int
 
@@ -116,7 +118,10 @@ func set_grid_position(pos: Vector2):
 func walk_along(path: PackedVector2Array) -> void:
 	if path.is_empty():
 		return
-
+	
+	$FootstepSound.stream = footstep_sounds.pick_random()
+	$FootstepSound.play()
+	
 	curve.add_point(Vector2.ZERO)
 	for point in path:
 		curve.add_point(ChunkDatabase.calculate_map_position(point) - position)
@@ -130,6 +135,9 @@ func damage(dmg: int):
 	health_bar.value = health
 	
 	damage_display.text = str(-dmg)
+	
+	$DamageSound.stream = damage_sounds.pick_random()
+	$DamageSound.play()
 	
 	effects_anim.play("damage_flash")
 	await effects_anim.animation_finished

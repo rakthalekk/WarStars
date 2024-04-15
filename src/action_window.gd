@@ -6,6 +6,8 @@ extends Control
 @onready var wait_button = $Buttons/Wait as TextureButton
 @onready var cancel_button = $Buttons/Cancel as TextureButton
 
+@onready var button_click = get_parent().get_node("ButtonClick") as AudioStreamPlayer
+
 func display():
 	show()
 	$MenuCursor.hide()
@@ -25,16 +27,19 @@ func update_buttons():
 func _on_action_pressed():
 	$Submenu.show()
 	$Submenu/Weapon1/Weapon1Button.grab_focus()
+	button_click.play()
 
 
 func _on_wait_pressed():
 	game_board.end_action()
 	$Submenu.hide()
+	button_click.play()
 
 
 func _on_cancel_pressed():
 	game_board.cancel_action()
 	$Submenu.hide()
+	button_click.play()
 
 
 func _on_action_mouse_entered():
@@ -79,6 +84,7 @@ func _on_weapon_1_button_pressed():
 	game_board.highlight_targets(true)
 	hide()
 	$Submenu.hide()
+	button_click.play()
 
 
 func _on_weapon_2_button_pressed():
@@ -87,6 +93,7 @@ func _on_weapon_2_button_pressed():
 	game_board.highlight_targets(true)
 	hide()
 	$Submenu.hide()
+	button_click.play()
 
 
 func _on_ability_1_button_pressed():
@@ -96,6 +103,7 @@ func _on_ability_1_button_pressed():
 	_use_gear(unit)
 	hide()
 	$Submenu.hide()
+	button_click.play()
 
 
 func _on_ability_2_button_pressed():
@@ -105,6 +113,7 @@ func _on_ability_2_button_pressed():
 	_use_gear(unit)
 	hide()
 	$Submenu.hide()
+	button_click.play()
 
 func _use_gear(unit):
 	match(unit.active_weapon.use_type):
@@ -140,6 +149,7 @@ func _on_ability_2_button_mouse_entered():
 func _on_action_cancel_pressed():
 	$Submenu.hide()
 	action_button.grab_focus()
+	button_click.play()
 
 
 func _on_action_cancel_mouse_entered():
