@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cprleh6fpmxcm"]
+[gd_scene load_steps=5 format=3 uid="uid://cprleh6fpmxcm"]
 
 [ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="1_36217"]
 [ext_resource type="Script" path="res://src/grid/unit_path.gd" id="1_rrscy"]
-[ext_resource type="Resource" uid="uid://ba7p87gewwk8k" path="res://src/grid/grid.tres" id="3_v2mad"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f5f1p"]
 texture = ExtResource("1_36217")
@@ -120,4 +119,3 @@ modulate = Color(0.0509804, 1, 0.254902, 1)
 tile_set = SubResource("TileSet_v33bi")
 format = 2
 script = ExtResource("1_rrscy")
-grid = ExtResource("3_v2mad")

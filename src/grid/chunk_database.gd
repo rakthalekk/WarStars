@@ -28,6 +28,51 @@ func get_random_chunk_by_difficulty(difficulty: int) -> Chunk:
 	
 	return chunk
 
+func get_random_chunk_by_contract_difficulty() -> Chunk:
+	var rng = RandomNumberGenerator.new()
+	match GameManager.currentContract.difficulty_stars:
+		1:
+			# 90/10/0 % chance of difficulty 1/2/3
+			var rngValue = rng.randi_range(1, 10)
+			if (rngValue <= 9):
+				return get_random_chunk_by_difficulty(1)
+			else:
+				return get_random_chunk_by_difficulty(2)
+		2:
+			# 50/40/10 % chance of difficulty 1/2/3
+			var rngValue = rng.randi_range(1, 10)
+			if (rngValue <= 5):
+				return get_random_chunk_by_difficulty(1)
+			elif (rngValue <= 9):
+				return get_random_chunk_by_difficulty(2)
+			else:
+				return get_random_chunk_by_difficulty(3)
+		3:
+			# 20/40/40 % chance of difficulty 1/2/3
+			var rngValue = rng.randi_range(1, 10)
+			if (rngValue <= 2):
+				return get_random_chunk_by_difficulty(1)
+			elif (rngValue <= 6):
+				return get_random_chunk_by_difficulty(2)
+			else:
+				return get_random_chunk_by_difficulty(3)
+		4:
+			# 10/40/50 % chance of difficulty 1/2/3
+			var rngValue = rng.randi_range(1, 10)
+			if (rngValue <= 1):
+				return get_random_chunk_by_difficulty(1)
+			elif (rngValue <= 5):
+				return get_random_chunk_by_difficulty(2)
+			else:
+				return get_random_chunk_by_difficulty(3)
+		5:
+			# 0/10/90 % chance of difficulty 1/2/3
+			var rngValue = rng.randi_range(1, 10)
+			if (rngValue <= 1):
+				return get_random_chunk_by_difficulty(2)
+			else:
+				return get_random_chunk_by_difficulty(3)
+	return null
 
 func get_player_chunk() -> Chunk:
 	return $PlayerChunk

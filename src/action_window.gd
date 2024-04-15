@@ -10,6 +10,7 @@ func display():
 	show()
 	$MenuCursor.hide()
 	$Submenu.hide()
+	action_button.grab_focus()
 
 
 func update_buttons():
@@ -23,6 +24,7 @@ func update_buttons():
 
 func _on_action_pressed():
 	$Submenu.show()
+	$Submenu/Weapon1/Weapon1Button.grab_focus()
 
 
 func _on_wait_pressed():
@@ -136,6 +138,7 @@ func _on_ability_2_button_mouse_entered():
 
 func _on_action_cancel_pressed():
 	$Submenu.hide()
+	action_button.grab_focus()
 
 
 func _on_action_cancel_mouse_entered():
