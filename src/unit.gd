@@ -130,3 +130,6 @@ func switch_weapons(index: int):
 	
 func end_action():
 	end_unit_action.emit()
+
+func use_gear(index: int, target):
+	gear_list[index].use_active(target)

@@ -25,10 +25,16 @@ var overheated: bool
 func can_use_active():
 	return super.can_use_active() && !overheated
 
-func use_active() -> bool:
+func use_active(target = null) -> bool:
+	if not target is Unit:
+		return false
 	if(!can_use_active()):
 		return false
+	
 	#use weapon
+	target.damage(damage)
+	perform_specialty(target)
+	
 	current_heat += heat_gain
 	if(current_heat >= heat_max):
 		current_heat = heat_max

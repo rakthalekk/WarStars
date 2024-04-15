@@ -251,8 +251,7 @@ func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
 	if _units.has(cell):
 		var unit = _units[cell]
 		if initiator is PlayerUnit && unit is EnemyUnit:
-			unit.damage(initiator.active_weapon.damage)
-			initiator.active_weapon.perform_specialty(unit)
+			initiator.active_weapon.use_active(unit)
 			attacking = false
 			end_action()
 		elif initiator is EnemyUnit && unit is PlayerUnit:
