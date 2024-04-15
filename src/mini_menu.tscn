@@ -28,7 +28,7 @@ healing_vats_button = NodePath("MarginContainer/TextureRect/HealingVatsButton")
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_right = 45.0
+offset_right = 46.0
 offset_bottom = -72.0
 grow_vertical = 2
 
@@ -43,9 +43,9 @@ expand_mode = 1
 
 [node name="MothershipButton" type="TextureButton" parent="MarginContainer/TextureRect"]
 layout_mode = 0
-offset_left = 1.0
+offset_left = 3.0
 offset_top = 2.0
-offset_right = 33.0
+offset_right = 35.0
 offset_bottom = 34.0
 texture_normal = ExtResource("3_kb2uh")
 texture_hover = ExtResource("4_833cq")
@@ -53,10 +53,10 @@ ignore_texture_size = true
 
 [node name="RiftButton" type="TextureButton" parent="MarginContainer/TextureRect"]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 37.0
-offset_right = 33.0
-offset_bottom = 69.0
+offset_left = 2.0
+offset_top = 39.0
+offset_right = 34.0
+offset_bottom = 71.0
 texture_normal = ExtResource("5_10w6l")
 texture_hover = ExtResource("6_bhnve")
 ignore_texture_size = true
@@ -65,9 +65,9 @@ ignore_texture_size = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 0
 offset_left = 2.0
-offset_top = 74.0
+offset_top = 75.0
 offset_right = 34.0
-offset_bottom = 106.0
+offset_bottom = 107.0
 texture_normal = ExtResource("7_rsts2")
 texture_hover = ExtResource("8_6xuu6")
 ignore_texture_size = true
@@ -75,10 +75,10 @@ ignore_texture_size = true
 [node name="HealingVatsButton" type="TextureButton" parent="MarginContainer/TextureRect"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 0
-offset_left = 2.0
-offset_top = 110.0
-offset_right = 34.0
-offset_bottom = 142.0
+offset_left = 3.0
+offset_top = 111.0
+offset_right = 35.0
+offset_bottom = 143.0
 texture_normal = ExtResource("9_8yj3k")
 texture_hover = ExtResource("10_g52it")
 
