@@ -1,4 +1,4 @@
-Zavox
+ Zavox
 Xylor
 Axion
 Jyvona
@@ -292,6 +292,7 @@ Maxededo
 Olatiny
 Raktha Lekk
 BlazeJMG-917
+Chooopy
 CT-5555
 LD-55
 HK-47
@@ -306,3 +307,4 @@ Olga
 Gol
 Drodger
 Afifiyug
+Pheet
