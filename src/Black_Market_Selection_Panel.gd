@@ -12,7 +12,11 @@ func setup(new_equip):
 	#print("setting up piece of equipment " )
 	if(new_equip == null):
 		print("no equipment to setup")
+		main_text.text = "SOLD"
+		main_image.texture = default_image
+		main_select_button.disabled = true
 		return
+	main_select_button.disabled = false;
 	equipment = new_equip
 	main_text.text = equipment.name
 	price = equipment.get_cost()
@@ -22,7 +26,7 @@ func setup(new_equip):
 	
 
 func set_button_active(active: bool):
-	main_select_button.disabled = !active
+	main_select_button.disabled = !active && equipment != null
 
 func setup_money(current_money: int, set_active: bool = false):
 	if(equipment == null):

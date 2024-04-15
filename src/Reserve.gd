@@ -12,6 +12,8 @@ extends Node
 #all available unequipped equipment at your disposal (your inventory)
 @export var stockpile: Array[Equipment]
 
+@export var party_menu: Party_Menu
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -28,15 +30,20 @@ func add_money(new_money: int):
 func spend_money(spent_money: int):
 	money -= spent_money
 
+func update_unit_visual(person: Person):
+	party_menu.update_visual(person)
+
 #add a new unit to the army
 func add_unit_to_army(new_person: Person):
 	army.append(new_person)
+	party_menu.add_new_party_member(new_person)
 
 func remove_unit_from_army(lost_unit: Person):
 	if(army.has(lost_unit)):
 		army.erase(lost_unit)
 	else:
 		print("could not find unit to remove ",lost_unit.equipment_name)
+	party_menu.remove_party_member(lost_unit)
 		
 func get_army() -> Array:
 	return army
