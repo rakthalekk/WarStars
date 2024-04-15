@@ -407,9 +407,7 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 			var unit = _units[new_cell] as Unit
 			combat_ui.get_node("HealthBar").frame = 17 - unit.health
 			combat_ui.get_node("Name").text = unit.name
-			display_unit_weapons(unit, unit.weapons[0], combat_ui.get_node("Weapon1"))
-			if unit.weapons.size() > 1:
-				display_unit_weapons(unit, unit.weapons[1], combat_ui.get_node("Weapon2"))
+			display_unit_weapons(unit, unit.weapons[0], combat_ui.get_node("Weapon"))
 			
 			combat_ui.show()
 		else:
