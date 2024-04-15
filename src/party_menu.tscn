@@ -54,3 +54,4 @@ anchors_preset = 0
 anchor_left = 0.0
 anchor_right = 0.0
 offset_bottom = 16.0
+is_army = false
