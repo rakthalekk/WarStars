@@ -92,6 +92,7 @@ func _on_weapon_2_button_pressed():
 func _on_ability_1_button_pressed():
 	var unit = game_board._active_unit
 	unit.switch_weapons(2)
+	game_board.self_targeting = true
 	_use_gear(unit)
 	hide()
 	$Submenu.hide()
@@ -100,6 +101,7 @@ func _on_ability_1_button_pressed():
 func _on_ability_2_button_pressed():
 	var unit = game_board._active_unit
 	unit.switch_weapons(3)
+	game_board.self_targeting = true
 	_use_gear(unit)
 	hide()
 	$Submenu.hide()
