@@ -25,6 +25,9 @@ var armor = 0
 
 const max_tier = 3
 
+@export var resting: bool
+@export var fighting: bool
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	price = base_price + randi_range(0, 25)

@@ -11,7 +11,11 @@ func on_button_click():
 func setup(new_person):
 	if(new_person == null):
 		print("no person to setup")
+		main_text.text = "SOLD"
+		main_image.texture = default_image
+		main_select_button.disabled = true
 		return
+	main_select_button.disabled = false
 	person = new_person
 	main_text.text = person.name
 	price = person.price
@@ -21,7 +25,7 @@ func setup(new_person):
 	
 
 func set_button_active(active: bool):
-	main_select_button.disabled = !active
+	main_select_button.disabled = !active && person != null
 
 func setup_money(current_money: int, set_active: bool = false):
 	if(person == null):

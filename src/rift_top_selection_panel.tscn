@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://o3l0h3136f45"]
+
+[ext_resource type="PackedScene" uid="uid://2xpvkl0nlncf" path="res://src/rift_selection_panel.tscn" id="1_hbktb"]
+[ext_resource type="Texture2D" uid="uid://cbtyncs2yp6bu" path="res://assets/FleetUI/LargeContainerTop.png" id="2_m1nhx"]
+
+[node name="Rift_Top_Selection_Panel" instance=ExtResource("1_hbktb")]
+
+[node name="TextureButton" parent="." index="2"]
+texture_normal = ExtResource("2_m1nhx")
+
+[node name="TextureRect" parent="TextureButton" index="0"]
+offset_left = 1.5
+offset_top = -11.5
+offset_right = 33.5
+offset_bottom = 20.5
+
+[node name="Label" parent="TextureButton" index="1"]
+offset_left = -69.0
+offset_top = -6.5
+offset_right = 71.0
+offset_bottom = 16.5
+
+[node name="Label2" parent="TextureButton" index="2"]
+offset_left = -40.5
+offset_top = -22.0
+offset_right = -0.5
+offset_bottom = 1.0
+
+[node name="TextureRect2" parent="TextureButton" index="3"]
+offset_left = -55.5
+offset_top = -19.0
+offset_right = -39.5
+offset_bottom = -3.0

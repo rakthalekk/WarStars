@@ -4,7 +4,8 @@ extends Control
 @export var main_ui: Fleet
 
 func open_ui():
-	main_ui.menu_opened(self)
+	#main_ui.menu_opened(self)
+	pass
 
 func on_close_ui():
 	print("closing menu")

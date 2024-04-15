@@ -4,19 +4,35 @@ extends Fleet_Structure_UI
 @export var healing_vats_script: Healing_Vats
 @export var heal_panels: Array[Control]
 
+func open_ui():
+	refresh()
+
 func _ready():
 	refresh()
 
-func try_heal(id: int, person: Person):
-	if(healing_vats_script.try_add_person(id, person)):
-		heal_panels[id].visible = false
-		
+func try_heal(id: int, person: Person)->bool:
+	print("trying to heal")
+	return healing_vats_script.try_add_person(id, person)
 
+		
 func refresh():
+	print("refreshing ui")
 	if(healing_vats_script == null):
 		return
+	for i in healing_vats_script.capacity:
+		heal_panels[i].set_person(healing_vats_script.get_vat_user(i))
 	for i in heal_panels.size():
 		heal_panels[i].visible = i < healing_vats_script.capacity
-		var can_use_vat = healing_vats_script.can_use_vat(i)
-		#mark as interactable only if you can afford its
+		
+	check_prices()
+
+func check_prices():
+	print("checking healing prices")
+	for i in healing_vats_script.capacity:
+		var can_buy = healing_vats_script.can_afford_heal()
+		heal_panels[i].setup_money(healing_vats_script.get_money())
+
+func get_cost():
+	return healing_vats_script.cost
+
 
