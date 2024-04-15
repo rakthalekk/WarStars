@@ -1,4 +1,4 @@
-class_name Stim_Effect
+class_name Accel_Effect
 extends Status_Effect
 
 

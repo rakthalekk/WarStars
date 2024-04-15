@@ -61,7 +61,7 @@ func spawn_weapon(tier: int, type: Weapon_Type)->Weapon:
 			weapon_to_spawn = base_shotgun
 		Weapon_Type.RIFLE:
 			weapon_to_spawn = base_rifle
-	var new_weapon = weapon_to_spawn.duplicate(DuplicateFlags.DUPLICATE_SCRIPTS)
+	var new_weapon = weapon_to_spawn.clone(DuplicateFlags.DUPLICATE_SCRIPTS)
 	new_weapon.generate_from_scratch(tier)
 	return new_weapon
 

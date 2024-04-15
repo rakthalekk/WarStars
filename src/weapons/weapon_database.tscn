@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://cbqa5xt1jyr85"]
+[gd_scene load_steps=8 format=3 uid="uid://cbqa5xt1jyr85"]
 
 [ext_resource type="Script" path="res://src/weapons/weapon_database.gd" id="1_ug3or"]
 [ext_resource type="PackedScene" uid="uid://b7fc4tcndbaow" path="res://src/equipment_generator.tscn" id="3_bxivp"]
 [ext_resource type="PackedScene" uid="uid://bnxqouecsspay" path="res://src/weapon.tscn" id="4_8puuc"]
-[ext_resource type="PackedScene" uid="uid://e7e8ec41aenu" path="res://src/stim_pack.tscn" id="5_7nnu8"]
+[ext_resource type="PackedScene" uid="uid://e7e8ec41aenu" path="res://src/accelerant.tscn" id="5_7nnu8"]
 [ext_resource type="PackedScene" uid="uid://cm507f6fdgtur" path="res://src/gear.tscn" id="5_j4y3p"]
 [ext_resource type="PackedScene" uid="uid://bpwir4n3mpvrh" path="res://src/med_kit.tscn" id="6_7d0ib"]
+[ext_resource type="PackedScene" uid="uid://bfvql1no841u7" path="res://src/stim_pack.tscn" id="7_qrjql"]
 
 [node name="WeaponDatabase" type="Node2D"]
 script = ExtResource("1_ug3or")
@@ -22,35 +23,35 @@ is_melee = true
 heat_max = 0
 heat_cooldown = 0
 damage = 1
+use_type = 1
 equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
-has_active = true
 range = 1
 
 [node name="Pistol" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
 weapon_type = 2
-has_active = true
+use_type = 1
 range = 2
 
 [node name="Shotgun" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
 weapon_type = 3
-has_active = true
+use_type = 1
 range = 2
 
 [node name="Rifle" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
 weapon_type = 4
 damage = 2
-has_active = true
+use_type = 1
 range = 2
 
 [node name="Laser" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
 weapon_type = 4
 damage = 2
-has_active = true
+use_type = 1
 range = 2
 
 [node name="Gear" type="Node" parent="Equipment_Generator"]
 
-[node name="Armor" parent="Equipment_Generator/Gear" instance=ExtResource("5_j4y3p")]
+[node name="Common Armor" parent="Equipment_Generator/Gear" instance=ExtResource("5_j4y3p")]
 uses_action = false
 passive_armor = 1
 rarity = 2
@@ -58,26 +59,48 @@ weight = 1
 has_passive = true
 equip_type = 2
 
-[node name="Grenade" parent="Equipment_Generator/Gear" instance=ExtResource("5_j4y3p")]
-use_type = 3
+[node name="Rare Armor" parent="Equipment_Generator/Gear" instance=ExtResource("5_j4y3p")]
+uses_action = false
+passive_armor = 1
+rarity = 2
+weight = 1
+has_passive = true
 equip_type = 2
 
-[node name="SmallMedKit" parent="Equipment_Generator/Gear" instance=ExtResource("6_7d0ib")]
+[node name="Small Med Kit" parent="Equipment_Generator/Gear" instance=ExtResource("6_7d0ib")]
 num_uses = 1
 is_consumable = true
-
-[node name="MedKit" parent="Equipment_Generator/Gear" instance=ExtResource("6_7d0ib")]
-num_uses = 1
-is_consumable = true
-rarity = 2
-
-[node name="LargeMedKit" parent="Equipment_Generator/Gear" instance=ExtResource("6_7d0ib")]
-num_uses = 1
-is_consumable = true
-rarity = 2
-
-[node name="StimPack" parent="Equipment_Generator/Gear" instance=ExtResource("5_7nnu8")]
 use_type = 2
+
+[node name="Med Kit" parent="Equipment_Generator/Gear" instance=ExtResource("6_7d0ib")]
+num_uses = 1
+is_consumable = true
+use_type = 2
+rarity = 2
+
+[node name="Large Med Kit" parent="Equipment_Generator/Gear" instance=ExtResource("6_7d0ib")]
+num_uses = 1
+is_consumable = true
+use_type = 2
+rarity = 2
+
+[node name="Light Accelerants" parent="Equipment_Generator/Gear" instance=ExtResource("5_7nnu8")]
 num_uses = 3
 is_consumable = true
-has_active = true
+
+[node name="Accelerants" parent="Equipment_Generator/Gear" instance=ExtResource("5_7nnu8")]
+num_uses = 3
+is_consumable = true
+rarity = 2
+
+[node name="Heavy Accelerant" parent="Equipment_Generator/Gear" instance=ExtResource("5_7nnu8")]
+num_uses = 3
+is_consumable = true
+rarity = 3
+
+[node name="Stim Pack" parent="Equipment_Generator/Gear" instance=ExtResource("7_qrjql")]
+num_uses = 1
+uses_action = false
+is_consumable = true
+use_type = 2
+rarity = 3

@@ -1,22 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://e7e8ec41aenu"]
+[gd_scene load_steps=2 format=3 uid="uid://bfvql1no841u7"]
 
 [ext_resource type="Script" path="res://src/stim_pack.gd" id="1_dfcp8"]
 
 [node name="StimPack" type="Node"]
 script = ExtResource("1_dfcp8")
-use_type = null
-num_uses = null
-use_cooldown = null
-uses_action = null
-passive_hp_buff = null
-passive_move_buff = null
-passive_armor = null
-cost = null
-is_consumable = null
-equipment_description = null
-rarity = null
-weight = null
-has_active = null
-has_passive = null
-equip_type = null
-range = null

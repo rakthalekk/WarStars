@@ -392,8 +392,11 @@ func _on_Cursor_accept_pressed(cell: Vector2) -> void:
 		_move_active_unit(cell)
 	elif _active_unit.cell == cell:
 		if self_targeting and _active_unit.active_weapon is Gear and _active_unit.active_weapon.use_type == Gear.USE_TYPE.SELF:
-			_active_unit.active_weapon.use_active(_active_unit)
-			end_action()
+			if _active_unit.active_weapon.use_active(_active_unit):
+				end_action()
+			else:
+				highlight_self(false)
+				self_targeting = false
 		else:
 			end_action()
 
@@ -437,8 +440,11 @@ func end_action():
 	if GameManager.currentContract && GameManager.currentContract.type == GameManager.Contract_Type.CAPTURE && _active_unit.cell == GameManager.capture_tile:
 		chapter_end()
 	$Cursor.active = true
-	_active_unit.acted = true
-	_active_unit.end_action()
+	if !_active_unit.stims:
+		_active_unit.acted = true
+		_active_unit.end_action()
+	else:
+		_active_unit.stims = false
 	highlight_self(false)
 	_deselect_active_unit()
 	_clear_active_unit()
