@@ -24,6 +24,7 @@ var player_turn = false
 
 var ui_up = false
 
+
 @onready var action_window = get_parent().get_node("ActionWindow")
 @onready var animation_player = get_parent().get_node("AnimationPlayer")
 
@@ -34,10 +35,12 @@ var ui_up = false
 @onready var map: TileMap = get_parent().get_node("Map")
 @onready var camera: Camera2D = get_parent().get_node("Camera2D")
 @onready var combat_ui: Control = get_parent().get_node("UI/CombatUI")
+@onready var chapter_end_ui: Control = get_parent().get_node("UI/ChapterEndControl")
 
 func _ready() -> void:
 	_reinitialize()
 	change_turn()
+	chapter_end_ui.hide()
 
 
 func _process(delta):
@@ -297,6 +300,9 @@ func remove_unit(unit: Unit):
 		player_units.erase(unit)
 	elif unit in enemy_units:
 		enemy_units.erase(unit)
+		# Completes level if all enemies are defeated if either the defend or route contracts are selected
+		if GameManager.currentContract && (GameManager.currentContract.type == GameManager.Contract_Type.DEFEND || GameManager.currentContract.type == GameManager.Contract_Type.ROUTE) && enemy_units.size() == 0:
+			chapter_end()
 	
 	unit.queue_free()
 
@@ -376,6 +382,10 @@ func check_acted(units):
 	if !any_active:
 		change_turn()
 
+func chapter_end():
+	GameManager.chapter_complete = true
+	chapter_end_ui.show()
+	
 
 func change_turn():
 	player_turn = !player_turn
@@ -387,6 +397,11 @@ func change_turn():
 		unit.acted = false
 	
 	if player_turn:
+		# Completes the chapter if the player selected a defend contract and they have defended for the necessary amount of turns
+		if GameManager.currentContract && GameManager.currentContract.type == GameManager.Contract_Type.DEFEND && GameManager.currentContract.defend_turns == GameManager.current_turn:
+			chapter_end()
+			return
+		GameManager.incrementTurns()
 		animation_player.play("player_turn_start")
 		for unit in player_units:
 			var damaging = map.get_cell_tile_data(0, unit.cell).get_custom_data("damaging")

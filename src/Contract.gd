@@ -11,19 +11,27 @@ extends Node
 @export var reward: int:
 	get:
 		return reward
+@export var defend_turns: int = 2:
+	get:
+		return defend_turns
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	GameManager.resetTurns()
 	var rng = RandomNumberGenerator.new()
 	#type = Contract_Type.values()[rng.randi_range(0, Contract_Type.size() - 1)]
 	difficulty_stars = rng.randi_range(1, 5)
 	GameManager.addContractDifficulty(type, difficulty_stars)
-	if (type == GameManager.Contract_Type.ROUTE):
-		while (GameManager.contractDifficulties[GameManager.Contract_Type.CAPTURE] == difficulty_stars and GameManager.contractDifficulties[GameManager.Contract_Type.DEFEND] == difficulty_stars):
-			print("Rerolling Difficulty RNG\n")
-			difficulty_stars = rng.randi_range(1, 5)
-			GameManager.addContractDifficulty(type, difficulty_stars)
+	match type:
+		GameManager.Contract_Type.ROUTE:
+			while (GameManager.contractDifficulties[GameManager.Contract_Type.CAPTURE] == difficulty_stars and GameManager.contractDifficulties[GameManager.Contract_Type.DEFEND] == difficulty_stars):
+				print("Rerolling Difficulty RNG\n")
+				difficulty_stars = rng.randi_range(1, 5)
+				GameManager.addContractDifficulty(type, difficulty_stars)
+		GameManager.Contract_Type.DEFEND:
+			#TODO formula for defend turns
+			pass
 	match difficulty_stars:
 		1:
 			reward = rng.randi_range(20, 30) * 10
