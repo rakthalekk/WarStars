@@ -9,7 +9,7 @@ signal accept_pressed(cell)
 signal moved(new_cell)
 
 ## Time before the cursor can move again in seconds.
-var ui_cooldown := 0.04
+var ui_cooldown := 0.05
 
 var initial_cooldown := 0.3
 
@@ -68,19 +68,19 @@ func handle_button_input():
 	if !active:
 		return
 	
-	if Input.is_action_just_pressed("ui_left"):
+	if Input.is_action_just_pressed("navigate_left"):
 		cell += Vector2.LEFT
 		_timer.start(initial_cooldown)
 		move_held = true
-	if Input.is_action_just_pressed("ui_right"):
+	if Input.is_action_just_pressed("navigate_right"):
 		cell += Vector2.RIGHT
 		_timer.start(initial_cooldown)
 		move_held = true
-	if Input.is_action_just_pressed("ui_up"):
+	if Input.is_action_just_pressed("navigate_up"):
 		cell += Vector2.UP
 		_timer.start(initial_cooldown)
 		move_held = true
-	if Input.is_action_just_pressed("ui_down"):
+	if Input.is_action_just_pressed("navigate_down"):
 		cell += Vector2.DOWN
 		_timer.start(initial_cooldown)
 		move_held = true
@@ -107,3 +107,4 @@ func handle_button_input():
 			_timer.start(ui_cooldown)
 	else:
 		move_held = false
+
