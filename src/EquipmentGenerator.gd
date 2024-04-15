@@ -7,16 +7,24 @@ enum Weapon_Type{NONE, MELEE, PISTOL, SHOTGUN, RIFLE}
 @export var base_pistol: Equipment
 @export var base_shotgun: Equipment
 @export var base_rifle: Equipment
-@onready var base_weapons: Array[Equipment] = [base_melee, base_pistol, base_shotgun, base_rifle]
+@onready var base_weapons: Array[Weapon] = [base_melee, base_pistol, base_shotgun, base_rifle]
 
 #@export var base_gear: Array[Equipment]
-@export var tier_1_gear: Array[Equipment]
-@export var tier_2_gear: Array[Equipment]
-@export var tier_3_gear: Array[Equipment]
+@export var tier_1_gear: Array[Gear]
+@export var tier_2_gear: Array[Gear]
+@export var tier_3_gear: Array[Gear]
 
 @export var tier_3_chance: float = 0.1
 @export var tier_2_chance: float = 0.3
 @export var tier_1_chance: float = 0.6
+
+func _ready():
+	for node in get_node("Gear").get_children():
+		if node is Gear:
+			match(node.rarity):
+				(1): tier_1_gear.append(node)
+				(2): tier_2_gear.append(node)
+				(3): tier_3_gear.append(node)
 
 func spawn_random_weapon_at_tier(tier: int, disallowed_type: Weapon_Type = Weapon_Type.NONE) -> Weapon:
 	var valid_weapons
