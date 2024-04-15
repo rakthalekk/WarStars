@@ -30,8 +30,17 @@ func _ready():
 				difficulty_stars = rng.randi_range(1, 5)
 				GameManager.addContractDifficulty(type, difficulty_stars)
 		GameManager.Contract_Type.DEFEND:
-			#TODO formula for defend turns
-			pass
+			match difficulty_stars:
+				1:
+					defend_turns = rng.randi_range(10, 12)
+				2:
+					defend_turns = rng.randi_range(13, 15)
+				3:
+					defend_turns = rng.randi_range(16, 18)
+				4:
+					defend_turns = rng.randi_range(19, 21)
+				5:
+					defend_turns = rng.randi_range(22, 24)
 	match difficulty_stars:
 		1:
 			reward = rng.randi_range(20, 30) * 10
