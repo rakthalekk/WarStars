@@ -448,13 +448,15 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 
 func display_unit_weapons(unit: Unit, weapon: Weapon, image: TextureRect):
 	var weapon_name = "WS_Emprie_" if unit is EnemyUnit else "WS_Troupe_"
-	match weapon.name:
-		"Laser":
-			weapon_name += "Pistol.png"
-		"Shotgun":
-			weapon_name += "Shotty.png"
-		"Melee":
+	match weapon.weapon_type:
+		Equipment_Generator.Weapon_Type.MELEE:
 			weapon_name += "Lance.png"
+		Equipment_Generator.Weapon_Type.PISTOL:
+			weapon_name += "Pistol.png"
+		Equipment_Generator.Weapon_Type.SHOTGUN:
+			weapon_name += "Shotty.png"
+		Equipment_Generator.Weapon_Type.RIFLE:
+			weapon_name += "Rifle.png"
 		_:
 			weapon_name += weapon.name + ".png"
 	
@@ -463,15 +465,18 @@ func display_unit_weapons(unit: Unit, weapon: Weapon, image: TextureRect):
 
 func display_unit_equipment_icons(unit: Unit, weapon: Weapon, image: TextureRect):
 	var weapon_name = ""
-	match weapon.name:
-		"Laser":
-			weapon_name += "Pistol"
-		"Shotgun":
-			weapon_name += "Shotty"
-		"Melee":
+	
+	match weapon.weapon_type:
+		Equipment_Generator.Weapon_Type.MELEE:
 			weapon_name += "Spear"
+		Equipment_Generator.Weapon_Type.PISTOL:
+			weapon_name += "Pistol"
+		Equipment_Generator.Weapon_Type.SHOTGUN:
+			weapon_name += "Shotty"
+		Equipment_Generator.Weapon_Type.RIFLE:
+			weapon_name += "Rifle"
 		_:
-			weapon_name += weapon.name + ""
+			weapon_name += weapon.name + ".png"
 	
 	image.texture = load("res://assets/CombatUI/" + weapon_name + "Icon.png")
 
