@@ -12,6 +12,8 @@ enum Upgrade_Type{SPECIALTY, DAMAGE, RANGE, HEAT}
 var current_heat: int
 var overheated: bool
 @export var damage: int
+@export var damage_roll: int
+@export var damage_roll_multiplier: int = 1
 @export var specialty: Specialty_Type
 @export var specialty_tier: int = 0
 @export var specialties: Array[Specialty_Type] = [Specialty_Type.BURN, Specialty_Type.STUN, Specialty_Type.ACID, Specialty_Type.PLASMA]
@@ -29,6 +31,8 @@ func clone() -> Weapon:
 	clone.heat_max = heat_max
 	clone.heat_cooldown = heat_cooldown
 	clone.damage = damage
+	clone.damage_roll = damage_roll
+	clone.damage_roll_multiplier = damage_roll_multiplier
 	clone.specialty = specialty
 	clone.specialty_tier = specialty_tier
 	clone.specialties = specialties
@@ -50,7 +54,7 @@ func use_active(target = null) -> bool:
 		return false
 	
 	#use weapon
-	await target.damage(damage)
+	await target.damage(damage + damage_roll_multiplier * randi_range(1, damage_roll))
 	perform_specialty(target)
 	
 	current_heat += heat_gain
