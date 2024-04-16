@@ -493,6 +493,8 @@ func chapter_end():
 	GameManager.chapter_complete = true
 	chapter_end_ui.get_node("ChapterEndButton").grab_focus()
 	$Cursor.active = false
+	for unit in player_units:
+		unit.person_source.update_from_unit(unit)
 	chapter_end_ui.show()
 
 

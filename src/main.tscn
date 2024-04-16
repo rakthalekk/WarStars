@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://bvxj0pfbkkljm"]
+[gd_scene load_steps=54 format=3 uid="uid://bvxj0pfbkkljm"]
 
 [ext_resource type="PackedScene" uid="uid://dr28wheto1jnr" path="res://src/grid/map.tscn" id="1_0bs38"]
 [ext_resource type="Script" path="res://src/grid/map_generator.gd" id="1_8koai"]
@@ -6,8 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://djst6xt2q1nff" path="res://src/grid/cursor.tscn" id="3_yqmtd"]
 [ext_resource type="PackedScene" uid="uid://cprleh6fpmxcm" path="res://src/grid/unit_path.tscn" id="5_sgnn1"]
 [ext_resource type="PackedScene" uid="uid://c37p1jxss1cx" path="res://src/grid/unit_overlay.tscn" id="6_tiuqn"]
-[ext_resource type="PackedScene" uid="uid://c08w2xnjck2wa" path="res://src/player_unit.tscn" id="7_p5jcs"]
-[ext_resource type="PackedScene" uid="uid://fg6fbe17ssya" path="res://src/grid/unit_attack_range.tscn" id="7_sw4l4"]
+[ext_resource type="PackedScene" path="res://src/grid/unit_attack_range.tscn" id="7_sw4l4"]
 [ext_resource type="Script" path="res://src/ChapterEndButton.gd" id="8_fkc47"]
 [ext_resource type="Texture2D" uid="uid://ra0pi0wergc" path="res://assets/CombatUI/CombatUI.png" id="9_q67u5"]
 [ext_resource type="Texture2D" uid="uid://do7flyfk15mhh" path="res://assets/CombatUI/ActionMenu.png" id="10_4tx7p"]
@@ -206,18 +205,6 @@ modulate = Color(0.34902, 0, 0, 1)
 [node name="UnitPath" parent="GameBoard" instance=ExtResource("5_sgnn1")]
 
 [node name="UnitAttackRange" parent="GameBoard" instance=ExtResource("7_sw4l4")]
-
-[node name="PlayerUnit" parent="GameBoard" instance=ExtResource("7_p5jcs")]
-position = Vector2(72, 40)
-
-[node name="PlayerUnit2" parent="GameBoard" instance=ExtResource("7_p5jcs")]
-position = Vector2(40, 56)
-
-[node name="PlayerUnit3" parent="GameBoard" instance=ExtResource("7_p5jcs")]
-position = Vector2(104, 72)
-
-[node name="PlayerUnit4" parent="GameBoard" instance=ExtResource("7_p5jcs")]
-position = Vector2(56, 88)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

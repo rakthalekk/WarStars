@@ -42,6 +42,11 @@ var capture_tile: Vector2:
 	get:
 		return capture_tile
 		
+var combat_resource: PackedScene = preload("res://src/main.tscn")
+var fleet_resource: PackedScene = preload("res://src/fleet.tscn")
+var combat_scene: Node = null
+var fleet: Node = null
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -63,6 +68,31 @@ func removeAlien(alienIndex: int):
 # Adds contract difficulty to the dictionary of difficulties with the index of the type of contract and value of the difficulty 
 func addContractDifficulty(index: int, value: int):
 	contractDifficulties[index] = value
+
+func get_fleet():
+	if fleet == null:
+		fleet = fleet_resource.instantiate()
+	return fleet
+		
+func get_combat_scene():
+	if combat_scene == null:
+		combat_scene = combat_resource.instantiate()
+	return combat_scene
+
+func load_fleet(units: Array[Unit] = []):
+	for unit in units:
+		unit.person_source.update_from_unit(unit)
+	var main = get_tree().root.get_node("Main")
+	get_tree().root.remove_child(combat_scene)
+	get_tree().root.add_child(fleet)
+		
+func enter_combat(platoon: Array[Person_Icon]):
+	for member in platoon:
+		var unit = member.person.construct_unit()
+		print(get_tree().root.get_children())
+		get_combat_scene().get_node("GameBoard").add_child(unit)
+	get_tree().root.remove_child(fleet)
+	get_tree().root.add_child(combat_scene)
 
 # Generates a random name
 func get_random_name() -> String:
@@ -103,3 +133,4 @@ class ContractData:
 		difficulty_stars = newContract.difficulty_stars
 		reward = newContract.reward
 		defend_turns = newContract.defend_turns
+		

@@ -11,6 +11,10 @@ extends Control
 @export var mothership_menu: Fleet_Structure_UI
 
 var last_menu: Fleet_Structure_UI = null
+
+func _init():
+	GameManager.fleet = self
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
