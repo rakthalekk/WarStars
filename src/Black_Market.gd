@@ -57,6 +57,10 @@ func purchase(id: int) -> bool:
 	ui.refresh()
 	return true
 
+func upgrade_capacity():
+	super.upgrade_capacity()
+	scout_item()
+	ui.refresh()
 
 func get_equip(id: int)->Equipment:
 	if(id < 0 || id >= capacity):

@@ -4,6 +4,9 @@ extends Fleet_Structure_UI
 @export var black_market_script: Black_Market
 @export var purchase_panels: Array[Control]
 
+func get_structure()->Fleet_Structure:
+	return black_market_script
+
 func open_ui():
 	refresh()
 

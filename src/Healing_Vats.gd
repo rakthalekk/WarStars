@@ -14,6 +14,11 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func upgrade_capacity():
+	super.upgrade_capacity()
+	vats.append(null)
+	vats_ui.refresh()
 	
 
 

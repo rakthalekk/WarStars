@@ -4,6 +4,9 @@ extends Fleet_Structure_UI
 @export var healing_vats_script: Healing_Vats
 @export var heal_panels: Array[Control]
 
+func get_structure()->Fleet_Structure:
+	return healing_vats_script
+
 func open_ui():
 	refresh()
 

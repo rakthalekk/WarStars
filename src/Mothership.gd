@@ -61,4 +61,8 @@ func remove_dead_troops():
 func get_deployed_troops():
 	return troops.filter(func(number): return number != null)
 
+func upgrade_capacity():
+	super.upgrade_capacity()
+	mothership_ui.set_tier(level)
+	mothership_ui.refresh_visuals()
 	

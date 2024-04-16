@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://17o6ijlgpb2i"]
+[gd_scene load_steps=8 format=3 uid="uid://17o6ijlgpb2i"]
 
 [ext_resource type="Script" path="res://src/ContractUIButtons.gd" id="1_8hwki"]
 [ext_resource type="Script" path="res://src/Contract.gd" id="1_xpubj"]
 [ext_resource type="Texture2D" uid="uid://w5qjvnhliqfx" path="res://assets/FleetUI/CaptureContract.png" id="3_psnwd"]
 [ext_resource type="Texture2D" uid="uid://c5n2r83tcniin" path="res://assets/FleetUI/DifficultyMeter.png" id="4_nqn2n"]
+[ext_resource type="FontFile" uid="uid://bv4wc7c2ird3k" path="res://assets/fonts/warstarsfont.ttf" id="4_pss68"]
 [ext_resource type="Texture2D" uid="uid://hagpn4kodfsx" path="res://assets/FleetUI/DefenseContract.png" id="5_gwik7"]
 [ext_resource type="Texture2D" uid="uid://dfuba87tbs20c" path="res://assets/FleetUI/RouteEnemyContract.png" id="6_a6yrx"]
 
@@ -175,6 +176,10 @@ size_flags_vertical = 0
 texture_normal = ExtResource("3_psnwd")
 script = ExtResource("1_xpubj")
 
+[node name="DifficultyMeter" type="Sprite2D" parent="MarginContainer/HBoxContainer/Capture"]
+position = Vector2(19, 83)
+texture = ExtResource("4_nqn2n")
+
 [node name="RewardLabel" type="Label" parent="MarginContainer/HBoxContainer/Capture"]
 layout_mode = 1
 anchors_preset = 8
@@ -182,12 +187,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -9.0
-offset_right = 29.0
-offset_bottom = 14.0
+offset_left = -14.0
+offset_top = 4.0
+offset_right = 31.0
+offset_bottom = 27.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_pss68")
+text = "aaa"
 
 [node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/Capture"]
 layout_mode = 1
@@ -196,12 +203,15 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -29.0
-offset_top = -26.0
-offset_right = 29.0
-offset_bottom = -3.0
+offset_left = -9.0
+offset_top = -16.0
+offset_right = 49.0
+offset_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_pss68")
+theme_override_font_sizes/font_size = 8
+text = "aaa"
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/Capture"]
 visible = false
@@ -216,6 +226,10 @@ size_flags_vertical = 0
 texture_normal = ExtResource("5_gwik7")
 script = ExtResource("1_xpubj")
 
+[node name="DifficultyMeter2" type="Sprite2D" parent="MarginContainer/HBoxContainer/Defend"]
+position = Vector2(19, 83)
+texture = ExtResource("4_nqn2n")
+
 [node name="RewardLabel" type="Label" parent="MarginContainer/HBoxContainer/Defend"]
 layout_mode = 1
 anchors_preset = 8
@@ -223,12 +237,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -9.0
-offset_right = 29.0
-offset_bottom = 14.0
+offset_left = -14.0
+offset_top = 4.0
+offset_right = 31.0
+offset_bottom = 27.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_pss68")
+text = "aaa"
 
 [node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/Defend"]
 layout_mode = 1
@@ -237,12 +253,15 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -29.0
-offset_top = -26.0
-offset_right = 29.0
-offset_bottom = -3.0
+offset_left = -9.0
+offset_top = -16.0
+offset_right = 49.0
+offset_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_pss68")
+theme_override_font_sizes/font_size = 8
+text = "aaa"
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/Defend"]
 visible = false
@@ -257,6 +276,10 @@ size_flags_vertical = 0
 texture_normal = ExtResource("6_a6yrx")
 script = ExtResource("1_xpubj")
 
+[node name="DifficultyMeter3" type="Sprite2D" parent="MarginContainer/HBoxContainer/Route"]
+position = Vector2(19, 83)
+texture = ExtResource("4_nqn2n")
+
 [node name="RewardLabel" type="Label" parent="MarginContainer/HBoxContainer/Route"]
 layout_mode = 1
 anchors_preset = 8
@@ -264,12 +287,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -9.0
-offset_right = 29.0
-offset_bottom = 14.0
+offset_left = -14.0
+offset_top = 4.0
+offset_right = 31.0
+offset_bottom = 27.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_pss68")
+text = "zzz"
 
 [node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/Route"]
 layout_mode = 1
@@ -278,12 +303,15 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -29.0
-offset_top = -26.0
-offset_right = 29.0
-offset_bottom = -3.0
+offset_left = -9.0
+offset_top = -16.0
+offset_right = 49.0
+offset_bottom = 7.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_pss68")
+theme_override_font_sizes/font_size = 8
+text = "aaa"
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/Route"]
 visible = false
