@@ -245,6 +245,7 @@ grow_vertical = 0
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/Defend"]
 visible = false
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("4_nqn2n")
@@ -285,6 +286,7 @@ grow_vertical = 0
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/Route"]
 visible = false
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("4_nqn2n")
