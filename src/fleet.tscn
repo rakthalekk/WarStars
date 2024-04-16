@@ -24,7 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://dc3s5ueph1acs" path="res://assets/FleetUI/FleetShip.png" id="16_fprl3"]
 [ext_resource type="Texture2D" uid="uid://wwppcrdndcvt" path="res://assets/FleetUI/FleetShip-hover.png" id="17_ie5cv"]
 [ext_resource type="PackedScene" uid="uid://crsy04yyeu5f5" path="res://src/party_menu.tscn" id="23_ptk4h"]
-[ext_resource type="PackedScene" path="res://src/inventory_menu.tscn" id="25_fvhu2"]
+[ext_resource type="PackedScene" uid="uid://cfl04oknyy6x8" path="res://src/inventory_menu.tscn" id="25_fvhu2"]
 
 [node name="Fleet" type="Control" node_paths=PackedStringArray("fleet_manager", "reserves", "quick_menu", "rift_menu", "healing_vats_menu", "black_market_menu", "mothership_menu")]
 layout_mode = 3
@@ -55,18 +55,26 @@ mothership = NodePath("Mothership")
 [node name="Black_Market" parent="FleetStructureManager" node_paths=PackedStringArray("ui", "manager") instance=ExtResource("3_xw7ne")]
 ui = NodePath("../../FleetUI/Background/Black_Market_UI")
 manager = NodePath("..")
+upgrade_price = 1000
 
 [node name="Healing_Vats" parent="FleetStructureManager" node_paths=PackedStringArray("vats_ui", "manager") instance=ExtResource("4_acte8")]
 vats_ui = NodePath("../../FleetUI/Background/Healing_Vats_UI")
 manager = NodePath("..")
+upgrade_price = 800
+upgrade_2_price = 1600
 
 [node name="Mothership" parent="FleetStructureManager" node_paths=PackedStringArray("mothership_ui", "manager") instance=ExtResource("5_mfnvs")]
 mothership_ui = NodePath("../../FleetUI/Background/Mothership_UI")
 manager = NodePath("..")
+upgrade_price = 2000
+upgrade_2_price = 2
+capacity_increase = 4
 
 [node name="Rift" parent="FleetStructureManager" node_paths=PackedStringArray("ui", "manager") instance=ExtResource("6_wq3md")]
 ui = NodePath("../../FleetUI/Background/Rift_UI")
 manager = NodePath("..")
+upgrade_price = 1500
+upgrade_2_price = 3000
 
 [node name="Reserve" parent="." node_paths=PackedStringArray("party_menu") instance=ExtResource("3_k0ck3")]
 money = 300

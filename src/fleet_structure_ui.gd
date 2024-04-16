@@ -14,4 +14,7 @@ func on_close_ui():
 func check_prices():
 	pass
 
+func get_structure()->Fleet_Structure:
+	return null
+
 

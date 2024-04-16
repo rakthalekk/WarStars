@@ -5,6 +5,9 @@ extends Fleet_Structure_UI
 @export var rift_script: Rift
 @export var summon_panels: Array[Rift_Selection_Panel]
 
+func get_structure()->Fleet_Structure:
+	return rift_script
+
 func open_ui():
 	refresh()
 

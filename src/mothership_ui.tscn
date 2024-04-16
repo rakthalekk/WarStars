@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://er246y3denep"]
+[gd_scene load_steps=12 format=3 uid="uid://er246y3denep"]
 
 [ext_resource type="Script" path="res://src/Mothership_UI.gd" id="1_t10ip"]
 [ext_resource type="FontFile" uid="uid://bv4wc7c2ird3k" path="res://assets/fonts/warstarsfont.ttf" id="2_apyls"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://17o6ijlgpb2i" path="res://src/ContractUI.tscn" id="5_sxc4d"]
 [ext_resource type="PackedScene" uid="uid://bhgdf5qvokd6k" path="res://src/mothership_unit_capacity_ui.tscn" id="6_32ydw"]
 [ext_resource type="PackedScene" uid="uid://cddgbv7vtuu7u" path="res://src/army_person_icon.tscn" id="6_tijfb"]
+[ext_resource type="Script" path="res://src/Upgrade_Button.gd" id="8_k3ady"]
+[ext_resource type="Texture2D" uid="uid://b53qxbulfchgb" path="res://assets/FleetUI/MoneySymbol.png" id="9_3d2eh"]
 
 [node name="Mothership_UI" type="Control" node_paths=PackedStringArray("army_container", "base_icon", "icon_holder", "capacity_label", "capacity_bar")]
 layout_mode = 3
@@ -133,6 +135,66 @@ offset_right = -113.0
 offset_bottom = -71.5
 grow_horizontal = 2
 
+[node name="Button" type="Button" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("ship", "cost_label", "tier_label", "money_icon", "display_label", "max_level_label")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -46.0
+offset_right = 60.0
+grow_vertical = 0
+script = ExtResource("8_k3ady")
+ship = NodePath("../../..")
+cost = 20
+tier = 30
+cost_label = NodePath("cost")
+tier_label = NodePath("tier")
+money_icon = NodePath("TextureRect")
+display_label = NodePath("upgrade")
+max_level_label = NodePath("max level")
+
+[node name="upgrade" type="Label" parent="MarginContainer/ColorRect/Button"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 1.0
+offset_right = 56.0
+offset_bottom = 24.0
+theme_override_font_sizes/font_size = 12
+text = "Upgrade"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/ColorRect/Button"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 18.0
+offset_right = 15.0
+offset_bottom = 43.0
+texture = ExtResource("9_3d2eh")
+stretch_mode = 2
+
+[node name="cost" type="Label" parent="MarginContainer/ColorRect/Button"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 19.0
+offset_right = 58.0
+offset_bottom = 42.0
+text = "143"
+
+[node name="tier" type="Label" parent="MarginContainer/ColorRect/Button"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -25.0
+offset_right = 60.0
+text = "Tier 1"
+
+[node name="max level" type="Label" parent="MarginContainer/ColorRect/Button"]
+visible = false
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 45.0
+text = "MAX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Person_Icon" parent="." instance=ExtResource("5_esohi")]
 visible = false
 layout_mode = 1
@@ -149,3 +211,4 @@ is_army = true
 [connection signal="pressed" from="MarginContainer/ColorRect/TextureButton2" to="." method="on_close_ui"]
 [connection signal="mouse_entered" from="MarginContainer/ColorRect/ColorRect" to="MarginContainer/ColorRect/ColorRect" method="start_overlap"]
 [connection signal="mouse_exited" from="MarginContainer/ColorRect/ColorRect" to="MarginContainer/ColorRect/ColorRect" method="end_overlap"]
+[connection signal="pressed" from="MarginContainer/ColorRect/Button" to="MarginContainer/ColorRect/Button" method="press_button"]

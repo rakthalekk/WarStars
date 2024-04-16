@@ -6,7 +6,9 @@ extends Node
 @export var level: int = 1
 @export var max_level: int = 5
 @export var upgrade_price: int = 500
+@export var upgrade_2_price: int = 2000
 @export var upgrade_increase_mult: float = 1.5
+@export var capacity_increase: int = 1
 
 
 # Called when the node enters the scene tree for the first time.
@@ -29,15 +31,23 @@ func can_afford_upgrade()->bool:
 	
 func is_max_level()->bool:
 	return level >= max_level
-	
+
+func get_cost()->int:
+	if(level == 1):
+		return upgrade_price
+	elif(level == 2):
+		return upgrade_2_price
+	return 0
 
 func can_upgrade()-> bool:
-	return can_afford_upgrade() && is_max_level()
+	return can_afford_upgrade() && !is_max_level()
 
 func upgrade_capacity():
+	print("trying to upgrade capacity of ",self)
+	if(level == 3):
+		return
 	manager.spend_money(upgrade_price)
-	capacity += 1
-	upgrade_price *= upgrade_increase_mult
+	capacity += capacity_increase
 	level += 1
 
 func get_money()->int:

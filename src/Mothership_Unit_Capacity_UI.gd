@@ -36,16 +36,20 @@ func set_tier(tier: int):
 		i.visible = true
 	if(tier == 1):
 		tier_1_end.visible = true
+		tier_2_end.visible = false
 		current_fill_end = fill_end_1
 		return
 	for i in tier_2_sections:
 		i.visible = true
 	if(tier == 2):
+		tier_1_end.visible = false
 		tier_2_end.visible = true
 		current_fill_end = fill_end_2
 		return
 	for i in tier_3_sections:
 		i.visible = true
+		tier_1_end.visible = false
+		tier_2_end.visible = false
 	tier_3_end.visible = true
 
 func display_capacity(current_number: int, capacity: int):
