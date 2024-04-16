@@ -8,17 +8,28 @@ enum Weapon_Type{NONE, MELEE, PISTOL, SHOTGUN, RIFLE}
 @export var base_shotgun: Equipment
 @export var base_rifle: Equipment
 @onready var base_weapons: Array[Weapon] = [base_melee, base_pistol, base_shotgun, base_rifle]
+@export var tier_1_weapons: Dictionary = {Weapon_Type.MELEE: [], Weapon_Type.PISTOL: [], Weapon_Type.SHOTGUN: [], Weapon_Type.RIFLE: []}
+@export var tier_2_weapons: Dictionary = {Weapon_Type.MELEE: [], Weapon_Type.PISTOL: [], Weapon_Type.SHOTGUN: [], Weapon_Type.RIFLE: []}
+@export var tier_3_weapons: Dictionary = {Weapon_Type.MELEE: [], Weapon_Type.PISTOL: [], Weapon_Type.SHOTGUN: [], Weapon_Type.RIFLE: []}
 
 #@export var base_gear: Array[Equipment]
 @export var tier_1_gear: Array[Gear]
 @export var tier_2_gear: Array[Gear]
 @export var tier_3_gear: Array[Gear]
 
+
+
 @export var tier_3_chance: float = 0.1
 @export var tier_2_chance: float = 0.3
 @export var tier_1_chance: float = 0.6
 
 func _ready():
+	for node in get_node("Weapons").get_children():
+		if node is Weapon:
+			match(node.rarity):
+				(1): tier_1_weapons[node.weapon_type].append(node)
+				(2): tier_2_weapons[node.weapon_type].append(node)
+				(3): tier_3_weapons[node.weapon_type].append(node)
 	for node in get_node("Gear").get_children():
 		if node is Gear:
 			match(node.rarity):

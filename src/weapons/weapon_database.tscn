@@ -12,42 +12,10 @@
 script = ExtResource("1_ug3or")
 
 [node name="Equipment_Generator" parent="." node_paths=PackedStringArray("base_melee", "base_pistol", "base_shotgun", "base_rifle") instance=ExtResource("3_bxivp")]
-base_melee = NodePath("Melee")
-base_pistol = NodePath("Pistol")
-base_shotgun = NodePath("Shotgun")
-base_rifle = NodePath("Rifle")
-
-[node name="Melee" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
-weapon_type = 1
-is_melee = true
-heat_max = 0
-heat_cooldown = 0
-damage = 1
-use_type = 1
-equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
-range = 1
-
-[node name="Pistol" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
-weapon_type = 2
-use_type = 1
-range = 2
-
-[node name="Shotgun" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
-weapon_type = 3
-use_type = 1
-range = 2
-
-[node name="Rifle" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
-weapon_type = 4
-damage = 2
-use_type = 1
-range = 2
-
-[node name="Laser" parent="Equipment_Generator" instance=ExtResource("4_8puuc")]
-weapon_type = 4
-damage = 2
-use_type = 1
-range = 2
+base_melee = NodePath("Weapons/Cool Sword")
+base_pistol = NodePath("Weapons/Sidearm")
+base_shotgun = NodePath("Weapons/Hunting Shotgun")
+base_rifle = NodePath("Weapons/Scout Rifle")
 
 [node name="Gear" type="Node" parent="Equipment_Generator"]
 
@@ -104,3 +72,167 @@ uses_action = false
 is_consumable = true
 use_type = 2
 rarity = 3
+
+[node name="Weapons" type="Node" parent="Equipment_Generator"]
+
+[node name="Scout Rifle" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 4
+heat_gain = 2
+damage = 6
+damage_roll = 8
+heat_tier_bonus = 0
+use_type = 1
+weight = 1
+range = 5
+
+[node name="Combat Rifle" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 4
+heat_gain = 2
+damage = 8
+damage_roll = 12
+heat_tier_bonus = 0
+use_type = 1
+rarity = 2
+weight = 1
+range = 5
+
+[node name="Sniper Rifle" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 4
+heat_gain = 2
+damage = 12
+damage_roll = 20
+heat_tier_bonus = 0
+use_type = 1
+rarity = 3
+weight = 1
+range = 5
+
+[node name="Hunting Shotgun" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 3
+heat_gain = 2
+damage = 3
+damage_roll = 8
+use_type = 1
+weight = 1
+range = 2
+
+[node name="Combat Shotgun" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 3
+heat_gain = 2
+damage = 4
+damage_roll = 4
+damage_roll_multiplier = 3
+use_type = 1
+weight = 1
+range = 2
+
+[node name="Slugger" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 3
+heat_gain = 2
+damage = 4
+damage_roll = 6
+use_type = 1
+weight = 1
+range = 2
+
+[node name="Sidearm" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 2
+heat_gain = 1
+damage = 3
+damage_roll = 4
+use_type = 1
+range = 4
+
+[node name="Pistol" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 2
+heat_gain = 1
+damage = 4
+damage_roll = 4
+damage_roll_multiplier = 2
+use_type = 1
+range = 4
+
+[node name="Hand Cannon" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 2
+heat_gain = 1
+damage = 6
+damage_roll = 4
+damage_roll_multiplier = 3
+use_type = 1
+range = 4
+
+[node name="Cool Sword" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 1
+is_melee = true
+heat_max = 0
+heat_cooldown = 0
+damage = 4
+damage_roll = 2
+damage_roll_multiplier = 3
+use_type = 1
+equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
+range = 1
+
+[node name="Rad Sword" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 1
+is_melee = true
+heat_max = 0
+heat_cooldown = 0
+damage = 8
+damage_roll = 2
+damage_roll_multiplier = 4
+use_type = 1
+equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
+rarity = 2
+range = 1
+
+[node name="Epic Sword" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 1
+is_melee = true
+heat_max = 0
+heat_cooldown = 0
+damage = 9
+damage_roll = 2
+damage_roll_multiplier = 5
+use_type = 1
+equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
+rarity = 3
+range = 1
+
+[node name="Cool Axe" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 1
+is_melee = true
+heat_max = 0
+heat_cooldown = 0
+damage = 8
+damage_roll = 4
+use_type = 1
+equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
+weight = 1
+range = 1
+
+[node name="Rad Axe" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 1
+is_melee = true
+heat_max = 0
+heat_cooldown = 0
+damage = 12
+damage_roll = 4
+use_type = 1
+equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
+rarity = 2
+weight = 1
+range = 1
+
+[node name="Epic Axe" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+weapon_type = 1
+is_melee = true
+heat_max = 0
+heat_cooldown = 0
+damage = 15
+damage_roll = 1
+damage_roll_multiplier = 0
+use_type = 1
+equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
+weight = 1
+range = 1

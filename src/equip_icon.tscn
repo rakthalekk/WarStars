@@ -1,0 +1,65 @@
+[gd_scene load_steps=6 format=3 uid="uid://cc0g3v21wxmc"]
+
+[ext_resource type="Script" path="res://src/equip_icon.gd" id="1_6spri"]
+[ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="2_04ujb"]
+[ext_resource type="Script" path="res://src/Drag_Icon.gd" id="3_butmq"]
+[ext_resource type="Texture2D" uid="uid://h7nsqdept6f0" path="res://assets/FleetUI/FleetSubmenu_smallcontainer.png" id="4_7d7mi"]
+[ext_resource type="PackedScene" uid="uid://y2bxmv4cxpv6" path="res://src/drag_icon.tscn" id="5_gwner"]
+
+[node name="Equip_Icon" type="Control" node_paths=PackedStringArray("icon", "drag_icon")]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 2
+size_flags_vertical = 2
+script = ExtResource("1_6spri")
+icon = NodePath("Icon")
+drag_icon = NodePath("Drag_Icon")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_04ujb")
+expand_mode = 1
+script = ExtResource("3_butmq")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+modulate = Color(0.298039, 0.298039, 0.298039, 0.313726)
+layout_mode = 1
+texture = ExtResource("4_7d7mi")
+expand_mode = 1
+stretch_mode = 2
+
+[node name="Drag_Icon" parent="." instance=ExtResource("5_gwner")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_04ujb")
+expand_mode = 1
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="gui_input" from="Icon" to="." method="_on_gui_input"]
+[connection signal="gui_input" from="TextureRect2" to="." method="_on_gui_input"]
+[connection signal="gui_input" from="Drag_Icon" to="." method="_on_gui_input"]

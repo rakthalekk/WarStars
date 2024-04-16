@@ -22,6 +22,7 @@ ChunkDatabase="*res://src/grid/chunk_database.tscn"
 GameManager="*res://src/GameManager.gd"
 PersonGenerator="*res://src/person_generator.tscn"
 MouseDrag="*res://src/mouse_drag.tscn"
+InventoryMenuListener="*res://src/inventory_menu_listener.tscn"
 
 [display]
 

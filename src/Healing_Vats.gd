@@ -44,7 +44,7 @@ func try_add_person(id: int, person: Person)-> bool:
 	#don't let player add person with full health
 	
 	if(person.health == person.max_health || person.resting):
-		pass#return false
+		return false
 	
 	vats[id] = person
 	

@@ -24,8 +24,8 @@ func _process(delta):
 	if(dragObject != null):
 		dragObject.global_position = get_viewport().get_mouse_position()
 		#print("mouse draggging: ",dragObject.global_position)
-	if(Input.is_action_just_released("ui_accept")):
-		stop_dragging()
+		if(Input.is_action_just_released("ui_accept")):
+			stop_dragging()
 
 func stop_dragging():
 	print("stop dragging")
