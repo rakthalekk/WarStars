@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://e7e8ec41aenu"]
+
+[ext_resource type="Script" path="res://src/accelerant.gd" id="1_dfcp8"]
+
+[node name="Accelerant" type="Node"]
+script = ExtResource("1_dfcp8")
