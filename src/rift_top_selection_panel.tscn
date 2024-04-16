@@ -15,19 +15,17 @@ offset_right = 33.5
 offset_bottom = 20.5
 
 [node name="Label" parent="TextureButton" index="1"]
-offset_left = -69.0
-offset_top = -6.5
-offset_right = 71.0
-offset_bottom = 16.5
+offset_top = 3.5
+offset_bottom = 26.5
 
 [node name="Label2" parent="TextureButton" index="2"]
-offset_left = -40.5
-offset_top = -22.0
-offset_right = -0.5
-offset_bottom = 1.0
+offset_left = -36.5
+offset_top = -18.0
+offset_right = 3.5
+offset_bottom = 5.0
 
 [node name="TextureRect2" parent="TextureButton" index="3"]
 offset_left = -55.5
-offset_top = -19.0
+offset_top = -29.0
 offset_right = -39.5
-offset_bottom = -3.0
+offset_bottom = -4.0
