@@ -22,9 +22,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_q31mb")
 icon = NodePath("Icon")
-drag_icon = NodePath("Icon")
+drag_icon = NodePath("Drag_Icon")
 sleep_icon = NodePath("Sleep_Label")
-is_army = null
 
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 1
