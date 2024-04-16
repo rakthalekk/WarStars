@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cfl04oknyy6x8"]
+[gd_scene load_steps=9 format=3 uid="uid://cfl04oknyy6x8"]
 
 [ext_resource type="Script" path="res://src/inventory_menu.gd" id="1_y4dkt"]
 [ext_resource type="Texture2D" uid="uid://h7nsqdept6f0" path="res://assets/FleetUI/FleetSubmenu_smallcontainer.png" id="2_mg3se"]
+[ext_resource type="Script" path="res://src/Inventory_Drop_Area.gd" id="3_l6wur"]
 [ext_resource type="PackedScene" uid="uid://cc0g3v21wxmc" path="res://src/equip_icon.tscn" id="3_u2sp8"]
+[ext_resource type="Texture2D" uid="uid://d0p6c3xmg0jww" path="res://assets/FleetUI/BackButton.png" id="5_b5n2c"]
+[ext_resource type="Texture2D" uid="uid://crm8k14ei2hgm" path="res://assets/FleetUI/BackButtonHover.png" id="6_jviyn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_rbiq1"]
 font_size = 20
@@ -20,6 +23,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_y4dkt")
+default_texture = ExtResource("2_mg3se")
 base_item_icon = NodePath("Equip_Icon")
 equip_parent = NodePath("ColorRect2/ColorRect/ScrollContainer/GridContainer")
 person_image = NodePath("ColorRect/TextureRect")
@@ -102,7 +106,7 @@ offset_bottom = 55.0
 text = "Gun 1"
 label_settings = SubResource("LabelSettings_sdey4")
 
-[node name="TextureRect3" type="TextureRect" parent="ColorRect"]
+[node name="TextureRect3" type="TextureRect" parent="ColorRect" node_paths=PackedStringArray("main_inventory")]
 layout_mode = 1
 offset_left = 12.0
 offset_top = 154.0
@@ -110,6 +114,8 @@ offset_right = 44.0
 offset_bottom = 186.0
 texture = ExtResource("2_mg3se")
 stretch_mode = 2
+script = ExtResource("3_l6wur")
+main_inventory = NodePath("../..")
 
 [node name="Label" type="Label" parent="ColorRect/TextureRect3"]
 layout_mode = 0
@@ -119,6 +125,14 @@ offset_bottom = 55.0
 text = "Equip 1
 "
 label_settings = SubResource("LabelSettings_sdey4")
+
+[node name="TextureButton" type="TextureButton" parent="ColorRect/TextureRect3"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TextureRect4" type="TextureRect" parent="ColorRect"]
 layout_mode = 1
@@ -137,7 +151,7 @@ offset_bottom = 55.0
 text = "Gun 2"
 label_settings = SubResource("LabelSettings_sdey4")
 
-[node name="TextureRect5" type="TextureRect" parent="ColorRect"]
+[node name="TextureRect5" type="TextureRect" parent="ColorRect" node_paths=PackedStringArray("main_inventory")]
 layout_mode = 1
 offset_left = 92.0
 offset_top = 154.0
@@ -145,6 +159,9 @@ offset_right = 124.0
 offset_bottom = 186.0
 texture = ExtResource("2_mg3se")
 stretch_mode = 2
+script = ExtResource("3_l6wur")
+main_inventory = NodePath("../..")
+equip2 = true
 
 [node name="Label" type="Label" parent="ColorRect/TextureRect5"]
 layout_mode = 0
@@ -154,6 +171,14 @@ offset_bottom = 55.0
 text = "Equip 2
 "
 label_settings = SubResource("LabelSettings_sdey4")
+
+[node name="TextureButton" type="TextureButton" parent="ColorRect/TextureRect5"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 layout_mode = 1
@@ -221,3 +246,25 @@ offset_left = 228.0
 offset_top = 75.0
 offset_right = 260.0
 offset_bottom = 107.0
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -75.0
+offset_right = -45.0
+offset_bottom = 35.0
+grow_horizontal = 0
+texture_normal = ExtResource("5_b5n2c")
+texture_hover = ExtResource("6_jviyn")
+
+[connection signal="mouse_entered" from="ColorRect/TextureRect3" to="ColorRect/TextureRect3" method="start_overlap"]
+[connection signal="mouse_exited" from="ColorRect/TextureRect3" to="ColorRect/TextureRect3" method="end_overlap"]
+[connection signal="mouse_entered" from="ColorRect/TextureRect3/TextureButton" to="ColorRect/TextureRect3" method="start_overlap"]
+[connection signal="mouse_exited" from="ColorRect/TextureRect3/TextureButton" to="ColorRect/TextureRect3" method="end_overlap"]
+[connection signal="mouse_entered" from="ColorRect/TextureRect5" to="ColorRect/TextureRect5" method="start_overlap"]
+[connection signal="mouse_exited" from="ColorRect/TextureRect5" to="ColorRect/TextureRect5" method="end_overlap"]
+[connection signal="mouse_entered" from="ColorRect/TextureRect5/TextureButton" to="ColorRect/TextureRect5" method="start_overlap"]
+[connection signal="mouse_exited" from="ColorRect/TextureRect5/TextureButton" to="ColorRect/TextureRect5" method="end_overlap"]
+[connection signal="pressed" from="TextureButton" to="." method="close_inventory"]

@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy170w4lx0vhy"]
+
+[ext_resource type="Script" path="res://src/Inventory_Drop_Area.gd" id="1_eveku"]
+
+[node name="Inventory_Drop_Area" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eveku")

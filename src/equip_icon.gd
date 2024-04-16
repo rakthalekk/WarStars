@@ -48,15 +48,16 @@ func _can_drop(pos,data):
 
 
 func _on_gui_input(event):
-	#print("input recieved")
+	print("input recieved")
 	if event is InputEventScreenDrag:
 		
 		if(!MouseDrag.can_drag()):
 			return
 		print("dragged")
 		var drag = drag_icon.duplicate()
-		drag.person_icon = self
+		drag.gear_icon = self
 		drag.modulate.a = .5
+		drag.visible = true
 		MouseDrag.set_drag(drag, self)
 		#add_child(drag)
 		#drag.move_to_front()

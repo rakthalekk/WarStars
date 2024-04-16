@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://8p5eomm4bfei"]
+[gd_scene load_steps=6 format=3 uid="uid://8p5eomm4bfei"]
 
 [ext_resource type="Script" path="res://src/Black_Market_Selection_Panel.gd" id="1_fiie1"]
 [ext_resource type="Texture2D" uid="uid://dbcomdwxg6fts" path="res://assets/FleetUI/LargeContainerMiddle.png" id="2_4gfwd"]
 [ext_resource type="Texture2D" uid="uid://h7nsqdept6f0" path="res://assets/FleetUI/FleetSubmenu_smallcontainer.png" id="3_o8dba"]
 [ext_resource type="Texture2D" uid="uid://b53qxbulfchgb" path="res://assets/FleetUI/MoneySymbol.png" id="4_jdd5w"]
+[ext_resource type="FontFile" uid="uid://bv4wc7c2ird3k" path="res://assets/fonts/warstarsfont.ttf" id="4_p6k7q"]
 
 [node name="Black_Market_Selection_Panel" type="Control" node_paths=PackedStringArray("main_select_button", "main_image", "main_text", "gold_text")]
 layout_mode = 3
@@ -71,12 +72,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -70.0
-offset_top = -11.5
-offset_right = 70.0
-offset_bottom = 11.5
+offset_left = -66.0
+offset_top = -1.5
+offset_right = 74.0
+offset_bottom = 21.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_p6k7q")
+theme_override_font_sizes/font_size = 8
 text = "Name Here"
 
 [node name="Label2" type="Label" parent="TextureButton"]
@@ -86,11 +89,14 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
-offset_top = -22.5
-offset_bottom = 0.5
+offset_left = -41.0
+offset_top = -18.5
+offset_right = -1.0
+offset_bottom = 4.5
 grow_horizontal = 0
 grow_vertical = 0
+theme_override_fonts/font = ExtResource("4_p6k7q")
+theme_override_font_sizes/font_size = 16
 text = "143"
 
 [node name="TextureRect2" type="TextureRect" parent="TextureButton"]
@@ -101,13 +107,14 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -55.0
-offset_top = -19.5
+offset_top = -29.5
 offset_right = -39.0
-offset_bottom = -3.5
+offset_bottom = -13.5
 grow_horizontal = 0
 grow_vertical = 0
 texture = ExtResource("4_jdd5w")
 expand_mode = 2
+stretch_mode = 2
 
 [connection signal="pressed" from="Button" to="." method="on_button_click"]
 [connection signal="pressed" from="TextureButton" to="." method="on_button_click"]
