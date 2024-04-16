@@ -11,8 +11,14 @@ extends Fleet_Structure_UI
 @export var capacity_label: Label
 @export var capacity_bar: Mothership_Unit_Capacity_UI
 
+func get_structure()->Fleet_Structure:
+	return mothership_script
+
 func _ready():
 	refresh()
+	
+func set_tier(new_tier: int):
+	capacity_bar.set_tier(new_tier)
 
 func open_ui():
 	refresh_visuals()

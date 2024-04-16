@@ -57,7 +57,7 @@ func _ready():
 	#print(reward)
 	# Writes to contract button labels
 	if (has_node("DifficultyLabel") && has_node("RewardLabel")):
-		$DifficultyLabel.text = "Difficulty: " + str(difficulty_stars) + "/5"
+		$DifficultyLabel.text = ": " + str(difficulty_stars) + "/5"
 		$RewardLabel.text = str(reward)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

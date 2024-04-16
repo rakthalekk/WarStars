@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c7u2o2qoxbsrs"]
+[gd_scene load_steps=12 format=3 uid="uid://c7u2o2qoxbsrs"]
 
 [ext_resource type="Script" path="res://src/Black_Market_UI.gd" id="1_2kp81"]
 [ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="2_fqc16"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://c12iefgkvyrqm" path="res://src/black_market_top_selection_panel.tscn" id="6_ksxm7"]
 [ext_resource type="PackedScene" uid="uid://c3wsj5g031oug" path="res://src/black_market_bottom_selection_panel.tscn" id="7_i5xuo"]
 [ext_resource type="Texture2D" uid="uid://h7nsqdept6f0" path="res://assets/FleetUI/FleetSubmenu_smallcontainer.png" id="7_l7iln"]
+[ext_resource type="Script" path="res://src/Upgrade_Button.gd" id="10_kie42"]
+[ext_resource type="Texture2D" uid="uid://b53qxbulfchgb" path="res://assets/FleetUI/MoneySymbol.png" id="11_1gq3w"]
 
 [node name="Black_Market_UI" type="Control" node_paths=PackedStringArray("purchase_panels")]
 layout_mode = 3
@@ -151,4 +153,65 @@ grow_vertical = 1
 market_UI = NodePath("../../..")
 id = 4
 
+[node name="Button" type="Button" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("ship", "cost_label", "tier_label", "money_icon", "display_label", "max_level_label")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -46.0
+offset_right = 60.0
+grow_vertical = 0
+script = ExtResource("10_kie42")
+ship = NodePath("../../..")
+cost = 20
+tier = 30
+cost_label = NodePath("cost")
+tier_label = NodePath("tier")
+money_icon = NodePath("TextureRect")
+display_label = NodePath("upgrade")
+max_level_label = NodePath("max level")
+
+[node name="upgrade" type="Label" parent="MarginContainer/ColorRect/Button"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 1.0
+offset_right = 56.0
+offset_bottom = 24.0
+theme_override_font_sizes/font_size = 12
+text = "Upgrade"
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/ColorRect/Button"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 18.0
+offset_right = 15.0
+offset_bottom = 43.0
+texture = ExtResource("11_1gq3w")
+stretch_mode = 2
+
+[node name="cost" type="Label" parent="MarginContainer/ColorRect/Button"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 19.0
+offset_right = 58.0
+offset_bottom = 42.0
+text = "143"
+
+[node name="tier" type="Label" parent="MarginContainer/ColorRect/Button"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -25.0
+offset_right = 60.0
+text = "Tier 1"
+
+[node name="max level" type="Label" parent="MarginContainer/ColorRect/Button"]
+visible = false
+layout_mode = 0
+offset_right = 60.0
+offset_bottom = 45.0
+text = "MAX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="MarginContainer/ColorRect/TextureButton2" to="." method="on_close_ui"]
+[connection signal="pressed" from="MarginContainer/ColorRect/Button" to="MarginContainer/ColorRect/Button" method="press_button"]

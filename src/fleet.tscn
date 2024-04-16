@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://un7xbdajvrq8" path="res://src/healing_vats.tscn" id="4_acte8"]
 [ext_resource type="PackedScene" uid="uid://bs2s4bmlbc2oc" path="res://src/mothership.tscn" id="5_mfnvs"]
 [ext_resource type="PackedScene" uid="uid://sqsy230be2vj" path="res://src/rift.tscn" id="6_wq3md"]
-[ext_resource type="Texture2D" uid="uid://dmpjfqqf8wd06" path="res://assets/FleetUI/FleetUIBackground.png" id="8_gpoo2"]
+[ext_resource type="Texture2D" uid="uid://bw83r1kisg387" path="res://assets/FleetUI/TitleScreenBG.png" id="8_loa0a"]
 [ext_resource type="Texture2D" uid="uid://nytfx7c5m6f5" path="res://icon.svg" id="9_4hehf"]
 [ext_resource type="PackedScene" uid="uid://dkwpke6vc60yr" path="res://src/healing_vats_ui.tscn" id="9_nj6yi"]
 [ext_resource type="Script" path="res://src/Drop_Area.gd" id="10_6gl0v"]
@@ -55,18 +55,26 @@ mothership = NodePath("Mothership")
 [node name="Black_Market" parent="FleetStructureManager" node_paths=PackedStringArray("ui", "manager") instance=ExtResource("3_xw7ne")]
 ui = NodePath("../../FleetUI/Background/Black_Market_UI")
 manager = NodePath("..")
+upgrade_price = 1000
 
 [node name="Healing_Vats" parent="FleetStructureManager" node_paths=PackedStringArray("vats_ui", "manager") instance=ExtResource("4_acte8")]
 vats_ui = NodePath("../../FleetUI/Background/Healing_Vats_UI")
 manager = NodePath("..")
+upgrade_price = 800
+upgrade_2_price = 1600
 
 [node name="Mothership" parent="FleetStructureManager" node_paths=PackedStringArray("mothership_ui", "manager") instance=ExtResource("5_mfnvs")]
 mothership_ui = NodePath("../../FleetUI/Background/Mothership_UI")
 manager = NodePath("..")
+upgrade_price = 2000
+upgrade_2_price = 2
+capacity_increase = 4
 
 [node name="Rift" parent="FleetStructureManager" node_paths=PackedStringArray("ui", "manager") instance=ExtResource("6_wq3md")]
 ui = NodePath("../../FleetUI/Background/Rift_UI")
 manager = NodePath("..")
+upgrade_price = 1500
+upgrade_2_price = 3000
 
 [node name="Reserve" parent="." node_paths=PackedStringArray("party_menu") instance=ExtResource("3_k0ck3")]
 money = 300
@@ -82,7 +90,7 @@ grow_vertical = 2
 
 [node name="Background" type="TextureRect" parent="FleetUI"]
 layout_mode = 2
-texture = ExtResource("8_gpoo2")
+texture = ExtResource("8_loa0a")
 
 [node name="ContractButton" type="TextureButton" parent="FleetUI/Background"]
 visible = false
@@ -99,9 +107,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -122.0
-offset_top = -79.0
-offset_right = -77.0
+offset_left = -117.0
+offset_top = -119.0
+offset_right = -72.0
+offset_bottom = -40.0
 grow_horizontal = 0
 grow_vertical = 0
 texture_normal = ExtResource("10_hlgw0")
@@ -112,10 +121,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -120.0
-offset_top = -1.0
-offset_right = -86.0
-offset_bottom = 89.0
+offset_left = -211.0
+offset_top = 13.0
+offset_right = -177.0
+offset_bottom = 103.0
 grow_horizontal = 0
 texture_normal = ExtResource("12_tvstn")
 texture_hover = ExtResource("13_kehtr")
@@ -125,8 +134,10 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -57.0
-offset_right = 59.0
+offset_left = 186.0
+offset_top = -84.0
+offset_right = 245.0
+offset_bottom = -27.0
 grow_vertical = 0
 texture_normal = ExtResource("14_4468a")
 texture_hover = ExtResource("15_2gh8m")
@@ -138,10 +149,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -49.0
-offset_top = -52.0
-offset_right = 50.0
-offset_bottom = 1.0
+offset_left = -149.0
+offset_top = -124.0
+offset_right = -50.0
+offset_bottom = -71.0
 grow_horizontal = 2
 grow_vertical = 0
 texture_normal = ExtResource("16_fprl3")
