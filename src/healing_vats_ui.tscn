@@ -3,12 +3,10 @@
 [ext_resource type="Script" path="res://src/Healing_Vats_UI.gd" id="1_bwss5"]
 [ext_resource type="Texture2D" uid="uid://d0p6c3xmg0jww" path="res://assets/FleetUI/BackButton.png" id="2_kf0x2"]
 [ext_resource type="Texture2D" uid="uid://crm8k14ei2hgm" path="res://assets/FleetUI/BackButtonHover.png" id="3_bm44r"]
+[ext_resource type="FontFile" uid="uid://bv4wc7c2ird3k" path="res://assets/fonts/warstarsfont.ttf" id="4_oaw86"]
 [ext_resource type="PackedScene" uid="uid://rrd285mtrnui" path="res://src/healing_vats_selection_panel.tscn" id="4_ytxpb"]
 [ext_resource type="PackedScene" uid="uid://n1qfnjqujvc5" path="res://src/healing_vats_top_selection_panel.tscn" id="5_gh0k7"]
 [ext_resource type="PackedScene" uid="uid://c4ro2ttr7unv4" path="res://src/healing_vats_bottom_selection_panel.tscn" id="6_v2sls"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_t4pjs"]
-font_size = 20
 
 [node name="Healing_Vats_UI" type="Control" node_paths=PackedStringArray("heal_panels")]
 layout_mode = 3
@@ -32,73 +30,73 @@ grow_vertical = 2
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer"]
 layout_mode = 2
-color = Color(0.643137, 0.858824, 0.956863, 0.52549)
+color = Color(0.0745098, 0.0235294, 0.129412, 1)
 
 [node name="TextureButton2" type="TextureButton" parent="MarginContainer/ColorRect"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -95.0
-offset_right = -45.0
-offset_bottom = 50.0
+offset_left = -94.0
+offset_right = -64.0
+offset_bottom = 35.0
 grow_horizontal = 0
 texture_normal = ExtResource("2_kf0x2")
 texture_hover = ExtResource("3_bm44r")
-ignore_texture_size = true
-stretch_mode = 4
 
 [node name="Label" type="Label" parent="MarginContainer/ColorRect"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -63.5
-offset_right = 63.5
-offset_bottom = 28.0
+offset_left = -61.5
+offset_top = 14.0
+offset_right = 65.5
+offset_bottom = 42.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_oaw86")
+theme_override_font_sizes/font_size = 24
 text = "Med Bay
 "
-label_settings = SubResource("LabelSettings_t4pjs")
 horizontal_alignment = 1
 
 [node name="Vat 1" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("main_ui") instance=ExtResource("5_gh0k7")]
 layout_mode = 1
 offset_left = -105.0
-offset_top = -88.5
+offset_top = -84.5
 offset_right = 106.0
-offset_bottom = -45.5
+offset_bottom = -41.5
 main_ui = NodePath("../../..")
 
 [node name="Vat 2" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("main_ui") instance=ExtResource("4_ytxpb")]
 layout_mode = 1
 offset_left = -106.0
-offset_top = -42.5
+offset_top = -38.5
 offset_right = 105.0
-offset_bottom = -8.5
+offset_bottom = -4.5
 main_ui = NodePath("../../..")
 id = 1
 
 [node name="Vat 3" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("main_ui") instance=ExtResource("4_ytxpb")]
 layout_mode = 1
-offset_top = 8.5
-offset_bottom = 8.5
+offset_top = 12.5
+offset_bottom = 12.5
 main_ui = NodePath("../../..")
 id = 2
 
 [node name="Vat 4" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("main_ui") instance=ExtResource("4_ytxpb")]
 layout_mode = 1
-offset_top = 42.5
-offset_bottom = 42.5
+offset_top = 46.5
+offset_bottom = 46.5
 main_ui = NodePath("../../..")
 id = 3
 
 [node name="Vat 5" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("main_ui") instance=ExtResource("6_v2sls")]
 layout_mode = 1
 offset_left = -106.0
-offset_top = 59.5
+offset_top = 63.5
 offset_right = 106.0
-offset_bottom = 102.5
+offset_bottom = 106.5
 main_ui = NodePath("../../..")
 id = 4
 
