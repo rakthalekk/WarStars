@@ -45,6 +45,7 @@ var capture_tile: Vector2:
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	return
 	var file = FileAccess.open("res://assets/AlienNames.txt", FileAccess.READ)
 	while !file.eof_reached():
 		alienList.append(file.get_line())

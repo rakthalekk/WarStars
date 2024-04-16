@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://bvxj0pfbkkljm"]
+[gd_scene load_steps=62 format=3 uid="uid://bvxj0pfbkkljm"]
 
 [ext_resource type="PackedScene" uid="uid://dr28wheto1jnr" path="res://src/grid/map.tscn" id="1_0bs38"]
 [ext_resource type="Script" path="res://src/grid/map_generator.gd" id="1_8koai"]
@@ -47,6 +47,7 @@
 [ext_resource type="Texture2D" uid="uid://dc3wm4y1difi" path="res://assets/CombatUI/ActionSubmenu-Ability2.png" id="27_cjq8j"]
 [ext_resource type="Texture2D" uid="uid://clskc05y6hwge" path="res://assets/CombatUI/ActionSubmenu-Ability2Pressed.png" id="28_1iphq"]
 [ext_resource type="AudioStream" uid="uid://crvo4l4oep8yr" path="res://assets/sounds/Button Click.mp3" id="47_eopig"]
+[ext_resource type="AudioStream" uid="uid://4jxwy16te545" path="res://assets/sounds/The Rift (Battle Music).mp3" id="48_70qu1"]
 
 [sub_resource type="Animation" id="Animation_kg4y6"]
 length = 0.001
@@ -274,6 +275,34 @@ offset_top = 174.0
 offset_right = 371.0
 offset_bottom = 206.0
 texture = ExtResource("14_hxpk4")
+
+[node name="Equipment1" type="TextureRect" parent="UI/CombatUI"]
+layout_mode = 0
+offset_left = 317.0
+offset_top = 170.0
+offset_right = 325.0
+offset_bottom = 178.0
+
+[node name="Equipment2" type="TextureRect" parent="UI/CombatUI"]
+layout_mode = 0
+offset_left = 317.0
+offset_top = 180.0
+offset_right = 325.0
+offset_bottom = 188.0
+
+[node name="Equipment3" type="TextureRect" parent="UI/CombatUI"]
+layout_mode = 0
+offset_left = 317.0
+offset_top = 190.0
+offset_right = 325.0
+offset_bottom = 198.0
+
+[node name="Equipment4" type="TextureRect" parent="UI/CombatUI"]
+layout_mode = 0
+offset_left = 317.0
+offset_top = 200.0
+offset_right = 325.0
+offset_bottom = 208.0
 
 [node name="UITimer" type="Timer" parent="UI"]
 one_shot = true
@@ -537,6 +566,10 @@ frame_progress = 0.70035
 [node name="ButtonClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("47_eopig")
 volume_db = 18.725
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("48_70qu1")
+autoplay = true
 
 [connection signal="accept_pressed" from="GameBoard/Cursor" to="GameBoard" method="_on_Cursor_accept_pressed"]
 [connection signal="moved" from="GameBoard/Cursor" to="GameBoard" method="_on_Cursor_moved"]
