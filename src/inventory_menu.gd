@@ -109,6 +109,7 @@ func try_give_equipment_1(new_equip: Gear):
 	reserves.remove_equipment(new_equip)
 	equip_1_image.texture = person.equip1.image
 	equip_1_label.text = person.equip1.name
+	delete_object(new_equip)
 	
 
 func try_give_equipment_2(new_equip: Gear):
@@ -118,8 +119,10 @@ func try_give_equipment_2(new_equip: Gear):
 	reserves.remove_equipment(new_equip)
 	equip_2_image.texture = person.equip2.image
 	equip_2_label.text = person.equip2.name
+	delete_object(new_equip)
 
 func delete_object(gear: Gear):
+	print("trying to delete ",gear)
 	for i in inventory.size():
 		if(inventory[i].equip == gear):
 			inventory[i].queue_free()
