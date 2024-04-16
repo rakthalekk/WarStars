@@ -65,6 +65,8 @@ var armor: int
 
 @onready var _path_follow: PathFollow2D = $PathFollow2D
 @onready var health_bar = $PathFollow2D/HealthBar/Health as TextureProgressBar
+@onready var effects_anim = $EffectsAnimation
+@onready var damage_display = $DamageDisplay
 
 
 func _ready() -> void:
@@ -122,6 +124,12 @@ func damage(dmg: int):
 	dmg = max(0, dmg - armor)
 	health = max(0, health - dmg)
 	health_bar.value = health
+	
+	damage_display.text = str(-dmg)
+	
+	effects_anim.play("damage_flash")
+	await effects_anim.animation_finished
+	
 	if health == 0:
 		emit_signal("die", self)
 		
