@@ -138,11 +138,12 @@ visible = false
 layout_mode = 1
 is_army = true
 
-[node name="Army_Person_Icon" parent="." node_paths=PackedStringArray("mothership_ui") instance=ExtResource("6_tijfb")]
+[node name="Army_Person_Icon" parent="." node_paths=PackedStringArray("mothership_ui", "drag_icon") instance=ExtResource("6_tijfb")]
 visible = false
 layout_mode = 1
 mouse_filter = 1
 mothership_ui = NodePath("..")
+drag_icon = NodePath("Icon")
 is_army = true
 
 [connection signal="pressed" from="MarginContainer/ColorRect/TextureButton2" to="." method="on_close_ui"]
