@@ -45,5 +45,5 @@ func generate_unit() -> Person:
 		var gear2 = generator.spawn_random_gear_up_to_tier(one_below_tier)
 		unit.equip(3, gear2)
 		
-	name = GameManager.get_random_name()
+	unit.name = GameManager.get_random_name()
 	return unit

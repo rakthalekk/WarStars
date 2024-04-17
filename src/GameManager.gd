@@ -89,8 +89,8 @@ func load_fleet(units: Array[Unit] = []):
 func enter_combat(platoon: Array[Person_Icon]):
 	for member in platoon:
 		var unit = member.person.construct_unit()
-		print(get_tree().root.get_children())
 		get_combat_scene().get_node("GameBoard").add_child(unit)
+		
 	get_tree().root.remove_child(fleet)
 	get_tree().root.add_child(combat_scene)
 

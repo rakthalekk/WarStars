@@ -98,7 +98,7 @@ func construct_unit() -> PlayerUnit:
 	if equip2 != null:
 		unit.weapons.append(equip2)
 		
-	unit.name = "wow! cool unit!"
+	unit.name = name
 	
 	return unit
 
