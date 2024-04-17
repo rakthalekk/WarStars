@@ -108,18 +108,25 @@ func get_walkable_cells(unit: Unit) -> Array:
 func _reinitialize() -> void:
 	action_window.hide()
 	_units.clear()
+	var player_chunk_tiles = ChunkDatabase.get_player_chunk().get_used_cells(1)
 
 	for child in get_children():
 		var unit := child as Unit
 		if not unit:
 			continue
-		_units[unit.cell] = unit
-		unit.connect("die", remove_unit)
 		
 		if unit is PlayerUnit:
 			player_units.append(unit)
+			# Set unit's position
+			var random_tile = player_chunk_tiles[randi_range(0, player_chunk_tiles.size() - 1)]
+			while is_occupied(random_tile):
+				random_tile = player_chunk_tiles[randi_range(0, player_chunk_tiles.size() - 1)]
+			unit.set_grid_position(random_tile)
 		elif unit is EnemyUnit:
 			enemy_units.append(unit)
+			
+		_units[unit.cell] = unit
+		unit.connect("die", remove_unit)
 
 
 ## Returns an array with all the coordinates of walkable cells based on the `max_distance`.
