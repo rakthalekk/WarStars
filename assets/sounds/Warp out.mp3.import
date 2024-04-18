@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://duln7otcsqmty"
+path="res://.godot/imported/Warp out.mp3-455f6eafee230c4c709f4ef119dfbb23.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Warp out.mp3"
+dest_files=["res://.godot/imported/Warp out.mp3-455f6eafee230c4c709f4ef119dfbb23.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -28,6 +28,9 @@ var ui_up = false
 
 var enemy_with_overlay: EnemyUnit
 
+const SWORD_SWIPE = preload("res://src/weapons/sword_swipe.tscn")
+const EXPLOSION = preload("res://src/weapons/explosion.tscn")
+const GUNSHOT = preload("res://src/weapons/gun_shot.tscn")
 
 @onready var action_window = get_parent().get_node("ActionWindow")
 @onready var animation_player = get_parent().get_node("AnimationPlayer")
@@ -48,6 +51,7 @@ func _ready() -> void:
 	_reinitialize()
 	change_turn()
 	chapter_end_ui.hide()
+	combat_ui.hide()
 	display_danger_area()
 
 
@@ -357,6 +361,24 @@ func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
 			if not unit in attack_targets:
 				return
 			
+			var weapon = initiator.active_weapon as Weapon
+			var vfx
+			if weapon.is_melee:
+				vfx = SWORD_SWIPE.instantiate()
+				var goofy = initiator.cell - unit.cell
+				if goofy.x > 0:
+					vfx.rotate(deg_to_rad(90))
+				elif goofy.x < 0:
+					vfx.rotate(deg_to_rad(270))
+				elif goofy.y < 0:
+					vfx.rotate(deg_to_rad(180))
+					
+			else:
+				vfx = GUNSHOT.instantiate()
+			
+			vfx.global_position = unit.global_position
+			add_child(vfx)
+			
 			await unit.damage(initiator.active_weapon.damage)
 			await initiator.active_weapon.perform_specialty(unit)
 			attacking = false
@@ -419,6 +441,10 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 			combat_ui.get_node("Name").text = unit.name
 			display_unit_weapons(unit, unit.weapons[0], combat_ui.get_node("Weapon"))
 			
+			display_unit_equipment_icons(unit, unit.weapons[0], combat_ui.get_node("Equipment1"))
+			if unit.weapons.size() > 1:
+				display_unit_equipment_icons(unit, unit.weapons[1], combat_ui.get_node("Equipment2"))
+			
 			combat_ui.show()
 		else:
 			combat_ui.hide()
@@ -429,17 +455,38 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 
 func display_unit_weapons(unit: Unit, weapon: Weapon, image: TextureRect):
 	var weapon_name = "WS_Emprie_" if unit is EnemyUnit else "WS_Troupe_"
-	match weapon.name:
-		"Laser":
-			weapon_name += "Pistol.png"
-		"Shotgun":
-			weapon_name += "Shotty.png"
-		"Melee":
+	match weapon.weapon_type:
+		Equipment_Generator.Weapon_Type.MELEE:
 			weapon_name += "Lance.png"
+		Equipment_Generator.Weapon_Type.PISTOL:
+			weapon_name += "Pistol.png"
+		Equipment_Generator.Weapon_Type.SHOTGUN:
+			weapon_name += "Shotty.png"
+		Equipment_Generator.Weapon_Type.RIFLE:
+			weapon_name += "Rifle.png"
 		_:
 			weapon_name += weapon.name + ".png"
 	
 	image.texture = load("res://assets/Weapons & Gear/" + weapon_name)
+
+
+func display_unit_equipment_icons(unit: Unit, weapon: Weapon, image: TextureRect):
+	var weapon_name = ""
+	
+	match weapon.weapon_type:
+		Equipment_Generator.Weapon_Type.MELEE:
+			weapon_name += "Spear"
+		Equipment_Generator.Weapon_Type.PISTOL:
+			weapon_name += "Pistol"
+		Equipment_Generator.Weapon_Type.SHOTGUN:
+			weapon_name += "Shotty"
+		Equipment_Generator.Weapon_Type.RIFLE:
+			weapon_name += "Rifle"
+		_:
+			weapon_name += weapon.name + ".png"
+	
+	image.texture = load("res://assets/CombatUI/" + weapon_name + "Icon.png")
+
 
 func cancel_action():
 	$Cursor.active = true
@@ -814,7 +861,8 @@ func highlight_targets(highlight):
 	$Cursor.active = true
 	for target in attack_targets:
 		target._highlighted = highlight
-		
+
+
 func highlight_self(highlight):
 	$Cursor.active = true
 	_active_unit._highlighted = highlight

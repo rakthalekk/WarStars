@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bw4we7dunt2hg"]
+[gd_scene load_steps=16 format=3 uid="uid://bw4we7dunt2hg"]
 
 [ext_resource type="Texture2D" uid="uid://4wjht4y46wmd" path="res://assets/EnemyUnits/Tier1Enemy.png" id="1_g2rn2"]
 [ext_resource type="Script" path="res://src/enemy_unit.gd" id="1_sa3nq"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://celycusapsiae" path="res://assets/CombatUI/8-HealthBar_Border.png" id="5_ss2cx"]
 [ext_resource type="FontFile" uid="uid://bv4wc7c2ird3k" path="res://assets/fonts/warstarsfont.ttf" id="6_eckew"]
 [ext_resource type="Texture2D" uid="uid://bj1idskr6gk4y" path="res://assets/CombatUI/8-HealthBar_Health.png" id="6_ka32g"]
+[ext_resource type="AudioStream" uid="uid://4wrg0qparrqu" path="res://assets/sounds/DMG 1.mp3" id="7_n42df"]
+[ext_resource type="AudioStream" uid="uid://bwx6lnt005h1c" path="res://assets/sounds/Footstep 3.mp3" id="8_lycp4"]
 
 [sub_resource type="Animation" id="Animation_ckxec"]
 length = 0.001
@@ -203,3 +205,11 @@ theme_override_constants/outline_size = 0
 theme_override_fonts/font = ExtResource("6_eckew")
 theme_override_font_sizes/font_size = 8
 text = "-99"
+
+[node name="DamageSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_n42df")
+volume_db = 15.71
+
+[node name="FootstepSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_lycp4")
+volume_db = 15.876

@@ -33,13 +33,20 @@
 [ext_resource type="Texture2D" uid="uid://52y65hai1jj5" path="res://assets/CombatUI/ActionSubmenu-BottomBit.png" id="21_5rqbm"]
 [ext_resource type="Texture2D" uid="uid://3dw3yg1su6yn" path="res://assets/CombatUI/ActionSubmenu-Weapon1.png" id="21_e128f"]
 [ext_resource type="Texture2D" uid="uid://d1555q8d2sxfd" path="res://assets/CombatUI/ActionSubmenu-Weapon1Pressed.png" id="22_0uj7c"]
+[ext_resource type="Texture2D" uid="uid://bcpd7g8mwl7k7" path="res://assets/CombatUI/BackToGameButton.png" id="22_bed7g"]
+[ext_resource type="Script" path="res://src/PauseMenu.gd" id="22_vilfy"]
 [ext_resource type="Texture2D" uid="uid://co5j0dy2uo5ru" path="res://assets/CombatUI/PauseMenuBG.png" id="22_y17e8"]
 [ext_resource type="Texture2D" uid="uid://kg6ntiucj7qh" path="res://assets/CombatUI/ActionSubmenu-Weapon2.png" id="23_e3rrc"]
+[ext_resource type="Texture2D" uid="uid://bi4uv2rfelfkn" path="res://assets/CombatUI/BackToGameButton-hover.png" id="23_sv6cb"]
+[ext_resource type="Texture2D" uid="uid://4pnsqslpuioj" path="res://assets/CombatUI/QuitButton.png" id="24_g3tfl"]
 [ext_resource type="Texture2D" uid="uid://x4a8xukwh5vg" path="res://assets/CombatUI/ActionSubmenu-Weapon2Pressed.png" id="24_un0ja"]
+[ext_resource type="Texture2D" uid="uid://1lx83s6o28hm" path="res://assets/CombatUI/QuitButton-hover.png" id="25_otu72"]
 [ext_resource type="Texture2D" uid="uid://d0u5yfqobfn7i" path="res://assets/CombatUI/ActionSubmenu-Ability1.png" id="25_tqihv"]
 [ext_resource type="Texture2D" uid="uid://cg3qu1or3ivk4" path="res://assets/CombatUI/ActionSubmenu-Ability1Pressed.png" id="26_3lmln"]
 [ext_resource type="Texture2D" uid="uid://dc3wm4y1difi" path="res://assets/CombatUI/ActionSubmenu-Ability2.png" id="27_cjq8j"]
 [ext_resource type="Texture2D" uid="uid://clskc05y6hwge" path="res://assets/CombatUI/ActionSubmenu-Ability2Pressed.png" id="28_1iphq"]
+[ext_resource type="AudioStream" uid="uid://crvo4l4oep8yr" path="res://assets/sounds/Button Click.mp3" id="47_eopig"]
+[ext_resource type="AudioStream" uid="uid://4jxwy16te545" path="res://assets/sounds/The Rift (Battle Music).mp3" id="48_70qu1"]
 
 [sub_resource type="Animation" id="Animation_kg4y6"]
 length = 0.001
@@ -256,6 +263,34 @@ offset_right = 371.0
 offset_bottom = 206.0
 texture = ExtResource("14_hxpk4")
 
+[node name="Equipment1" type="TextureRect" parent="UI/CombatUI"]
+layout_mode = 0
+offset_left = 317.0
+offset_top = 170.0
+offset_right = 325.0
+offset_bottom = 178.0
+
+[node name="Equipment2" type="TextureRect" parent="UI/CombatUI"]
+layout_mode = 0
+offset_left = 317.0
+offset_top = 180.0
+offset_right = 325.0
+offset_bottom = 188.0
+
+[node name="Equipment3" type="TextureRect" parent="UI/CombatUI"]
+layout_mode = 0
+offset_left = 317.0
+offset_top = 190.0
+offset_right = 325.0
+offset_bottom = 198.0
+
+[node name="Equipment4" type="TextureRect" parent="UI/CombatUI"]
+layout_mode = 0
+offset_left = 317.0
+offset_top = 200.0
+offset_right = 325.0
+offset_bottom = 208.0
+
 [node name="UITimer" type="Timer" parent="UI"]
 one_shot = true
 
@@ -327,6 +362,7 @@ texture_focused = ExtResource("20_eux28")
 script = ExtResource("8_fkc47")
 
 [node name="PauseMenu" type="TextureRect" parent="UI"]
+process_mode = 3
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -340,6 +376,41 @@ offset_bottom = 55.5
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("22_y17e8")
+script = ExtResource("22_vilfy")
+
+[node name="BackToGame" type="TextureButton" parent="UI/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -6.5
+offset_right = 32.0
+offset_bottom = 6.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("22_bed7g")
+texture_hover = ExtResource("23_sv6cb")
+texture_focused = ExtResource("23_sv6cb")
+
+[node name="Quit" type="TextureButton" parent="UI/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -13.0
+offset_top = 13.5
+offset_right = 13.0
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("24_g3tfl")
+texture_hover = ExtResource("25_otu72")
+texture_focused = ExtResource("25_otu72")
 
 [node name="ActionWindow" type="Control" parent="."]
 layout_mode = 3
@@ -479,10 +550,20 @@ autoplay = "move"
 frame = 3
 frame_progress = 0.70035
 
+[node name="ButtonClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("47_eopig")
+volume_db = 18.725
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("48_70qu1")
+autoplay = true
+
 [connection signal="accept_pressed" from="GameBoard/Cursor" to="GameBoard" method="_on_Cursor_accept_pressed"]
 [connection signal="moved" from="GameBoard/Cursor" to="GameBoard" method="_on_Cursor_moved"]
 [connection signal="timeout" from="UI/UITimer" to="GameBoard" method="_on_ui_timer_timeout"]
 [connection signal="pressed" from="UI/ChapterEndControl/ChapterEndButton" to="UI/ChapterEndControl/ChapterEndButton" method="_on_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/BackToGame" to="UI/PauseMenu" method="_on_back_to_game_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/Quit" to="UI/PauseMenu" method="_on_quit_pressed"]
 [connection signal="mouse_entered" from="ActionWindow/Buttons/Action" to="ActionWindow" method="_on_action_mouse_entered"]
 [connection signal="mouse_exited" from="ActionWindow/Buttons/Action" to="ActionWindow" method="_on_action_mouse_exited"]
 [connection signal="pressed" from="ActionWindow/Buttons/Action" to="ActionWindow" method="_on_action_pressed"]
