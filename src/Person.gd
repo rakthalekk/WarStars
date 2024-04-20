@@ -28,6 +28,8 @@ const max_tier = 3
 @export var resting: bool
 @export var fighting: bool
 
+const unit_scene = preload("res://src/player_unit.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	price = base_price + randi_range(0, 25)
@@ -80,8 +82,8 @@ func equip(slot : int, equipment : Equipment):
 			else: return
 	equipment.apply_stat_changes(self)
 
-func construct_unit():
-	var unit = Unit.new()
+func construct_unit() -> PlayerUnit:
+	var unit = unit_scene.instantiate()
 	unit.max_health = max_health
 	unit.health = health
 	unit.move_range = speed
@@ -91,8 +93,12 @@ func construct_unit():
 	unit.weapons.append(weapon1)
 	unit.weapons.append(weapon2)
 	
-	unit.weapons.append(equip1)
-	unit.weapons.append(equip2)
+	if equip1 != null:
+		unit.weapons.append(equip1)
+	if equip2 != null:
+		unit.weapons.append(equip2)
+		
+	unit.name = name
 	
 	return unit
 
@@ -102,7 +108,7 @@ func update_from_unit(unit: Unit):
 	var unit_gear = unit.weapons
 		
 	# update used gear
-	if unit_gear[2] == equip1 and unit_gear[2].is_consumable and unit_gear[2].num_uses == 0:
+	if unit_gear.size() >= 3 and unit_gear[2] == equip1 and unit_gear[2].is_consumable and unit_gear[2].num_uses == 0:
 		equip1 = null
-	elif unit_gear[3] == equip2 and unit_gear[3].is_consumable and unit_gear[3].num_uses == 0:
+	elif unit_gear.size() >= 4 and unit_gear[3] == equip2 and unit_gear[3].is_consumable and unit_gear[3].num_uses == 0:
 		equip2 = null

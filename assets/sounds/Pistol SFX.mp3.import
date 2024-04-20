@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://3t0jqgksweku"
+path="res://.godot/imported/Pistol SFX.mp3-abbcdfa60bd665770ca4b7d3e3eb8ab8.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Pistol SFX.mp3"
+dest_files=["res://.godot/imported/Pistol SFX.mp3-abbcdfa60bd665770ca4b7d3e3eb8ab8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://8hyqtpna0t41"]
+[gd_scene load_steps=27 format=3 uid="uid://8hyqtpna0t41"]
 
 [ext_resource type="Script" path="res://Fleet.gd" id="1_arvdr"]
 [ext_resource type="PackedScene" uid="uid://bq04wip4d1kki" path="res://src/fleet_structure_manager.tscn" id="2_c0d5s"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://wwppcrdndcvt" path="res://assets/FleetUI/FleetShip-hover.png" id="17_ie5cv"]
 [ext_resource type="PackedScene" uid="uid://crsy04yyeu5f5" path="res://src/party_menu.tscn" id="23_ptk4h"]
 [ext_resource type="PackedScene" uid="uid://cfl04oknyy6x8" path="res://src/inventory_menu.tscn" id="25_fvhu2"]
+[ext_resource type="AudioStream" uid="uid://cc1u2popkrdy0" path="res://assets/sounds/Observation (Thinking Music).mp3" id="25_h1fk8"]
 
 [node name="Fleet" type="Control" node_paths=PackedStringArray("fleet_manager", "reserves", "quick_menu", "rift_menu", "healing_vats_menu", "black_market_menu", "mothership_menu")]
 layout_mode = 3
@@ -212,6 +213,11 @@ offset_bottom = 0.5
 visible = false
 layout_mode = 1
 reserves = NodePath("../../../Reserve")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("25_h1fk8")
+volume_db = 13.565
+autoplay = true
 
 [connection signal="pressed" from="FleetUI/Background/RiftButton" to="." method="open_rift_menu"]
 [connection signal="pressed" from="FleetUI/Background/BlackMarketButton" to="." method="open_black_market_menu"]

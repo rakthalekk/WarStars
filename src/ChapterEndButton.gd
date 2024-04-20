@@ -14,5 +14,5 @@ func _process(delta):
 func _on_pressed():
 	GameManager.chapter_complete = false
 	GameManager.current_turn = 0
-	get_tree().change_scene_to_file("res://src/fleet.tscn")
+	GameManager.load_fleet()
 	pass # Replace with function body.

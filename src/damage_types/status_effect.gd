@@ -41,17 +41,18 @@ func _remove_effect():
 func _save_stat():
 	pass
 	
-#func add_effect_to_target(unit: Unit):
-	#target = unit
-	#var existing_effect = get_tree().get_node(str(target.get_path(), "/", name))
-	#if existing_effect == null:
-		#target = unit
-		#unit.add_child(self)
-		#target.end_unit_action.connect(on_action_end)
-		#_save_stat()
-	#else:
-		#existing_effect.magnitude = max(existing_effect.magnitude + magnitude, max_magnitude)
-		#existing_effect.duration = (duration + existing_effect.duration) / 2
-		#
-	#if not applied_every_turn:
-		#_apply_effect()
+func add_effect_to_target(unit: Unit):
+	return
+	target = unit
+	var existing_effect = get_tree().get_node(str(target.get_path(), "/", name))
+	if existing_effect == null:
+		target = unit
+		unit.add_child(self)
+		target.end_unit_action.connect(on_action_end)
+		_save_stat()
+	else:
+		existing_effect.magnitude = max(existing_effect.magnitude + magnitude, max_magnitude)
+		existing_effect.duration = (duration + existing_effect.duration) / 2
+		
+	if not applied_every_turn:
+		_apply_effect()

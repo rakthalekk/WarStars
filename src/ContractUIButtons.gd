@@ -1,5 +1,7 @@
 extends Control
 
+@export var mothership_ui: Mothership_UI
+
 func _ready():
 	#while ($MarginContainer/HBoxContainer/CaptureContract.difficulty_stars == $MarginContainer/HBoxContainer/DefendContract.difficulty_stars and $MarginContainer/HBoxContainer/DefendContract.difficulty_stars == $MarginContainer/HBoxContainer/RouteContract.difficulty_stars):
 		#print("Rerolling Difficulty RNG")
@@ -7,19 +9,22 @@ func _ready():
 	pass
 
 func _on_capture_contract_pressed():
-	GameManager.currentContract = GameManager.ContractData.new($MarginContainer/HBoxContainer/CaptureContract)
+	GameManager.currentContract = GameManager.ContractData.new()
+	GameManager.currentContract.initialize_by_contract($MarginContainer/HBoxContainer/CaptureContract)
 	print("Contract Type: " + GameManager.Contract_Type.find_key(GameManager.currentContract.type) + "\nDifficulty: " + str(GameManager.currentContract.difficulty_stars) + "\nReward: " + str(GameManager.currentContract.reward) + "\n")
-	get_tree().change_scene_to_file("res://src/main.tscn")
+	GameManager.enter_combat(mothership_ui.current_platoon)
 
 
 func _on_defend_contract_pressed():
-	GameManager.currentContract = GameManager.ContractData.new($MarginContainer/HBoxContainer/DefendContract)
+	GameManager.currentContract = GameManager.ContractData.new()
+	GameManager.currentContract.initialize_by_contract($MarginContainer/HBoxContainer/DefendContract)
 	print("Contract Type: " + GameManager.Contract_Type.find_key(GameManager.currentContract.type) + "\nDifficulty: " + str(GameManager.currentContract.difficulty_stars) + "\nReward: " + str(GameManager.currentContract.reward) + "\n")
-	get_tree().change_scene_to_file("res://src/main.tscn")
+	GameManager.enter_combat(mothership_ui.current_platoon)
 
 
 func _on_route_contract_pressed():
-	GameManager.currentContract = GameManager.ContractData.new($MarginContainer/HBoxContainer/RouteContract)
+	GameManager.currentContract = GameManager.ContractData.new()
+	GameManager.currentContract.initialize_by_contract($MarginContainer/HBoxContainer/RouteContract)
 	print("Contract Type: " + GameManager.Contract_Type.find_key(GameManager.currentContract.type) + "\nDifficulty: " + str(GameManager.currentContract.difficulty_stars) + "\nReward: " + str(GameManager.currentContract.reward) + "\n")
-	get_tree().change_scene_to_file("res://src/main.tscn")
+	GameManager.enter_combat(mothership_ui.current_platoon)
 

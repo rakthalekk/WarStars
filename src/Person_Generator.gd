@@ -9,6 +9,9 @@ var generator : Equipment_Generator
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	generator =  WeaponDatabase.get_generator()
+	
+	for i in range(4):
+		GameManager.reserve_list.append(generate_unit())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -44,4 +47,6 @@ func generate_unit() -> Person:
 	if gear_roll > 1:
 		var gear2 = generator.spawn_random_gear_up_to_tier(one_below_tier)
 		unit.equip(3, gear2)
+		
+	unit.name = GameManager.get_random_name()
 	return unit
