@@ -28,6 +28,11 @@ var ui_up = false
 
 var enemy_with_overlay: EnemyUnit
 
+const ENEMY_UNIT = preload("res://src/enemy_unit.tscn")
+
+const SWORD_SWIPE = preload("res://src/weapons/sword_swipe.tscn")
+const EXPLOSION = preload("res://src/weapons/explosion.tscn")
+const GUNSHOT = preload("res://src/weapons/gun_shot.tscn")
 
 @onready var action_window = get_parent().get_node("ActionWindow")
 @onready var animation_player = get_parent().get_node("AnimationPlayer")
@@ -48,6 +53,7 @@ func _ready() -> void:
 	_reinitialize()
 	change_turn()
 	chapter_end_ui.hide()
+	combat_ui.hide()
 	display_danger_area()
 
 
@@ -108,18 +114,24 @@ func get_walkable_cells(unit: Unit) -> Array:
 func _reinitialize() -> void:
 	action_window.hide()
 	_units.clear()
-
+	
 	for child in get_children():
 		var unit := child as Unit
 		if not unit:
 			continue
-		_units[unit.cell] = unit
-		unit.connect("die", remove_unit)
 		
 		if unit is PlayerUnit:
 			player_units.append(unit)
+			# Set unit's position
+			var random_tile = Vector2(randi_range(0, 4), randi_range(0, 4))
+			while is_occupied(random_tile):
+				random_tile = Vector2(randi_range(0, 4), randi_range(0, 4))
+			unit.set_grid_position(random_tile)
 		elif unit is EnemyUnit:
 			enemy_units.append(unit)
+			
+		_units[unit.cell] = unit
+		unit.connect("die", remove_unit)
 
 
 ## Returns an array with all the coordinates of walkable cells based on the `max_distance`.
@@ -350,6 +362,24 @@ func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
 			if not unit in attack_targets:
 				return
 			
+			var weapon = initiator.active_weapon as Weapon
+			var vfx
+			if weapon.is_melee:
+				vfx = SWORD_SWIPE.instantiate()
+				var goofy = initiator.cell - unit.cell
+				if goofy.x > 0:
+					vfx.rotate(deg_to_rad(90))
+				elif goofy.x < 0:
+					vfx.rotate(deg_to_rad(270))
+				elif goofy.y < 0:
+					vfx.rotate(deg_to_rad(180))
+					
+			else:
+				vfx = GUNSHOT.instantiate()
+			
+			vfx.global_position = unit.global_position
+			add_child(vfx)
+			
 			await unit.damage(initiator.active_weapon.damage)
 			await initiator.active_weapon.perform_specialty(unit)
 			attacking = false
@@ -409,8 +439,17 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 		if _units.has(new_cell):
 			var unit = _units[new_cell] as Unit
 			combat_ui.get_node("HealthBar").frame = 17 - unit.health
-			combat_ui.get_node("Name").text = unit.name
+			
+			if unit is PlayerUnit:
+				combat_ui.get_node("Name").text = unit.name
+			else:
+				combat_ui.get_node("Name").text = "Empire Soldier"
+			
 			display_unit_weapons(unit, unit.weapons[0], combat_ui.get_node("Weapon"))
+			
+			display_unit_equipment_icons(unit, unit.weapons[0], combat_ui.get_node("Equipment1"))
+			if unit.weapons.size() > 1:
+				display_unit_equipment_icons(unit, unit.weapons[1], combat_ui.get_node("Equipment2"))
 			
 			combat_ui.show()
 		else:
@@ -422,17 +461,38 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 
 func display_unit_weapons(unit: Unit, weapon: Weapon, image: TextureRect):
 	var weapon_name = "WS_Emprie_" if unit is EnemyUnit else "WS_Troupe_"
-	match weapon.name:
-		"Laser":
-			weapon_name += "Pistol.png"
-		"Shotgun":
-			weapon_name += "Shotty.png"
-		"Melee":
+	match weapon.weapon_type:
+		Equipment_Generator.Weapon_Type.MELEE:
 			weapon_name += "Lance.png"
+		Equipment_Generator.Weapon_Type.PISTOL:
+			weapon_name += "Pistol.png"
+		Equipment_Generator.Weapon_Type.SHOTGUN:
+			weapon_name += "Shotty.png"
+		Equipment_Generator.Weapon_Type.RIFLE:
+			weapon_name += "Rifle.png"
 		_:
 			weapon_name += weapon.name + ".png"
 	
 	image.texture = load("res://assets/Weapons & Gear/" + weapon_name)
+
+
+func display_unit_equipment_icons(unit: Unit, weapon: Weapon, image: TextureRect):
+	var weapon_name = ""
+	
+	match weapon.weapon_type:
+		Equipment_Generator.Weapon_Type.MELEE:
+			weapon_name += "Spear"
+		Equipment_Generator.Weapon_Type.PISTOL:
+			weapon_name += "Pistol"
+		Equipment_Generator.Weapon_Type.SHOTGUN:
+			weapon_name += "Shotty"
+		Equipment_Generator.Weapon_Type.RIFLE:
+			weapon_name += "Rifle"
+		_:
+			weapon_name += weapon.name + ".png"
+	
+	image.texture = load("res://assets/CombatUI/" + weapon_name + "Icon.png")
+
 
 func cancel_action():
 	$Cursor.active = true
@@ -493,6 +553,8 @@ func chapter_end():
 	GameManager.chapter_complete = true
 	chapter_end_ui.get_node("ChapterEndButton").grab_focus()
 	$Cursor.active = false
+	for unit in player_units:
+		unit.person_source.update_from_unit(unit)
 	chapter_end_ui.show()
 
 
@@ -805,7 +867,34 @@ func highlight_targets(highlight):
 	$Cursor.active = true
 	for target in attack_targets:
 		target._highlighted = highlight
-		
+
+
 func highlight_self(highlight):
 	$Cursor.active = true
 	_active_unit._highlighted = highlight
+
+
+func spawn_enemy(tier: int, grid_position: Vector2):
+	var enemy = ENEMY_UNIT.instantiate() as EnemyUnit
+	enemy.position = grid_position * 16
+	add_child(enemy)
+
+
+func _on_equipment_1_mouse_entered():
+	if %Equipment1.texture:
+		pass
+
+
+func _on_equipment_2_mouse_entered():
+	if %Equipment2.texture:
+		pass
+
+
+func _on_equipment_3_mouse_entered():
+	if %Equipment3.texture:
+		pass
+
+
+func _on_equipment_4_mouse_entered():
+	if %Equipment4.texture:
+		pass

@@ -22,14 +22,15 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 script = ExtResource("1_y4dkt")
 default_texture = ExtResource("2_mg3se")
 base_item_icon = NodePath("Equip_Icon")
 equip_parent = NodePath("ColorRect2/ColorRect/ScrollContainer/GridContainer")
 person_image = NodePath("ColorRect/TextureRect")
 name_label = NodePath("ColorRect/Label")
-health_label = NodePath("ColorRect/TextureRect/Label")
-speed_label = NodePath("ColorRect/TextureRect/Label2")
+health_label = NodePath("ColorRect/Label2")
+speed_label = NodePath("ColorRect/Label3")
 weapon_1_image = NodePath("ColorRect/TextureRect2")
 weapon_1_label = NodePath("ColorRect/TextureRect2/Label")
 weapon_2_image = NodePath("ColorRect/TextureRect4")
@@ -71,23 +72,6 @@ offset_right = 44.0
 offset_bottom = 44.0
 texture = ExtResource("2_mg3se")
 stretch_mode = 2
-
-[node name="Label" type="Label" parent="ColorRect/TextureRect"]
-layout_mode = 0
-offset_top = 32.0
-offset_right = 40.0
-offset_bottom = 55.0
-text = "hp: 3/10"
-label_settings = SubResource("LabelSettings_sdey4")
-
-[node name="Label2" type="Label" parent="ColorRect/TextureRect"]
-layout_mode = 0
-offset_left = 51.0
-offset_top = 31.0
-offset_right = 91.0
-offset_bottom = 54.0
-text = "Speed: 6"
-label_settings = SubResource("LabelSettings_sdey4")
 
 [node name="TextureRect2" type="TextureRect" parent="ColorRect"]
 layout_mode = 1
@@ -179,6 +163,24 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Label2" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 44.0
+offset_right = 52.0
+offset_bottom = 67.0
+text = "hp: 3/10"
+label_settings = SubResource("LabelSettings_sdey4")
+
+[node name="Label3" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 43.0
+offset_right = 104.0
+offset_bottom = 66.0
+text = "Speed: 6"
+label_settings = SubResource("LabelSettings_sdey4")
 
 [node name="ColorRect2" type="ColorRect" parent="."]
 layout_mode = 1

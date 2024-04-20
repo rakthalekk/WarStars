@@ -66,6 +66,7 @@ upgrade_2_price = 1600
 [node name="Mothership" parent="FleetStructureManager" node_paths=PackedStringArray("mothership_ui", "manager") instance=ExtResource("5_mfnvs")]
 mothership_ui = NodePath("../../FleetUI/Background/Mothership_UI")
 manager = NodePath("..")
+capacity = 8
 upgrade_price = 2000
 upgrade_2_price = 2
 capacity_increase = 4
@@ -212,6 +213,10 @@ offset_bottom = 0.5
 visible = false
 layout_mode = 1
 reserves = NodePath("../../../Reserve")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+volume_db = 13.565
+autoplay = true
 
 [connection signal="pressed" from="FleetUI/Background/RiftButton" to="." method="open_rift_menu"]
 [connection signal="pressed" from="FleetUI/Background/BlackMarketButton" to="." method="open_black_market_menu"]

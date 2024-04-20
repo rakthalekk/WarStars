@@ -1,0 +1,105 @@
+[gd_scene load_steps=16 format=3 uid="uid://daywmbovbkqt3"]
+
+[ext_resource type="Texture2D" uid="uid://clofeac0ew1xa" path="res://assets/VFX/WS_VFX_SwordAttack.png" id="1_8y6rp"]
+[ext_resource type="Script" path="res://src/weapons/vfx.gd" id="1_be3ul"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frc6j"]
+atlas = ExtResource("1_8y6rp")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jqmrm"]
+atlas = ExtResource("1_8y6rp")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gmiwh"]
+atlas = ExtResource("1_8y6rp")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vyca1"]
+atlas = ExtResource("1_8y6rp")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kj5c0"]
+atlas = ExtResource("1_8y6rp")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5lna"]
+atlas = ExtResource("1_8y6rp")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uvg32"]
+atlas = ExtResource("1_8y6rp")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rk18x"]
+atlas = ExtResource("1_8y6rp")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b6nyc"]
+atlas = ExtResource("1_8y6rp")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4i0lc"]
+atlas = ExtResource("1_8y6rp")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntqiv"]
+atlas = ExtResource("1_8y6rp")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1u20w"]
+atlas = ExtResource("1_8y6rp")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8vl83"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frc6j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jqmrm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gmiwh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vyca1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kj5c0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5lna")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uvg32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rk18x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b6nyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4i0lc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntqiv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1u20w")
+}],
+"loop": false,
+"name": &"default",
+"speed": 30.0
+}]
+
+[node name="SwordSwipe" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_8vl83")
+autoplay = "default"
+frame = 5
+frame_progress = 0.889633
+script = ExtResource("1_be3ul")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

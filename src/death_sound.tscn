@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgkmrbxre3j0d"]
+
+[ext_resource type="Script" path="res://src/death_sound.gd" id="1_ivmbk"]
+[ext_resource type="AudioStream" uid="uid://cnpsm21dbpumt" path="res://assets/sounds/DEATH 1.mp3" id="1_jttif"]
+
+[node name="DeathSound" type="AudioStreamPlayer"]
+stream = ExtResource("1_jttif")
+volume_db = 12.812
+script = ExtResource("1_ivmbk")

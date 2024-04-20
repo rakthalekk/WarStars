@@ -3,12 +3,15 @@ extends Node2D
 @export var rank_1_chance = .6
 @export var rank_2_chance = .3
 @export var rank_3_chance = .1
-
+@export var image_picker: Person_Image_Picker
 var generator : Equipment_Generator
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	generator =  WeaponDatabase.get_generator()
+	
+	for i in range(4):
+		GameManager.reserve_list.append(generate_unit())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -16,6 +19,8 @@ func _process(delta):
 
 func generate_unit() -> Person:
 	var unit = Person.new()
+	unit.image = image_picker.get_image()
+	unit.color = image_picker.get_color()
 	
 	var rank_chance_total = rank_1_chance + rank_2_chance + rank_3_chance
 	var rank_roll = randf_range(0, rank_chance_total)
@@ -44,4 +49,6 @@ func generate_unit() -> Person:
 	if gear_roll > 1:
 		var gear2 = generator.spawn_random_gear_up_to_tier(one_below_tier)
 		unit.equip(3, gear2)
+		
+	unit.name = GameManager.get_random_name()
 	return unit

@@ -65,7 +65,8 @@ func remove_unit(person: Person):
 
 
 func spawn_new_soldier(person: Person):
-	var new_icon:Person_Icon = base_icon.duplicate()
+	var new_icon:Person_Icon = base_icon.duplicate(DUPLICATE_SCRIPTS + DUPLICATE_SIGNALS)
+	new_icon.setup()
 	new_icon.set_person(person)
 	new_icon.visible = true
 	current_platoon.append(new_icon)
