@@ -37,7 +37,7 @@ texture = ExtResource("2_ghpid")
 expand_mode = 1
 script = ExtResource("3_ytu4x")
 
-[node name="TextureRect2" type="TextureRect" parent="."]
+[node name="Highlight" type="TextureRect" parent="."]
 modulate = Color(0.298039, 0.298039, 0.298039, 0.313726)
 layout_mode = 1
 texture = ExtResource("3_ho36m")
@@ -71,5 +71,5 @@ label_settings = SubResource("LabelSettings_6xfqd")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="gui_input" from="Icon" to="." method="_on_gui_input"]
-[connection signal="gui_input" from="TextureRect2" to="." method="_on_gui_input"]
+[connection signal="gui_input" from="Highlight" to="." method="_on_gui_input"]
 [connection signal="gui_input" from="Drag_Icon" to="." method="_on_gui_input"]

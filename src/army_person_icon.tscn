@@ -4,6 +4,10 @@
 [ext_resource type="Script" path="res://src/Army_Person_Icon.gd" id="2_bo2yc"]
 
 [node name="Army_Person_Icon" instance=ExtResource("1_xsxkd")]
+custom_minimum_size = Vector2(32, 32)
 script = ExtResource("2_bo2yc")
 sleep_color = Color(0.411765, 0.411765, 0.411765, 1)
 warband_color = Color(0.698039, 0.133333, 0.133333, 1)
+
+[node name="Icon" parent="." index="0"]
+custom_minimum_size = Vector2(32, 32)
