@@ -52,9 +52,10 @@ func open_inventory():
 func display_person(new_person:Person):
 	person = new_person
 	person_image.texture = person.image
+	person_image.modulate = person.color
 	name_label.text = person.name
-	health_label.text = str(person.health) + "/" + str(person.max_health)
-	speed_label.text = str(person.speed)
+	health_label.text = "HP: " + str(person.health) + "/" + str(person.max_health)
+	speed_label.text = "Move: " + str(person.speed)
 	weapon_1_image.texture = person.weapon1.image
 	weapon_1_label.text = person.weapon1.name
 	weapon_2_image.texture = person.weapon2.image
@@ -140,6 +141,7 @@ func close_inventory():
 
 func spawn_new_equip(equip: Equipment):
 	var new_icon:Equip_Icon = base_item_icon.duplicate()
+	new_icon.setup()
 	new_icon.set_equip(equip)
 	new_icon.visible = true
 	equip_parent.add_child(new_icon)

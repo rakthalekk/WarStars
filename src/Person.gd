@@ -12,6 +12,7 @@ var equip2 : Gear
 @export var gear_price_base = 25
 
 @export var image: Texture
+@export var color: Color = Color.WHITE
 var price = 100
 
 var tier = 1
@@ -89,6 +90,9 @@ func construct_unit() -> PlayerUnit:
 	unit.move_range = speed
 	unit.tier = tier
 	unit.person_source = self
+	unit.texture = image
+	unit.color = color
+	unit.set_sprites(image, color)
 	
 	unit.weapons.append(weapon1)
 	unit.weapons.append(weapon2)

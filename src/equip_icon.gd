@@ -15,11 +15,15 @@ func _ready():
 func _process(delta):
 	pass
 	
+func setup():
+	icon = get_node("Icon")
+	drag_icon = get_node("Drag_Icon")
 
 func set_equip(new_equip:Equipment):
 	equip=new_equip;
 	if(new_equip.image != null):
 		icon.texture = new_equip.image
+		drag_icon.texture = new_equip.image
 
 #func _get_drag_data(at_position):
 #	print("start dragging")

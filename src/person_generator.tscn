@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bt306fals7b5n"]
+[gd_scene load_steps=3 format=3 uid="uid://bt306fals7b5n"]
 
 [ext_resource type="Script" path="res://src/Person_Generator.gd" id="1_4viic"]
+[ext_resource type="PackedScene" uid="uid://djshxun1tv33f" path="res://src/person_image_picker.tscn" id="2_aw6wo"]
 
-[node name="PersonGenerator" type="Node2D"]
+[node name="PersonGenerator" type="Node2D" node_paths=PackedStringArray("image_picker")]
 script = ExtResource("1_4viic")
+image_picker = NodePath("PersonImagePicker")
+
+[node name="PersonImagePicker" parent="." instance=ExtResource("2_aw6wo")]

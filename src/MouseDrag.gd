@@ -13,7 +13,7 @@ func set_drag(new_object: Drag_Icon, new_spawner: Node):
 		dragObject = new_object
 		print("start dragging new object ",new_object)
 		new_object.z_index = 10
-		get_parent().get_node("Fleet").add_child(dragObject);
+		get_parent().get_node("Fleet/FleetUI").add_child(dragObject);
 		dragObject.move_to_front()
 		spawner = new_spawner
 

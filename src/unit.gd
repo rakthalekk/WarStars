@@ -17,6 +17,10 @@ signal die(unit: Unit)
 @export var max_health := 8
 ## The unit's tier
 @export var tier := 1
+## the player's head texture
+@export var texture: Texture
+## the player's head color
+@export var color: Color
 
 var person_source: Person
 

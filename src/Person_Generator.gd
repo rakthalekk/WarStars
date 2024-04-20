@@ -3,7 +3,7 @@ extends Node2D
 @export var rank_1_chance = .6
 @export var rank_2_chance = .3
 @export var rank_3_chance = .1
-
+@export var image_picker: Person_Image_Picker
 var generator : Equipment_Generator
 
 # Called when the node enters the scene tree for the first time.
@@ -19,6 +19,8 @@ func _process(delta):
 
 func generate_unit() -> Person:
 	var unit = Person.new()
+	unit.image = image_picker.get_image()
+	unit.color = image_picker.get_color()
 	
 	var rank_chance_total = rank_1_chance + rank_2_chance + rank_3_chance
 	var rank_roll = randf_range(0, rank_chance_total)
