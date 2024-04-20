@@ -9,7 +9,6 @@ extends Control
 @export var healing_vats_menu: Fleet_Structure_UI
 @export var black_market_menu: Fleet_Structure_UI
 @export var mothership_menu: Fleet_Structure_UI
-var initial = true
 
 var last_menu: Fleet_Structure_UI = null
 
@@ -18,10 +17,8 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if initial:
-		initial = false
-		for i in range(4):
-			reserves.add_unit_to_army(PersonGenerator.generate_unit())
+	for person in GameManager.reserve_list:
+		reserves.add_unit_to_army(person)
 	#reserves.add_money(GameManager.currentContract.reward)
 
 

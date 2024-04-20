@@ -28,6 +28,8 @@ var ui_up = false
 
 var enemy_with_overlay: EnemyUnit
 
+const ENEMY_UNIT = preload("res://src/enemy_unit.tscn")
+
 const SWORD_SWIPE = preload("res://src/weapons/sword_swipe.tscn")
 const EXPLOSION = preload("res://src/weapons/explosion.tscn")
 const GUNSHOT = preload("res://src/weapons/gun_shot.tscn")
@@ -112,8 +114,7 @@ func get_walkable_cells(unit: Unit) -> Array:
 func _reinitialize() -> void:
 	action_window.hide()
 	_units.clear()
-	var player_chunk_tiles = ChunkDatabase.get_player_chunk().get_used_cells(1)
-
+	
 	for child in get_children():
 		var unit := child as Unit
 		if not unit:
@@ -122,9 +123,9 @@ func _reinitialize() -> void:
 		if unit is PlayerUnit:
 			player_units.append(unit)
 			# Set unit's position
-			var random_tile = player_chunk_tiles[randi_range(0, player_chunk_tiles.size() - 1)]
+			var random_tile = Vector2(randi_range(0, 4), randi_range(0, 4))
 			while is_occupied(random_tile):
-				random_tile = player_chunk_tiles[randi_range(0, player_chunk_tiles.size() - 1)]
+				random_tile = Vector2(randi_range(0, 4), randi_range(0, 4))
 			unit.set_grid_position(random_tile)
 		elif unit is EnemyUnit:
 			enemy_units.append(unit)
@@ -438,7 +439,12 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 		if _units.has(new_cell):
 			var unit = _units[new_cell] as Unit
 			combat_ui.get_node("HealthBar").frame = 17 - unit.health
-			combat_ui.get_node("Name").text = unit.name
+			
+			if unit is PlayerUnit:
+				combat_ui.get_node("Name").text = unit.name
+			else:
+				combat_ui.get_node("Name").text = "Empire Soldier"
+			
 			display_unit_weapons(unit, unit.weapons[0], combat_ui.get_node("Weapon"))
 			
 			display_unit_equipment_icons(unit, unit.weapons[0], combat_ui.get_node("Equipment1"))
@@ -866,3 +872,29 @@ func highlight_targets(highlight):
 func highlight_self(highlight):
 	$Cursor.active = true
 	_active_unit._highlighted = highlight
+
+
+func spawn_enemy(tier: int, grid_position: Vector2):
+	var enemy = ENEMY_UNIT.instantiate() as EnemyUnit
+	enemy.position = grid_position * 16
+	add_child(enemy)
+
+
+func _on_equipment_1_mouse_entered():
+	if %Equipment1.texture:
+		pass
+
+
+func _on_equipment_2_mouse_entered():
+	if %Equipment2.texture:
+		pass
+
+
+func _on_equipment_3_mouse_entered():
+	if %Equipment3.texture:
+		pass
+
+
+func _on_equipment_4_mouse_entered():
+	if %Equipment4.texture:
+		pass
