@@ -506,7 +506,7 @@ func display_unit_weapons(unit: Unit, weapon: Weapon, image: TextureRect):
 	var weapon_name = "WS_Emprie_" if unit is EnemyUnit else "WS_Troupe_"
 	match weapon.weapon_type:
 		Equipment_Generator.Weapon_Type.MELEE:
-			if weapon_name.contains("Spear"):
+			if weapon.name.contains("Spear"):
 				weapon_name += "Lance.png"
 			else:
 				weapon_name += "Sword.png"
@@ -527,7 +527,7 @@ func display_unit_equipment_icons(unit: Unit, weapon: Weapon, image: TextureRect
 	
 	match weapon.weapon_type:
 		Equipment_Generator.Weapon_Type.MELEE:
-			if weapon_name.contains("Spear"):
+			if weapon.name.contains("Spear"):
 				weapon_name += "Spear"
 			else:
 				weapon_name += "Sword"
@@ -579,6 +579,8 @@ func end_action():
 	highlight_targets(false)
 	
 	attack_targets.clear()
+	
+	_on_Cursor_moved($Cursor.cell)
 	
 	check_end_turn()
 
@@ -634,14 +636,23 @@ func change_turn():
 			if damaging:
 				await unit.damage(2)
 			
-			for weapon in unit.weapons:
-				weapon.rest()
+			var heat = map.get_cell_tile_data(0, unit.cell).get_custom_data("heat")
+			if heat:
+				for weapon in unit.weapons:
+					if weapon is Weapon:
+						weapon.increment_heat()
+			else:
+				for weapon in unit.weapons:
+					weapon.rest()
 	else:
 		animation_player.play("enemy_turn_start")
 		for unit in enemy_units:
 			var damaging = map.get_cell_tile_data(0, unit.cell).get_custom_data("damaging")
 			if damaging:
 				await unit.damage(2)
+			
+			for weapon in unit.weapons:
+				weapon.rest()
 		
 		await animation_player.animation_finished
 		enemy_turn()

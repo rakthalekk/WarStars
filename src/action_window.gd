@@ -8,6 +8,12 @@ extends Control
 
 @onready var button_click = get_parent().get_node("ButtonClick") as AudioStreamPlayer
 
+
+func _ready():
+	$Submenu.hide()
+	$WeaponInfo.hide()
+
+
 func display():
 	show()
 	$MenuCursor.hide()

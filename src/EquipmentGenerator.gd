@@ -4,10 +4,11 @@ extends Node2D
 enum Weapon_Type{NONE, MELEE, PISTOL, SHOTGUN, RIFLE}
 
 @export var base_melee: Equipment
+@export var base_spear: Equipment
 @export var base_pistol: Equipment
 @export var base_shotgun: Equipment
 @export var base_rifle: Equipment
-@onready var base_weapons: Array[Weapon] = [base_melee, base_pistol, base_shotgun, base_rifle]
+@onready var base_weapons: Array[Weapon] = [base_melee, base_spear, base_pistol, base_shotgun, base_rifle]
 @export var tier_1_weapons: Dictionary = {Weapon_Type.MELEE: [], Weapon_Type.PISTOL: [], Weapon_Type.SHOTGUN: [], Weapon_Type.RIFLE: []}
 @export var tier_2_weapons: Dictionary = {Weapon_Type.MELEE: [], Weapon_Type.PISTOL: [], Weapon_Type.SHOTGUN: [], Weapon_Type.RIFLE: []}
 @export var tier_3_weapons: Dictionary = {Weapon_Type.MELEE: [], Weapon_Type.PISTOL: [], Weapon_Type.SHOTGUN: [], Weapon_Type.RIFLE: []}
@@ -46,6 +47,7 @@ func spawn_random_weapon_at_tier(tier: int, disallowed_type: Weapon_Type = Weapo
 		match(disallowed_type):
 			Weapon_Type.MELEE:
 				valid_weapons.erase(base_melee)
+				valid_weapons.erase(base_spear)
 			Weapon_Type.PISTOL:
 				valid_weapons.erase(base_pistol)
 			Weapon_Type.SHOTGUN:

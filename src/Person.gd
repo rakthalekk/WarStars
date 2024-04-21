@@ -97,6 +97,9 @@ func construct_unit() -> PlayerUnit:
 	unit.weapons.append(weapon1)
 	unit.weapons.append(weapon2)
 	
+	weapon1.user = unit
+	weapon2.user = unit
+	
 	if equip1 != null:
 		unit.weapons.append(equip1)
 	if equip2 != null:

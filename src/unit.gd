@@ -79,6 +79,7 @@ var stims: bool = false
 @onready var health_bar = $PathFollow2D/HealthBar/Health as TextureProgressBar
 @onready var effects_anim = $EffectsAnimation
 @onready var damage_display = $DamageDisplay
+@onready var heat_display = $HeatDisplay
 
 
 func _ready() -> void:
@@ -92,7 +93,9 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	
 	for weapon_name in weapon_names:
-		weapons.append(WeaponDatabase._get_weapon_by_name(weapon_name).clone())
+		var weapon = WeaponDatabase._get_weapon_by_name(weapon_name).clone()
+		weapon.user = self
+		weapons.append(weapon)
 	
 	active_weapon = weapons[0]
 
@@ -142,7 +145,7 @@ func damage(dmg: int):
 	health = max(0, health - dmg)
 	health_bar.value = health
 	
-	damage_display.text = str(-dmg)
+	damage_display.text = str(-dmg) + " HP"
 	
 	$DamageSound.stream = damage_sounds.pick_random()
 	$DamageSound.play()
@@ -156,7 +159,14 @@ func damage(dmg: int):
 		sound.play_sound(death_sounds.pick_random())
 		
 		emit_signal("die", self)
-		
+
+
+func play_heat_gain(heat: int):
+	heat_display.text = str(heat) + " HEAT"
+	effects_anim.play("heat_flash")
+	await effects_anim.animation_finished
+
+
 func switch_weapons(index: int):
 	if index >= 0 and index <= 3:
 		active_weapon = weapons[index]

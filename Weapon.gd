@@ -61,12 +61,23 @@ func use_active(target = null) -> bool:
 	await target.damage(damage + damage_roll_multiplier * randi_range(1, damage_roll))
 	perform_specialty(target)
 	
+	increment_heat()
+	
+	return true
+
+
+func increment_heat():
+	if weapon_type == Equipment_Generator.Weapon_Type.MELEE:
+		return
+	
 	current_heat += heat_gain
 	if(current_heat >= heat_max):
 		current_heat = heat_max
 		overheated = true
-	return true
 	
+	user.play_heat_gain(heat_gain)
+
+
 func rest():
 	if !used_this_turn:
 		current_heat = maxi(0,current_heat - heat_cooldown)

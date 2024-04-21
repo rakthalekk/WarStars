@@ -20,8 +20,9 @@
 [node name="WeaponDatabase" type="Node2D"]
 script = ExtResource("1_ug3or")
 
-[node name="Equipment_Generator" parent="." node_paths=PackedStringArray("base_melee", "base_pistol", "base_shotgun", "base_rifle") instance=ExtResource("3_bxivp")]
+[node name="Equipment_Generator" parent="." node_paths=PackedStringArray("base_melee", "base_spear", "base_pistol", "base_shotgun", "base_rifle") instance=ExtResource("3_bxivp")]
 base_melee = NodePath("Weapons/Cool Sword")
+base_spear = NodePath("Weapons/Cool Spear")
 base_pistol = NodePath("Weapons/Sidearm")
 base_shotgun = NodePath("Weapons/Hunting Shotgun")
 base_rifle = NodePath("Weapons/Scout Rifle")
