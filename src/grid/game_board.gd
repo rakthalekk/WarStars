@@ -390,6 +390,9 @@ func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
 		if !attackable && cell.distance_to(initiator.cell) > 1:
 			return
 		
+		if !initiator.active_weapon.can_use_active():
+			return
+		
 		if initiator is PlayerUnit && unit is EnemyUnit:
 			if not unit in attack_targets:
 				return
@@ -482,7 +485,7 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 
 
 func show_unit_information(unit: Unit):
-	combat_ui.get_node("HealthBar").frame = 17 - unit.health
+	combat_ui.get_node("HealthBar").frame = 16 - unit.health
 	
 	if unit is PlayerUnit:
 		combat_ui.get_node("Name").text = unit.name
@@ -503,7 +506,10 @@ func display_unit_weapons(unit: Unit, weapon: Weapon, image: TextureRect):
 	var weapon_name = "WS_Emprie_" if unit is EnemyUnit else "WS_Troupe_"
 	match weapon.weapon_type:
 		Equipment_Generator.Weapon_Type.MELEE:
-			weapon_name += "Lance.png"
+			if weapon_name.contains("Spear"):
+				weapon_name += "Lance.png"
+			else:
+				weapon_name += "Sword.png"
 		Equipment_Generator.Weapon_Type.PISTOL:
 			weapon_name += "Pistol.png"
 		Equipment_Generator.Weapon_Type.SHOTGUN:
@@ -521,7 +527,10 @@ func display_unit_equipment_icons(unit: Unit, weapon: Weapon, image: TextureRect
 	
 	match weapon.weapon_type:
 		Equipment_Generator.Weapon_Type.MELEE:
-			weapon_name += "Spear"
+			if weapon_name.contains("Spear"):
+				weapon_name += "Spear"
+			else:
+				weapon_name += "Sword"
 		Equipment_Generator.Weapon_Type.PISTOL:
 			weapon_name += "Pistol"
 		Equipment_Generator.Weapon_Type.SHOTGUN:
@@ -611,9 +620,6 @@ func change_turn():
 	unit_moved = false
 	
 	for unit in _units.values():
-		for weapon in unit.weapons:
-			weapon.rest()
-		
 		unit.acted = false
 	
 	if player_turn:
@@ -627,6 +633,9 @@ func change_turn():
 			var damaging = map.get_cell_tile_data(0, unit.cell).get_custom_data("damaging")
 			if damaging:
 				await unit.damage(2)
+			
+			for weapon in unit.weapons:
+				weapon.rest()
 	else:
 		animation_player.play("enemy_turn_start")
 		for unit in enemy_units:
@@ -691,8 +700,6 @@ func check_enemy_range(enemy: EnemyUnit):
 					await _move_enemy_unit(destination, enemy)
 					await _attack_unit(target, enemy)
 					
-					display_danger_area()
-					
 					return
 	if number_of_targets == 0 && GameManager.currentContract:
 		await no_attack_ai(enemy, movement_options)
@@ -713,7 +720,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, random_tile)
 					await _move_enemy_unit(random_tile, enemy)
-					display_danger_area()
 				2:
 					var wait_check = rng.randi_range(1, 10)
 					# 60% chance to wait
@@ -724,7 +730,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, random_tile)
 					await _move_enemy_unit(random_tile, enemy)
-					display_danger_area()
 				3:
 					var wait_check = rng.randi_range(1, 10)
 					# 50% chance to wait
@@ -738,7 +743,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, closest_tile_to_capture_point)
 					await _move_enemy_unit(closest_tile_to_capture_point, enemy)
-					display_danger_area()
 				4:
 					var wait_check = rng.randi_range(1, 10)
 					# 30% chance to wait
@@ -752,7 +756,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, closest_tile_to_capture_point)
 					await _move_enemy_unit(closest_tile_to_capture_point, enemy)
-					display_danger_area()
 				5:
 					# 0% chance to wait
 					var closest_tile_to_capture_point = enemy.cell
@@ -763,7 +766,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, closest_tile_to_capture_point)
 					await _move_enemy_unit(closest_tile_to_capture_point, enemy)
-					display_danger_area()
 		GameManager.Contract_Type.DEFEND:
 			match GameManager.currentContract.difficulty_stars:
 				1:
@@ -780,7 +782,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, closest_tile_to_player)
 					await _move_enemy_unit(closest_tile_to_player, enemy)
-					display_danger_area()
 				2:
 					var wait_check = rng.randi_range(1, 10)
 					# 60% chance to wait
@@ -795,7 +796,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, closest_tile_to_player)
 					await _move_enemy_unit(closest_tile_to_player, enemy)
-					display_danger_area()
 				3:
 					var wait_check = rng.randi_range(1, 10)
 					# 50% chance to wait
@@ -810,7 +810,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, closest_tile_to_player)
 					await _move_enemy_unit(closest_tile_to_player, enemy)
-					display_danger_area()
 				4:
 					var wait_check = rng.randi_range(1, 10)
 					# 30% chance to wait
@@ -825,7 +824,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, closest_tile_to_player)
 					await _move_enemy_unit(closest_tile_to_player, enemy)
-					display_danger_area()
 				5:
 					# 0% chance to wait
 					var closest_tile_to_player = enemy.cell
@@ -837,7 +835,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, closest_tile_to_player)
 					await _move_enemy_unit(closest_tile_to_player, enemy)
-					display_danger_area()
 					
 		GameManager.Contract_Type.ROUTE:
 			match GameManager.currentContract.difficulty_stars:
@@ -851,7 +848,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, random_tile)
 					await _move_enemy_unit(random_tile, enemy)
-					display_danger_area()
 				2:
 					var wait_check = rng.randi_range(1, 10)
 					# 60% chance to wait
@@ -862,7 +858,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, random_tile)
 					await _move_enemy_unit(random_tile, enemy)
-					display_danger_area()
 				3:
 					var wait_check = rng.randi_range(1, 10)
 					# 50% chance to wait
@@ -877,7 +872,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, closest_tile_to_player)
 					await _move_enemy_unit(closest_tile_to_player, enemy)
-					display_danger_area()
 				4:
 					var wait_check = rng.randi_range(1, 10)
 					# 30% chance to wait
@@ -892,7 +886,6 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, closest_tile_to_player)
 					await _move_enemy_unit(closest_tile_to_player, enemy)
-					display_danger_area()
 				5:
 					# 0% chance to wait
 					var closest_tile_to_player = enemy.cell
@@ -904,10 +897,8 @@ func no_attack_ai(enemy: EnemyUnit, movement_options: Array):
 						return
 					_unit_path.update_path(enemy.cell, closest_tile_to_player)
 					await _move_enemy_unit(closest_tile_to_player, enemy)
-					display_danger_area()	
-					
-					
-							
+
+
 func highlight_targets(highlight):
 	$Cursor.active = true
 	for target in attack_targets:
@@ -932,7 +923,10 @@ func display_weapon_tooltip(weapon: Weapon):
 	%EquipmentPopup.get_node("Type").text = "Type: " + Equipment_Generator.Weapon_Type.keys()[weapon.weapon_type]
 	%EquipmentPopup.get_node("Range").text = "Range: " + str(weapon.range)
 	%EquipmentPopup.get_node("Damage").text = "DMG: " + str(weapon.damage) + " plus " + str(weapon.damage_roll_multiplier) + "d" + str(weapon.damage_roll)
-	%EquipmentPopup.get_node("Heat").text = "Heat: " + str(weapon.current_heat) + "/" + str(weapon.heat_max)
+	if weapon.weapon_type == Equipment_Generator.Weapon_Type.MELEE:
+		%EquipmentPopup.get_node("Heat").text = ""
+	else:
+		%EquipmentPopup.get_node("Heat").text = "Heat: " + str(weapon.current_heat) + "/" + str(weapon.heat_max)
 
 
 func _on_equipment_1_mouse_entered():

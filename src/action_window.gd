@@ -145,7 +145,10 @@ func display_weapon_info(weapon: Weapon):
 	$WeaponInfo.get_node("Type").text = "Type: " + Equipment_Generator.Weapon_Type.keys()[weapon.weapon_type]
 	$WeaponInfo.get_node("Range").text = "Range: " + str(weapon.range)
 	$WeaponInfo.get_node("Damage").text = "DMG: " + str(weapon.damage) + " plus " + str(weapon.damage_roll_multiplier) + "d" + str(weapon.damage_roll)
-	$WeaponInfo.get_node("Heat").text = "Heat: " + str(weapon.current_heat) + "/" + str(weapon.heat_max)
+	if weapon.weapon_type == Equipment_Generator.Weapon_Type.MELEE:
+		$WeaponInfo.get_node("Heat").text = ""
+	else:
+		$WeaponInfo.get_node("Heat").text = "Heat: " + str(weapon.current_heat) + "/" + str(weapon.heat_max)
 
 
 func _on_weapon_1_button_mouse_entered():

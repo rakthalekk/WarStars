@@ -11,6 +11,7 @@ enum Upgrade_Type{SPECIALTY, DAMAGE, RANGE, HEAT}
 @export var heat_cooldown: int = 1
 var current_heat: int
 var overheated: bool
+var used_this_turn := false
 @export var damage: int
 @export var damage_roll: int
 @export var damage_roll_multiplier: int = 1
@@ -25,6 +26,7 @@ var overheated: bool
 
 func clone() -> Weapon:
 	var clone = super.clone()
+	clone.name = name
 	clone.weapon_type = weapon_type
 	clone.is_melee = is_melee
 	clone.heat_gain = heat_gain
@@ -53,6 +55,8 @@ func use_active(target = null) -> bool:
 	if(!can_use_active()):
 		return false
 	
+	used_this_turn = true
+	
 	#use weapon
 	await target.damage(damage + damage_roll_multiplier * randi_range(1, damage_roll))
 	perform_specialty(target)
@@ -64,13 +68,16 @@ func use_active(target = null) -> bool:
 	return true
 	
 func rest():
-	current_heat = maxi(0,current_heat - heat_cooldown)
-	
+	if !used_this_turn:
+		current_heat = maxi(0,current_heat - heat_cooldown)
+		overheated = false
+	else:
+		used_this_turn = false
 
 func generate_from_scratch(tier: int):
-	rarity = 0
-	for i in tier:
-		upgrade()
+	rarity = 1
+	for i in range(1, tier):
+		upgrade() 
 	
 func upgrade():
 	if(rarity == 3):
@@ -78,6 +85,11 @@ func upgrade():
 	rarity += 1
 	
 	var random_selection = randi() % upgrade_types.size()
+	
+	# If upgrade was for heat on melee weapon, reroll until different upgrade
+	while random_selection == 3 && weapon_type == Equipment_Generator.Weapon_Type.MELEE:
+		random_selection = randi() % upgrade_types.size()
+	
 	var random_upgrade = upgrade_types[random_selection]
 
 	apply_upgrade(random_upgrade)

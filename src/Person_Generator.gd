@@ -21,13 +21,14 @@ func generate_unit() -> Person:
 	var unit = Person.new()
 	unit.image = image_picker.get_image()
 	unit.color = image_picker.get_color()
+	unit.max_health = 6 + randi_range(1, 3)
 	
 	var rank_chance_total = rank_1_chance + rank_2_chance + rank_3_chance
 	var rank_roll = randf_range(0, rank_chance_total)
 	var rank = 1
 	if rank_roll < rank_3_chance:
 		rank = 3
-	elif rank_roll < rank_2_chance:
+	elif rank_roll < rank_2_chance + rank_3_chance:
 		rank = 2
 	unit.raise_tier_to(rank)
 	
