@@ -38,137 +38,6 @@ grow_vertical = 0
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="CaptureContract" type="Button" parent="MarginContainer/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Capture Point
-
-
-
-
-
-
-
-"
-script = ExtResource("1_xpubj")
-
-[node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/CaptureContract"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -65.0
-offset_top = -50.0
-offset_right = 65.0
-offset_bottom = -27.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="RewardLabel" type="Label" parent="MarginContainer/HBoxContainer/CaptureContract"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -65.0
-offset_top = -27.0
-offset_right = 65.0
-offset_bottom = -4.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="DefendContract" type="Button" parent="MarginContainer/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Defend Area
-
-
-
-
-
-
-
-"
-script = ExtResource("1_xpubj")
-type = 1
-
-[node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/DefendContract"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -65.0
-offset_top = -50.0
-offset_right = 65.0
-offset_bottom = -27.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="RewardLabel" type="Label" parent="MarginContainer/HBoxContainer/DefendContract"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -65.0
-offset_top = -27.0
-offset_right = 65.0
-offset_bottom = -4.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="RouteContract" type="Button" parent="MarginContainer/HBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Route Enemy
-
-
-
-
-
-
-
-"
-script = ExtResource("1_xpubj")
-type = 2
-
-[node name="DifficultyLabel" type="Label" parent="MarginContainer/HBoxContainer/RouteContract"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -65.0
-offset_top = -50.0
-offset_right = 65.0
-offset_bottom = -27.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="RewardLabel" type="Label" parent="MarginContainer/HBoxContainer/RouteContract"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -65.0
-offset_top = -27.0
-offset_right = 65.0
-offset_bottom = -4.0
-grow_horizontal = 2
-grow_vertical = 0
-
 [node name="Capture" type="TextureButton" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -225,6 +94,7 @@ layout_mode = 2
 size_flags_vertical = 0
 texture_normal = ExtResource("5_gwik7")
 script = ExtResource("1_xpubj")
+type = 1
 
 [node name="DifficultyMeter2" type="Sprite2D" parent="MarginContainer/HBoxContainer/Defend"]
 position = Vector2(19, 83)
@@ -275,6 +145,7 @@ layout_mode = 2
 size_flags_vertical = 0
 texture_normal = ExtResource("6_a6yrx")
 script = ExtResource("1_xpubj")
+type = 2
 
 [node name="DifficultyMeter3" type="Sprite2D" parent="MarginContainer/HBoxContainer/Route"]
 position = Vector2(19, 83)
@@ -320,9 +191,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("4_nqn2n")
 
-[connection signal="pressed" from="MarginContainer/HBoxContainer/CaptureContract" to="." method="_on_capture_contract_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/DefendContract" to="." method="_on_defend_contract_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer/RouteContract" to="." method="_on_route_contract_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Capture" to="." method="_on_capture_contract_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Defend" to="." method="_on_defend_contract_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Route" to="." method="_on_route_contract_pressed"]
