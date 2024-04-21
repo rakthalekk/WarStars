@@ -12,6 +12,7 @@ func display():
 	show()
 	$MenuCursor.hide()
 	$Submenu.hide()
+	$WeaponInfo.hide()
 	action_button.grab_focus()
 
 
@@ -33,12 +34,14 @@ func _on_action_pressed():
 func _on_wait_pressed():
 	game_board.end_action()
 	$Submenu.hide()
+	$WeaponInfo.hide()
 	button_click.play()
 
 
 func _on_cancel_pressed():
 	game_board.cancel_action()
 	$Submenu.hide()
+	$WeaponInfo.hide()
 	button_click.play()
 
 
@@ -84,6 +87,7 @@ func _on_weapon_1_button_pressed():
 	game_board.highlight_targets(true)
 	hide()
 	$Submenu.hide()
+	$WeaponInfo.hide()
 	button_click.play()
 
 
@@ -93,6 +97,7 @@ func _on_weapon_2_button_pressed():
 	game_board.highlight_targets(true)
 	hide()
 	$Submenu.hide()
+	$WeaponInfo.hide()
 	button_click.play()
 
 
@@ -105,6 +110,7 @@ func _on_ability_1_button_pressed():
 			_use_gear(unit)
 			hide()
 			$Submenu.hide()
+			$WeaponInfo.hide()
 			button_click.play()
 
 
@@ -117,6 +123,7 @@ func _on_ability_2_button_pressed():
 			_use_gear(unit)
 			hide()
 			$Submenu.hide()
+			$WeaponInfo.hide()
 			button_click.play()
 
 func _use_gear(unit):
@@ -131,11 +138,22 @@ func _use_gear(unit):
 			# TODO make some kind of confirm popup and do the effect
 			pass
 
+
+func display_weapon_info(weapon: Weapon):
+	$WeaponInfo.show()
+	$WeaponInfo.get_node("Name").text = weapon.name
+	$WeaponInfo.get_node("Type").text = "Type: " + Equipment_Generator.Weapon_Type.keys()[weapon.weapon_type]
+	$WeaponInfo.get_node("Range").text = "Range: " + str(weapon.range)
+	$WeaponInfo.get_node("Damage").text = "DMG: " + str(weapon.damage) + " plus " + str(weapon.damage_roll_multiplier) + "d" + str(weapon.damage_roll)
+	$WeaponInfo.get_node("Heat").text = "Heat: " + str(weapon.current_heat) + "/" + str(weapon.heat_max)
+
+
 func _on_weapon_1_button_mouse_entered():
 	$Submenu/SubmenuCursor.position = $Submenu/Weapon1.position + Vector2(1, 6)
 	$Submenu/Weapon1/Weapon1Button.position += Vector2(-2, 0)
 	game_board._active_unit.switch_weapons(0)
 	game_board.draw_attack_range()
+	display_weapon_info(game_board._active_unit.active_weapon)
 
 
 func _on_weapon_2_button_mouse_entered():
@@ -144,6 +162,7 @@ func _on_weapon_2_button_mouse_entered():
 	if game_board._active_unit.weapons.size() > 1:
 		game_board._active_unit.switch_weapons(1)
 	game_board.draw_attack_range()
+	display_weapon_info(game_board._active_unit.active_weapon)
 
 
 func _on_ability_1_button_mouse_entered():
@@ -158,6 +177,7 @@ func _on_ability_2_button_mouse_entered():
 
 func _on_action_cancel_pressed():
 	$Submenu.hide()
+	$WeaponInfo.hide()
 	game_board._unit_attack_range.clear()
 	action_button.grab_focus()
 	button_click.play()
