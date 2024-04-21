@@ -33,14 +33,13 @@ base_rifle = NodePath("Weapons/Scout Rifle")
 uses_action = false
 passive_armor = 1
 image = ExtResource("4_qj1cv")
-rarity = 2
 weight = 1
 has_passive = true
 equip_type = 2
 
 [node name="Rare Armor" parent="Equipment_Generator/Gear" instance=ExtResource("5_j4y3p")]
 uses_action = false
-passive_armor = 1
+passive_armor = 2
 image = ExtResource("4_qj1cv")
 rarity = 2
 weight = 1
@@ -65,7 +64,7 @@ num_uses = 1
 is_consumable = true
 use_type = 2
 image = ExtResource("6_y2516")
-rarity = 2
+rarity = 3
 
 [node name="Light Accelerants" parent="Equipment_Generator/Gear" instance=ExtResource("5_7nnu8")]
 num_uses = 3
