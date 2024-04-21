@@ -3,12 +3,16 @@ extends Unit
 
 
 var hex_colors = [Color("8cff9b"), Color("ffaa6e"), Color("c37289"), Color("ffe091"), Color("ffa5d5"), Color("78fae6"), Color("b483ef"), Color("ff6675")]
-var assigned_sprites: bool = false
 
 func _ready():
 	super()
 	if(!assigned_sprites):
 		select_sprites()
+
+
+func activate_wait_buff():
+	wait_buff = true
+	effects_anim.play("wait_buff")
 
 
 func select_sprites():

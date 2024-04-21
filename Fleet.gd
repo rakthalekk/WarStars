@@ -28,16 +28,20 @@ func _process(delta):
 	
 
 func open_rift_menu():
+	AudioManager.play_click()
 	menu_opened(rift_menu)
 
 func open_black_market_menu():
 	#print("button")
+	AudioManager.play_click()
 	menu_opened(black_market_menu)
 
 func open_healing_vats_menu():
+	AudioManager.play_click()
 	menu_opened(healing_vats_menu)
 	
 func open_mothership_menu():
+	AudioManager.play_click()
 	menu_opened(mothership_menu)
 
 func menu_opened(new_menu: Fleet_Structure_UI):

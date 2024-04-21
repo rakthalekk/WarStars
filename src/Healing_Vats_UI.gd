@@ -8,6 +8,7 @@ func get_structure()->Fleet_Structure:
 	return healing_vats_script
 
 func open_ui():
+	super.open_ui()
 	refresh()
 
 func _ready():
@@ -15,7 +16,10 @@ func _ready():
 
 func try_heal(id: int, person: Person)->bool:
 	print("trying to heal")
-	return healing_vats_script.try_add_person(id, person)
+	var success = healing_vats_script.try_add_person(id, person)
+	if(success):
+		update_money_text()
+	return success
 
 		
 func refresh():

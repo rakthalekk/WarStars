@@ -22,6 +22,6 @@ texture_normal = ExtResource("2_hohuf")
 texture_pressed = ExtResource("3_vvk0d")
 texture_hover = ExtResource("3_vvk0d")
 texture_disabled = ExtResource("2_hohuf")
-texture_focused = ExtResource("2_hohuf")
+texture_focused = ExtResource("3_vvk0d")
 
 [connection signal="pressed" from="PLayButton" to="." method="_on_p_lay_button_pressed"]

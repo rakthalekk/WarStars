@@ -25,6 +25,7 @@ func set_current_menu(menu_type: Menu_Type):
 			healing_vats_button.disabled = true
 
 func on_press_mothership_button():
+	#AudioManager.play_click()
 	fleet.menu_opened(mothership_UI)
 	mothership_button.disabled = true
 	rift_button.disabled = false
@@ -32,6 +33,7 @@ func on_press_mothership_button():
 	healing_vats_button.disabled = false
 	
 func on_press_rift_button():
+	#AudioManager.play_click()
 	fleet.menu_opened(rift_UI)
 	mothership_button.disabled = false
 	rift_button.disabled = true
@@ -39,6 +41,7 @@ func on_press_rift_button():
 	healing_vats_button.disabled = false
 
 func on_press_black_market_button():
+	#AudioManager.play_click()
 	fleet.menu_opened(black_market_UI)
 	mothership_button.disabled = false
 	rift_button.disabled = false
@@ -46,6 +49,7 @@ func on_press_black_market_button():
 	healing_vats_button.disabled = false
 
 func on_press_vats_button():
+	#AudioManager.play_click()
 	fleet.menu_opened(healing_vats_UI)
 	mothership_button.disabled = false
 	rift_button.disabled = false

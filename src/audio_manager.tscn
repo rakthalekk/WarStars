@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://wuuk2ka16dvf"]
+
+[ext_resource type="Script" path="res://src/Audio_Manager.gd" id="1_kis01"]
+
+[node name="Audio_Manager" type="Node" node_paths=PackedStringArray("click_player", "purchase_player")]
+script = ExtResource("1_kis01")
+click_player = NodePath("clicks")
+purchase_player = NodePath("purchase")
+
+[node name="clicks" type="AudioStreamPlayer" parent="."]
+volume_db = 11.0
+
+[node name="purchase" type="AudioStreamPlayer" parent="."]
+volume_db = 11.0

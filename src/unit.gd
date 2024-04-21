@@ -70,15 +70,20 @@ var acted := false:
 var weapons: Array[Equipment]
 var active_weapon: Equipment
 
+var wait_buff = false
+
 #var gear_list: Array[Gear]
 var armor: int
 
 var stims: bool = false
 
+var assigned_sprites: bool = false
+
 @onready var _path_follow: PathFollow2D = $PathFollow2D
 @onready var health_bar = $PathFollow2D/HealthBar/Health as TextureProgressBar
 @onready var effects_anim = $EffectsAnimation
 @onready var damage_display = $DamageDisplay
+@onready var heat_display = $HeatDisplay
 
 
 func _ready() -> void:
@@ -92,7 +97,9 @@ func _ready() -> void:
 	health_bar.max_value = max_health
 	
 	for weapon_name in weapon_names:
-		weapons.append(WeaponDatabase._get_weapon_by_name(weapon_name).clone())
+		var weapon = WeaponDatabase._get_weapon_by_name(weapon_name).clone()
+		weapon.user = self
+		weapons.append(weapon)
 	
 	active_weapon = weapons[0]
 
@@ -122,7 +129,9 @@ func set_grid_position(pos: Vector2):
 ## Starts walking along the `path`.
 ## `path` is an array of grid coordinates that the function converts to map coordinates.
 func walk_along(path: PackedVector2Array) -> void:
-	if path.is_empty():
+	if path.size() <= 1:
+		await get_tree().create_timer(0.05).timeout
+		emit_signal("walk_finished")
 		return
 	
 	$FootstepSound.stream = footstep_sounds.pick_random()
@@ -137,10 +146,14 @@ func walk_along(path: PackedVector2Array) -> void:
 
 func damage(dmg: int):
 	dmg = max(0, dmg - armor)
+	
+	if wait_buff:
+		dmg /= 2
+	
 	health = max(0, health - dmg)
 	health_bar.value = health
 	
-	damage_display.text = str(-dmg)
+	damage_display.text = str(-dmg) + " HP"
 	
 	$DamageSound.stream = damage_sounds.pick_random()
 	$DamageSound.play()
@@ -154,7 +167,14 @@ func damage(dmg: int):
 		sound.play_sound(death_sounds.pick_random())
 		
 		emit_signal("die", self)
-		
+
+
+func play_heat_gain(heat: int):
+	heat_display.text = str(heat) + " HEAT"
+	effects_anim.play("heat_flash")
+	await effects_anim.animation_finished
+
+
 func switch_weapons(index: int):
 	if index >= 0 and index <= 3:
 		active_weapon = weapons[index]
@@ -179,3 +199,11 @@ func add_status_effect(effect: Status_Effect):
 
 #func use_gear(index: int, target):
 #	gear_list[index].use_active(target)
+
+
+func activate_wait_buff():
+	pass
+
+
+func set_sprites(head: Texture, color: Color):
+	pass

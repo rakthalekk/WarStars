@@ -57,5 +57,6 @@ func try_add_person(id: int, person: Person)-> bool:
 	#mark person as resting
 	person.resting = true
 	manager.reserves.update_unit_visual(person)
+	AudioManager.play_purchase()
 	return true
 
