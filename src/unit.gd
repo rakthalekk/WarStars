@@ -70,10 +70,14 @@ var acted := false:
 var weapons: Array[Equipment]
 var active_weapon: Equipment
 
+var wait_buff = false
+
 #var gear_list: Array[Gear]
 var armor: int
 
 var stims: bool = false
+
+var assigned_sprites: bool = false
 
 @onready var _path_follow: PathFollow2D = $PathFollow2D
 @onready var health_bar = $PathFollow2D/HealthBar/Health as TextureProgressBar
@@ -142,6 +146,10 @@ func walk_along(path: PackedVector2Array) -> void:
 
 func damage(dmg: int):
 	dmg = max(0, dmg - armor)
+	
+	if wait_buff:
+		dmg /= 2
+	
 	health = max(0, health - dmg)
 	health_bar.value = health
 	
@@ -191,3 +199,11 @@ func add_status_effect(effect: Status_Effect):
 
 #func use_gear(index: int, target):
 #	gear_list[index].use_active(target)
+
+
+func activate_wait_buff():
+	pass
+
+
+func set_sprites(head: Texture, color: Color):
+	pass

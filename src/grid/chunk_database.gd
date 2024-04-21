@@ -23,7 +23,7 @@ func get_random_chunk_by_difficulty(difficulty: int) -> Chunk:
 	var chunk = get_children().pick_random()
 	
 	var iterations = 0
-	while (chunk.difficulty != difficulty || chunk.name == "PlayerChunk") && iterations > 20:
+	while (chunk.difficulty != difficulty || chunk.name == "PlayerChunk") && iterations <= 20:
 		chunk = get_children().pick_random()
 		iterations += 1
 	

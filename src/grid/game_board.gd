@@ -12,8 +12,8 @@ var _active_unit: Unit
 var _walkable_cells := []
 var _origin_cell = Vector2.ZERO
 
-var player_units = []
-var enemy_units = []
+var player_units = [] as Array[Unit]
+var enemy_units = [] as Array[Unit]
 
 var unit_moved := false
 var attack_targets: Array[Unit]
@@ -319,7 +319,11 @@ func _display_enemy_overlay(unit: EnemyUnit) -> void:
 		var cells = get_walkable_cells(unit)
 		var atk_range = []
 		for cell in cells:
-			var attack_cells = _flood_fill(cell, unit.active_weapon.range, true, false)
+			var range = unit.weapons[0].range
+			if unit.weapons.size() > 1:
+				range = unit.weapons[1].range if unit.weapons[1].range > range else range
+			
+			var attack_cells = _flood_fill(cell, range, true, false)
 			for atk_cell in attack_cells:
 				var attackable = map.get_cell_tile_data(0, atk_cell).get_custom_data("attackable")
 				if !attackable && cell.distance_to(unit.cell) > 1:
@@ -424,6 +428,9 @@ func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
 
 func remove_unit(unit: Unit):
 	_units.erase(unit.cell)
+	
+	if unit == enemy_with_overlay:
+		_display_enemy_overlay(unit)
 	
 	if unit in player_units:
 		player_units.erase(unit)
@@ -614,6 +621,7 @@ func chapter_end():
 func change_turn():
 	_enemy_attack_range.clear()
 	_enemy_unit_overlay.clear()
+	enemy_with_overlay = null
 	display_danger_area()
 	
 	player_turn = !player_turn
@@ -632,6 +640,8 @@ func change_turn():
 		GameManager.incrementTurns()
 		animation_player.play("player_turn_start")
 		for unit in player_units:
+			unit.wait_buff = false
+			
 			var damaging = map.get_cell_tile_data(0, unit.cell).get_custom_data("damaging")
 			if damaging:
 				await unit.damage(2)
@@ -677,7 +687,11 @@ func display_danger_area():
 			if not tile in danger_area:
 				danger_area.append(tile)
 			
-			var possible_targets = _flood_fill(tile, enemy.active_weapon.range, true, false)
+			var range = enemy.weapons[0].range
+			if enemy.weapons.size() > 1:
+				range = enemy.weapons[1].range if enemy.weapons[1].range > range else range
+			
+			var possible_targets = _flood_fill(tile, range, true, false)
 			for target in possible_targets:
 				# If the opponent is in grass, make sure the path is 1 away
 				var attackable = map.get_cell_tile_data(0, target).get_custom_data("attackable")
@@ -695,23 +709,29 @@ func check_enemy_range(enemy: EnemyUnit):
 	var movement_options = _flood_fill(enemy.cell, enemy.move_range, false, false)
 	var number_of_targets = 0
 	for destination in movement_options:
-		var possible_targets = _flood_fill(destination, enemy.active_weapon.range, true, false)
-		for target in possible_targets:
-			if _units.has(target):
-				if _units[target] is PlayerUnit:
-					number_of_targets += 1
-					# If the opponent is in grass, make sure the path is 1 away
-					var attackable = map.get_cell_tile_data(0, target).get_custom_data("attackable")
-					if !attackable && target.distance_to(destination) > 1:
-						continue
-					
-					_unit_path.update_path(enemy.cell, destination)
-					
-					# destination and target
-					await _move_enemy_unit(destination, enemy)
-					await _attack_unit(target, enemy)
-					
-					return
+		for weapon in enemy.weapons:
+			if not weapon is Weapon:
+				continue
+			
+			enemy.active_weapon = weapon
+			
+			var possible_targets = _flood_fill(destination, weapon.range, true, false)
+			for target in possible_targets:
+				if _units.has(target):
+					if _units[target] is PlayerUnit:
+						number_of_targets += 1
+						# If the opponent is in grass, make sure the path is 1 away
+						var attackable = map.get_cell_tile_data(0, target).get_custom_data("attackable")
+						if !attackable && target.distance_to(destination) > 1:
+							continue
+						
+						_unit_path.update_path(enemy.cell, destination)
+						
+						# destination and target
+						await _move_enemy_unit(destination, enemy)
+						await _attack_unit(target, enemy)
+						
+						return
 	if number_of_targets == 0 && GameManager.currentContract:
 		await no_attack_ai(enemy, movement_options)
 	
@@ -922,8 +942,13 @@ func highlight_self(highlight):
 
 
 func spawn_enemy(tier: int, grid_position: Vector2):
-	var enemy = ENEMY_UNIT.instantiate() as EnemyUnit
+	#75% chance to reduce enemy tier by 1 (tier 0 means only 1 weapon)
+	var effective_tier = tier - 1 if randf() < 0.75 else tier
+	
+	var person = PersonGenerator.generate_enemy_unit(effective_tier) as Person
+	var enemy = person.construct_enemy_unit()
 	enemy.position = grid_position * 16
+	
 	add_child(enemy)
 
 
@@ -958,3 +983,9 @@ func _on_equipment_3_mouse_entered():
 func _on_equipment_4_mouse_entered():
 	if %Equipment4.texture:
 		pass
+
+
+func _on_chapter_end_button_pressed():
+	GameManager.chapter_complete = false
+	GameManager.current_turn = 0
+	GameManager.load_fleet(player_units)

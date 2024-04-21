@@ -38,6 +38,8 @@ func _on_action_pressed():
 
 
 func _on_wait_pressed():
+	game_board._active_unit.activate_wait_buff()
+	
 	game_board.end_action()
 	$Submenu.hide()
 	$WeaponInfo.hide()
@@ -89,6 +91,9 @@ func _on_cancel_mouse_exited():
 
 func _on_weapon_1_button_pressed():
 	game_board._active_unit.switch_weapons(0)
+	if !game_board._active_unit.active_weapon.can_use_active():
+		return
+	
 	game_board.attacking = true
 	game_board.highlight_targets(true)
 	hide()
@@ -99,6 +104,9 @@ func _on_weapon_1_button_pressed():
 
 func _on_weapon_2_button_pressed():
 	game_board._active_unit.switch_weapons(1)
+	if !game_board._active_unit.active_weapon.can_use_active():
+		return
+	
 	game_board.attacking = true
 	game_board.highlight_targets(true)
 	hide()

@@ -85,6 +85,8 @@ func load_fleet(units: Array[Unit] = []):
 	if units.size() == 0:
 		return
 	
+	get_fleet()
+	
 	for unit in units:
 		unit.person_source.update_from_unit(unit)
 	var main = get_tree().root.get_node("Main")
@@ -96,7 +98,7 @@ func enter_combat(platoon: Array[Person_Icon]):
 		return
 	
 	for member in platoon:
-		var unit = member.person.construct_unit()
+		var unit = member.person.construct_player_unit()
 		get_combat_scene().get_node("GameBoard").add_child(unit)
 		
 	get_tree().root.remove_child(fleet)
@@ -108,7 +110,7 @@ func enter_combat_title(platoon: Array[Person]):
 		return
 	
 	for person in platoon:
-		var unit = person.construct_unit()
+		var unit = person.construct_player_unit()
 		get_combat_scene().get_node("GameBoard").add_child(unit)
 	
 	get_tree().root.add_child(combat_scene)
