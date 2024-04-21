@@ -6,7 +6,10 @@ extends UI_Selection_Panel
 @export var equipment: Equipment
 
 func on_button_click():
-	market_UI.try_purchase(id)
+	AudioManager.play_click()
+	if(market_UI.try_purchase(id)):
+		AudioManager.play_purchase()
+
 	
 func setup(new_equip):
 	#print("setting up piece of equipment " )

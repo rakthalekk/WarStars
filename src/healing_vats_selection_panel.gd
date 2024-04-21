@@ -21,6 +21,7 @@ func drop_person(dropped: Drag_Icon):
 		if(main_ui.try_heal(id, new_person)):
 			main_image.texture = new_person.image
 			dropped.person_icon.set_sleep()
+			AudioManager.play_purchase()
 
 func _can_drop_data(at_position, data):
 	print("checking droppable in heal at ", at_position)

@@ -1,0 +1,99 @@
+[gd_scene load_steps=4 format=3 uid="uid://7gbr0vgnkn4n"]
+
+[ext_resource type="Script" path="res://src/Upgrade_Button.gd" id="1_lre5w"]
+[ext_resource type="FontFile" uid="uid://bv4wc7c2ird3k" path="res://assets/fonts/warstarsfont.ttf" id="2_fnyud"]
+[ext_resource type="Texture2D" uid="uid://b53qxbulfchgb" path="res://assets/FleetUI/MoneySymbol.png" id="3_nrnmv"]
+
+[node name="Upgrade_Button" type="Button" node_paths=PackedStringArray("cost_label", "tier_label", "money_icon", "display_label", "max_level_label")]
+custom_minimum_size = Vector2(77, 48)
+anchors_preset = -1
+anchor_top = 0.791
+anchor_right = 0.192
+anchor_bottom = 1.0
+offset_top = -0.975006
+offset_right = 0.199997
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_lre5w")
+tier = 1
+cost_label = NodePath("cost")
+tier_label = NodePath("tier")
+money_icon = NodePath("TextureRect")
+display_label = NodePath("upgrade")
+max_level_label = NodePath("max level")
+
+[node name="upgrade" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -34.5
+offset_top = 2.0
+offset_right = 35.5
+offset_bottom = 25.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_fnyud")
+theme_override_font_sizes/font_size = 16
+text = "Upgrade"
+vertical_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -27.0
+offset_right = 15.0
+offset_bottom = -2.0
+grow_vertical = 0
+texture = ExtResource("3_nrnmv")
+stretch_mode = 2
+
+[node name="cost" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -19.5
+offset_top = -10.0
+offset_right = 20.5
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_fnyud")
+text = "143"
+vertical_alignment = 2
+
+[node name="tier" type="Label" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = -24.0
+offset_right = 62.0
+offset_bottom = 1.0
+theme_override_fonts/font = ExtResource("2_fnyud")
+text = "Tier 1"
+vertical_alignment = 2
+
+[node name="max level" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -30.0
+offset_top = -29.0
+offset_right = 30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_fnyud")
+text = "MAX LVL"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="." to="." method="press_button"]
