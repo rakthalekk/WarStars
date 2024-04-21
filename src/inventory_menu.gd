@@ -136,6 +136,7 @@ func display_inventory():
 		spawn_new_equip(i)
 
 func close_inventory():
+	AudioManager.play_click()
 	refresh()
 	visible = false
 

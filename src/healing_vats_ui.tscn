@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dkwpke6vc60yr"]
+[gd_scene load_steps=11 format=3 uid="uid://dkwpke6vc60yr"]
 
 [ext_resource type="Script" path="res://src/Healing_Vats_UI.gd" id="1_bwss5"]
 [ext_resource type="Texture2D" uid="uid://d0p6c3xmg0jww" path="res://assets/FleetUI/BackButton.png" id="2_kf0x2"]
@@ -9,8 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://c4ro2ttr7unv4" path="res://src/healing_vats_bottom_selection_panel.tscn" id="6_v2sls"]
 [ext_resource type="Script" path="res://src/Upgrade_Button.gd" id="8_0w8j6"]
 [ext_resource type="Texture2D" uid="uid://b53qxbulfchgb" path="res://assets/FleetUI/MoneySymbol.png" id="9_bvbev"]
+[ext_resource type="PackedScene" uid="uid://7gbr0vgnkn4n" path="res://src/upgrade_button.tscn" id="10_v6wy7"]
 
-[node name="Healing_Vats_UI" type="Control" node_paths=PackedStringArray("heal_panels")]
+[node name="Healing_Vats_UI" type="Control" node_paths=PackedStringArray("heal_panels", "gold_ui")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,6 +22,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_bwss5")
 heal_panels = [NodePath("MarginContainer/ColorRect/Vat 1"), NodePath("MarginContainer/ColorRect/Vat 2"), NodePath("MarginContainer/ColorRect/Vat 3"), NodePath("MarginContainer/ColorRect/Vat 4"), NodePath("MarginContainer/ColorRect/Vat 5")]
+gold_ui = NodePath("MarginContainer/ColorRect/money icon/money text")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -102,7 +104,8 @@ offset_bottom = 106.5
 main_ui = NodePath("../../..")
 id = 4
 
-[node name="Button" type="Button" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("ship", "cost_label", "tier_label", "money_icon", "display_label", "max_level_label")]
+[node name="Button2" type="Button" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("ship", "cost_label", "tier_label", "money_icon", "display_label", "max_level_label")]
+visible = false
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -120,16 +123,18 @@ money_icon = NodePath("TextureRect")
 display_label = NodePath("upgrade")
 max_level_label = NodePath("max level")
 
-[node name="upgrade" type="Label" parent="MarginContainer/ColorRect/Button"]
+[node name="upgrade" type="Label" parent="MarginContainer/ColorRect/Button2"]
 layout_mode = 0
 offset_left = 6.0
 offset_top = 1.0
 offset_right = 56.0
 offset_bottom = 24.0
+theme_override_fonts/font = ExtResource("4_oaw86")
 theme_override_font_sizes/font_size = 12
 text = "Upgrade"
+vertical_alignment = 2
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/ColorRect/Button"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/ColorRect/Button2"]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 18.0
@@ -138,29 +143,66 @@ offset_bottom = 43.0
 texture = ExtResource("9_bvbev")
 stretch_mode = 2
 
-[node name="cost" type="Label" parent="MarginContainer/ColorRect/Button"]
+[node name="cost" type="Label" parent="MarginContainer/ColorRect/Button2"]
 layout_mode = 0
 offset_left = 18.0
-offset_top = 19.0
+offset_top = 28.0
 offset_right = 58.0
-offset_bottom = 42.0
+offset_bottom = 51.0
+theme_override_fonts/font = ExtResource("4_oaw86")
 text = "143"
+vertical_alignment = 2
 
-[node name="tier" type="Label" parent="MarginContainer/ColorRect/Button"]
+[node name="tier" type="Label" parent="MarginContainer/ColorRect/Button2"]
 layout_mode = 0
 offset_left = 2.0
 offset_top = -25.0
 offset_right = 60.0
+theme_override_fonts/font = ExtResource("4_oaw86")
 text = "Tier 1"
+vertical_alignment = 2
 
-[node name="max level" type="Label" parent="MarginContainer/ColorRect/Button"]
+[node name="max level" type="Label" parent="MarginContainer/ColorRect/Button2"]
 visible = false
 layout_mode = 0
+offset_top = 16.0
 offset_right = 60.0
 offset_bottom = 45.0
+theme_override_fonts/font = ExtResource("4_oaw86")
 text = "MAX"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Upgrade_Button" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("ship") instance=ExtResource("10_v6wy7")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_right = 0.0
+offset_top = -48.0
+offset_right = 77.0
+ship = NodePath("../../..")
+
+[node name="money icon" type="TextureRect" parent="MarginContainer/ColorRect"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 2.0
+offset_right = 67.0
+offset_bottom = 27.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("9_bvbev")
+stretch_mode = 2
+
+[node name="money text" type="Label" parent="MarginContainer/ColorRect/money icon"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 10.0
+offset_right = 53.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("4_oaw86")
+theme_override_font_sizes/font_size = 0
+text = "1232"
+vertical_alignment = 2
+
 [connection signal="pressed" from="MarginContainer/ColorRect/TextureButton2" to="." method="on_close_ui"]
-[connection signal="pressed" from="MarginContainer/ColorRect/Button" to="MarginContainer/ColorRect/Button" method="press_button"]
+[connection signal="pressed" from="MarginContainer/ColorRect/Button2" to="MarginContainer/ColorRect/Button2" method="press_button"]

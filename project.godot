@@ -23,6 +23,7 @@ GameManager="*res://src/GameManager.gd"
 PersonGenerator="*res://src/person_generator.tscn"
 MouseDrag="*res://src/mouse_drag.tscn"
 InventoryMenuListener="*res://src/inventory_menu_listener.tscn"
+AudioManager="*res://src/audio_manager.tscn"
 
 [display]
 

@@ -6,13 +6,16 @@ extends UI_Selection_Panel
 @export var person: Person
 
 func on_button_click():
-	rift_UI.try_summon(id)
+	AudioManager.play_click()
+	if(rift_UI.try_summon(id)):
+		pass#AudioManager.play_purchase()
 	
 func setup(new_person):
 	if(new_person == null):
 		print("no person to setup")
 		main_text.text = "SOLD"
 		main_image.texture = default_image
+		main_image.modulate = Color.WHITE
 		main_select_button.disabled = true
 		return
 	main_select_button.disabled = false

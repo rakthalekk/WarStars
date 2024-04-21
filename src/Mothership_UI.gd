@@ -21,6 +21,7 @@ func set_tier(new_tier: int):
 	capacity_bar.set_tier(new_tier)
 
 func open_ui():
+	super.open_ui()
 	refresh_visuals()
 
 func refresh():

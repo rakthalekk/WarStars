@@ -29,7 +29,7 @@ func upgrade_capacity():
 	
 func scout_summon():
 	var new_person
-	new_person = PersonGenerator.generate_unit()
+	new_person = PersonGenerator.generate_player_unit()
 	people_to_summon.append(new_person)
 	#add their price to the price list
 	var new_price = new_person.price
@@ -64,6 +64,7 @@ func summon(id: int) -> bool:
 	#people_to_summon.insert(id, null)
 	people_to_summon[id] = null
 	ui.refresh()
+	AudioManager.play_purchase()
 	return true
 
 
