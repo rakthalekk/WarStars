@@ -21,6 +21,7 @@ func setup(new_person):
 	price = person.price
 	gold_text.text = str(price)
 	main_image.texture = person.image
+	main_image.modulate = person.color
 	
 	
 

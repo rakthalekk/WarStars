@@ -7,11 +7,14 @@ extends Control
 @export var base_icon: Person_Icon
 
 func add_new_party_member(person: Person):
-	var new_icon:Person_Icon = base_icon.duplicate()
+	var new_icon:Person_Icon = base_icon.duplicate(DUPLICATE_SIGNALS + DUPLICATE_GROUPS + DUPLICATE_SCRIPTS)
+	icon_holder.add_child(new_icon)
+	new_icon.setup()
 	new_icon.set_person(person)
 	new_icon.visible = true
+	new_icon.set_active()
 	party_icons.append(new_icon)
-	icon_holder.add_child(new_icon)
+	
 	print("new icon: ", new_icon)
 
 func remove_party_member(person: Person):

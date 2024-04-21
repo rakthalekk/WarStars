@@ -119,10 +119,11 @@ theme_override_fonts/font = ExtResource("2_apyls")
 text = "16/16"
 horizontal_alignment = 2
 
-[node name="ContractUi" parent="MarginContainer/ColorRect" instance=ExtResource("5_sxc4d")]
+[node name="ContractUi" parent="MarginContainer/ColorRect" node_paths=PackedStringArray("mothership_ui") instance=ExtResource("5_sxc4d")]
 layout_mode = 1
 offset_top = 3.0
 offset_bottom = 4.0
+mothership_ui = NodePath("../../..")
 
 [node name="Mothership_Unit_Capacity_UI" parent="MarginContainer/ColorRect" instance=ExtResource("6_32ydw")]
 layout_mode = 1

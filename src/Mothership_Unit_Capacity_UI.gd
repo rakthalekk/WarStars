@@ -55,10 +55,10 @@ func set_tier(tier: int):
 func display_capacity(current_number: int, capacity: int):
 	for i in capacity:
 		if(current_tier == 1 && i == 7):
-			fill_end_1.visible = true
+			fill_end_1.visible = i < current_number
 			fill_sections[i].visible = false
 		elif(current_tier == 2 && i == 11):
-			fill_end_2.visible = true
+			fill_end_2.visible = i < current_number
 			fill_sections[i].visible = false
 		else:
 			fill_sections[i].visible = i < current_number

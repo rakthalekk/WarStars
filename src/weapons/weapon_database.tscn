@@ -1,18 +1,28 @@
-[gd_scene load_steps=8 format=3 uid="uid://cbqa5xt1jyr85"]
+[gd_scene load_steps=17 format=3 uid="uid://cbqa5xt1jyr85"]
 
 [ext_resource type="Script" path="res://src/weapons/weapon_database.gd" id="1_ug3or"]
 [ext_resource type="PackedScene" uid="uid://b7fc4tcndbaow" path="res://src/equipment_generator.tscn" id="3_bxivp"]
 [ext_resource type="PackedScene" uid="uid://bnxqouecsspay" path="res://src/weapon.tscn" id="4_8puuc"]
+[ext_resource type="Texture2D" uid="uid://iiov06rk2v88" path="res://assets/Weapons & Gear/WS_Gear_Armor.png" id="4_qj1cv"]
 [ext_resource type="PackedScene" uid="uid://e7e8ec41aenu" path="res://src/accelerant.tscn" id="5_7nnu8"]
 [ext_resource type="PackedScene" uid="uid://cm507f6fdgtur" path="res://src/gear.tscn" id="5_j4y3p"]
 [ext_resource type="PackedScene" uid="uid://bpwir4n3mpvrh" path="res://src/med_kit.tscn" id="6_7d0ib"]
+[ext_resource type="Texture2D" uid="uid://c0qepauk5fs07" path="res://assets/Weapons & Gear/WS_Gear_Medkit.png" id="6_y2516"]
 [ext_resource type="PackedScene" uid="uid://bfvql1no841u7" path="res://src/stim_pack.tscn" id="7_qrjql"]
+[ext_resource type="Texture2D" uid="uid://crneaaghelrxt" path="res://assets/Weapons & Gear/WS_Gear_Accelerant.png" id="8_sqvjp"]
+[ext_resource type="Texture2D" uid="uid://rqibj0lm3wmn" path="res://assets/Weapons & Gear/WS_Gear_Stim.png" id="10_kgu7r"]
+[ext_resource type="Texture2D" uid="uid://1pcc4mmvhmku" path="res://assets/Weapons & Gear/WS_Troupe_Rifle.png" id="12_mju51"]
+[ext_resource type="Texture2D" uid="uid://bdanar0og5vej" path="res://assets/Weapons & Gear/WS_Troupe_Shotty.png" id="13_ydt2k"]
+[ext_resource type="Texture2D" uid="uid://b8emu2fvdhlc8" path="res://assets/Weapons & Gear/WS_Troupe_Pistol.png" id="14_rul3f"]
+[ext_resource type="Texture2D" uid="uid://bervq42aw367a" path="res://assets/Weapons & Gear/WS_Troupe_Sword.png" id="15_85cmt"]
+[ext_resource type="Texture2D" uid="uid://63mqn44jd0o" path="res://assets/Weapons & Gear/WS_Troupe_Lance.png" id="16_p3dh1"]
 
 [node name="WeaponDatabase" type="Node2D"]
 script = ExtResource("1_ug3or")
 
-[node name="Equipment_Generator" parent="." node_paths=PackedStringArray("base_melee", "base_pistol", "base_shotgun", "base_rifle") instance=ExtResource("3_bxivp")]
+[node name="Equipment_Generator" parent="." node_paths=PackedStringArray("base_melee", "base_spear", "base_pistol", "base_shotgun", "base_rifle") instance=ExtResource("3_bxivp")]
 base_melee = NodePath("Weapons/Cool Sword")
+base_spear = NodePath("Weapons/Cool Spear")
 base_pistol = NodePath("Weapons/Sidearm")
 base_shotgun = NodePath("Weapons/Hunting Shotgun")
 base_rifle = NodePath("Weapons/Scout Rifle")
@@ -22,6 +32,7 @@ base_rifle = NodePath("Weapons/Scout Rifle")
 [node name="Common Armor" parent="Equipment_Generator/Gear" instance=ExtResource("5_j4y3p")]
 uses_action = false
 passive_armor = 1
+image = ExtResource("4_qj1cv")
 rarity = 2
 weight = 1
 has_passive = true
@@ -30,6 +41,7 @@ equip_type = 2
 [node name="Rare Armor" parent="Equipment_Generator/Gear" instance=ExtResource("5_j4y3p")]
 uses_action = false
 passive_armor = 1
+image = ExtResource("4_qj1cv")
 rarity = 2
 weight = 1
 has_passive = true
@@ -39,31 +51,37 @@ equip_type = 2
 num_uses = 1
 is_consumable = true
 use_type = 2
+image = ExtResource("6_y2516")
 
 [node name="Med Kit" parent="Equipment_Generator/Gear" instance=ExtResource("6_7d0ib")]
 num_uses = 1
 is_consumable = true
 use_type = 2
+image = ExtResource("6_y2516")
 rarity = 2
 
 [node name="Large Med Kit" parent="Equipment_Generator/Gear" instance=ExtResource("6_7d0ib")]
 num_uses = 1
 is_consumable = true
 use_type = 2
+image = ExtResource("6_y2516")
 rarity = 2
 
 [node name="Light Accelerants" parent="Equipment_Generator/Gear" instance=ExtResource("5_7nnu8")]
 num_uses = 3
 is_consumable = true
+image = ExtResource("8_sqvjp")
 
 [node name="Accelerants" parent="Equipment_Generator/Gear" instance=ExtResource("5_7nnu8")]
 num_uses = 3
 is_consumable = true
+image = ExtResource("8_sqvjp")
 rarity = 2
 
 [node name="Heavy Accelerant" parent="Equipment_Generator/Gear" instance=ExtResource("5_7nnu8")]
 num_uses = 3
 is_consumable = true
+image = ExtResource("8_sqvjp")
 rarity = 3
 
 [node name="Stim Pack" parent="Equipment_Generator/Gear" instance=ExtResource("7_qrjql")]
@@ -71,6 +89,7 @@ num_uses = 1
 uses_action = false
 is_consumable = true
 use_type = 2
+image = ExtResource("10_kgu7r")
 rarity = 3
 
 [node name="Weapons" type="Node" parent="Equipment_Generator"]
@@ -82,6 +101,7 @@ damage = 6
 damage_roll = 8
 heat_tier_bonus = 0
 use_type = 1
+image = ExtResource("12_mju51")
 weight = 1
 range = 5
 
@@ -92,6 +112,7 @@ damage = 8
 damage_roll = 12
 heat_tier_bonus = 0
 use_type = 1
+image = ExtResource("12_mju51")
 rarity = 2
 weight = 1
 range = 5
@@ -103,6 +124,7 @@ damage = 12
 damage_roll = 20
 heat_tier_bonus = 0
 use_type = 1
+image = ExtResource("12_mju51")
 rarity = 3
 weight = 1
 range = 5
@@ -113,6 +135,7 @@ heat_gain = 2
 damage = 3
 damage_roll = 8
 use_type = 1
+image = ExtResource("13_ydt2k")
 weight = 1
 range = 2
 
@@ -123,6 +146,8 @@ damage = 4
 damage_roll = 4
 damage_roll_multiplier = 3
 use_type = 1
+image = ExtResource("13_ydt2k")
+rarity = 2
 weight = 1
 range = 2
 
@@ -132,6 +157,8 @@ heat_gain = 2
 damage = 4
 damage_roll = 6
 use_type = 1
+image = ExtResource("13_ydt2k")
+rarity = 3
 weight = 1
 range = 2
 
@@ -141,6 +168,7 @@ heat_gain = 1
 damage = 3
 damage_roll = 4
 use_type = 1
+image = ExtResource("14_rul3f")
 range = 4
 
 [node name="Pistol" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
@@ -150,6 +178,8 @@ damage = 4
 damage_roll = 4
 damage_roll_multiplier = 2
 use_type = 1
+image = ExtResource("14_rul3f")
+rarity = 2
 range = 4
 
 [node name="Hand Cannon" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
@@ -159,6 +189,8 @@ damage = 6
 damage_roll = 4
 damage_roll_multiplier = 3
 use_type = 1
+image = ExtResource("14_rul3f")
+rarity = 3
 range = 4
 
 [node name="Cool Sword" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
@@ -171,6 +203,7 @@ damage_roll = 2
 damage_roll_multiplier = 3
 use_type = 1
 equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
+image = ExtResource("15_85cmt")
 range = 1
 
 [node name="Rad Sword" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
@@ -183,6 +216,7 @@ damage_roll = 2
 damage_roll_multiplier = 4
 use_type = 1
 equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
+image = ExtResource("15_85cmt")
 rarity = 2
 range = 1
 
@@ -196,10 +230,11 @@ damage_roll = 2
 damage_roll_multiplier = 5
 use_type = 1
 equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
+image = ExtResource("15_85cmt")
 rarity = 3
 range = 1
 
-[node name="Cool Axe" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+[node name="Cool Spear" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
 weapon_type = 1
 is_melee = true
 heat_max = 0
@@ -208,10 +243,11 @@ damage = 8
 damage_roll = 4
 use_type = 1
 equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
+image = ExtResource("16_p3dh1")
 weight = 1
-range = 1
+range = 2
 
-[node name="Rad Axe" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+[node name="Rad Spear" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
 weapon_type = 1
 is_melee = true
 heat_max = 0
@@ -220,11 +256,12 @@ damage = 12
 damage_roll = 4
 use_type = 1
 equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
+image = ExtResource("16_p3dh1")
 rarity = 2
 weight = 1
-range = 1
+range = 2
 
-[node name="Epic Axe" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
+[node name="Epic Spear" parent="Equipment_Generator/Weapons" instance=ExtResource("4_8puuc")]
 weapon_type = 1
 is_melee = true
 heat_max = 0
@@ -234,5 +271,6 @@ damage_roll = 1
 damage_roll_multiplier = 0
 use_type = 1
 equipment_description = "+---big stic+++++++++++++++++++++++++++++++++++++++++++++++++++++++++k"
+image = ExtResource("16_p3dh1")
 weight = 1
-range = 1
+range = 2

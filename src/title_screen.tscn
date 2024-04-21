@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4nl5isfmi0p5"]
+[gd_scene load_steps=5 format=3 uid="uid://bj7rsnf0w5dh7"]
 
 [ext_resource type="Texture2D" uid="uid://b0hautdbatxf2" path="res://assets/TitleScreen/TitleScreenBGbutForealsees.png" id="1_a7iak"]
 [ext_resource type="Script" path="res://src/title_screen.gd" id="1_obww2"]
@@ -22,6 +22,6 @@ texture_normal = ExtResource("2_hohuf")
 texture_pressed = ExtResource("3_vvk0d")
 texture_hover = ExtResource("3_vvk0d")
 texture_disabled = ExtResource("2_hohuf")
-texture_focused = ExtResource("2_hohuf")
+texture_focused = ExtResource("3_vvk0d")
 
 [connection signal="pressed" from="PLayButton" to="." method="_on_p_lay_button_pressed"]

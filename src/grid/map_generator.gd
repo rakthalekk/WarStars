@@ -1,7 +1,5 @@
 extends Node2D
 
-const ENEMY_UNIT = preload("res://src/enemy_unit.tscn")
-
 @export var chunk_grid_size: Vector2
 @export var player_chunk_position: Vector2
 
@@ -34,10 +32,10 @@ func _ready():
 					tilemap.set_cell(0, grid_position, 0, atlas)
 					
 					var enemy_spawn = chunk.get_cell_atlas_coords(0, Vector2i(x, y))
-					if enemy_spawn.x == 0:
-						var enemy = ENEMY_UNIT.instantiate() as EnemyUnit
-						enemy.position = grid_position * 16
-						game_board.add_child(enemy)
+					
+					#50% chance to actually spawn enemy at location
+					if enemy_spawn.x >= 0 && randf() < 0.5:
+						game_board.spawn_enemy(enemy_spawn.x + 1, grid_position)
 	if GameManager.currentContract && GameManager.currentContract.type == GameManager.Contract_Type.CAPTURE:
 		var capture_chunk = Vector2((chunk_grid_size.x - 1) * 8 - player_chunk_position.x, (chunk_grid_size.y - 1) * 8 - player_chunk_position.y)
 		var rng = RandomNumberGenerator.new()
