@@ -122,7 +122,9 @@ func set_grid_position(pos: Vector2):
 ## Starts walking along the `path`.
 ## `path` is an array of grid coordinates that the function converts to map coordinates.
 func walk_along(path: PackedVector2Array) -> void:
-	if path.is_empty():
+	if path.size() <= 1:
+		await get_tree().create_timer(0.05).timeout
+		emit_signal("walk_finished")
 		return
 	
 	$FootstepSound.stream = footstep_sounds.pick_random()

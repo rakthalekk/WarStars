@@ -28,6 +28,9 @@ var ui_up = false
 
 var enemy_with_overlay: EnemyUnit
 
+var hovered_unit: Unit
+var selected_unit_position: Vector2
+
 const ENEMY_UNIT = preload("res://src/enemy_unit.tscn")
 
 const SWORD_SWIPE = preload("res://src/weapons/sword_swipe.tscn")
@@ -74,6 +77,11 @@ func _process(delta):
 				action_window._on_action_cancel_pressed()
 			else:
 				cancel_action()
+	
+	if Input.is_action_just_pressed("1"):
+		_on_equipment_1_mouse_entered()
+	elif Input.is_action_just_pressed("2"):
+		_on_equipment_2_mouse_entered()
 	
 	if GameManager.controller:
 		var cursor_to_camera = $Cursor.position - camera.position
@@ -139,10 +147,10 @@ func _flood_fill(cell: Vector2, max_distance: int, attack_range: bool, is_player
 	var walkable_ish_grid = []
 	var upper_left = Vector2(cell.x - max_distance - 1, cell.y - max_distance)
 	for x in range(upper_left.x, upper_left.x + max_distance * 2 + 1):
-		if x <= 0 || x >= ChunkDatabase.size.x:
+		if x < 0 || x >= ChunkDatabase.size.x:
 			continue
 		for y in range(upper_left.y, upper_left.y + max_distance * 2 + 1):
-			if y <= 0 || y >= ChunkDatabase.size.y:
+			if y < 0 || y >= ChunkDatabase.size.y:
 				continue
 			
 			var vector = Vector2(x, y)
@@ -210,18 +218,21 @@ func _flood_fill(cell: Vector2, max_distance: int, attack_range: bool, is_player
 func _move_active_unit(new_cell: Vector2) -> void:
 	_origin_cell = _active_unit.cell
 	
-	if new_cell == _active_unit.cell:
-		set_unit_moved(true)
-		_popup_action_window(_active_unit.position)
+	_unit_path.update_path(_origin_cell, new_cell)
 	
 	if is_occupied(new_cell) or not new_cell in _walkable_cells:
-		return
+		if _active_unit.cell != new_cell:
+			return
 	
 	$Cursor.active = false
 	
 	# warning-ignore:return_value_discarded
 	_units.erase(_active_unit.cell)
 	_units[new_cell] = _active_unit
+	
+	_unit_overlay.clear()
+	_unit_attack_range.clear()
+	
 	set_unit_moved(true)
 	_active_unit.walk_along(_unit_path.current_path)
 	await _active_unit.walk_finished
@@ -263,9 +274,13 @@ func _select_unit(cell: Vector2) -> void:
 	_unit_path.initialize(_walkable_cells)
 	_origin_cell = _active_unit.cell
 	
+	var longest_range = unit.weapons[0].range
+	if unit.weapons.size() > 1:
+		longest_range = unit.weapons[1].range if unit.weapons[1].range > longest_range else longest_range
+	
 	var atk_range = []
 	for walk in _walkable_cells:
-		var attack_cells = _flood_fill(walk, unit.active_weapon.range, true, true)
+		var attack_cells = _flood_fill(walk, longest_range, true, true)
 		
 		for location in attack_cells:
 			var attackable = map.get_cell_tile_data(0, location).get_custom_data("attackable")
@@ -274,6 +289,23 @@ func _select_unit(cell: Vector2) -> void:
 			
 			if not location in _walkable_cells:
 				atk_range.append(location)
+	
+	_unit_attack_range.draw(atk_range)
+
+
+func draw_attack_range():
+	_unit_attack_range.clear()
+	find_attack_targets()
+	
+	var attack_cells = _flood_fill(_active_unit.cell, _active_unit.active_weapon.range, true, true)
+	var atk_range = []
+		
+	for location in attack_cells:
+		var attackable = map.get_cell_tile_data(0, location).get_custom_data("attackable")
+		if !attackable && _active_unit.cell.distance_to(location) > 1:
+			continue
+		
+		atk_range.append(location)
 	
 	_unit_attack_range.draw(atk_range)
 
@@ -380,8 +412,7 @@ func _attack_unit(cell: Vector2, initiator = _active_unit) -> void:
 			vfx.global_position = unit.global_position
 			add_child(vfx)
 			
-			await unit.damage(initiator.active_weapon.damage)
-			await initiator.active_weapon.perform_specialty(unit)
+			await initiator.active_weapon.use_active(unit)
 			attacking = false
 			end_action()
 		elif initiator is EnemyUnit && unit is PlayerUnit:
@@ -393,6 +424,7 @@ func remove_unit(unit: Unit):
 	
 	if unit in player_units:
 		player_units.erase(unit)
+		GameManager.alienList.append(unit.name + " 2")
 	elif unit in enemy_units:
 		enemy_units.erase(unit)
 		# Completes level if all enemies are defeated if either the defend or route contracts are selected
@@ -435,29 +467,37 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 	if !player_turn:
 		return
 	
+	%EquipmentPopup.hide()
+	
 	if !_active_unit:
 		if _units.has(new_cell):
-			var unit = _units[new_cell] as Unit
-			combat_ui.get_node("HealthBar").frame = 17 - unit.health
-			
-			if unit is PlayerUnit:
-				combat_ui.get_node("Name").text = unit.name
-			else:
-				combat_ui.get_node("Name").text = "Empire Soldier"
-			
-			display_unit_weapons(unit, unit.weapons[0], combat_ui.get_node("Weapon"))
-			
-			display_unit_equipment_icons(unit, unit.weapons[0], combat_ui.get_node("Equipment1"))
-			if unit.weapons.size() > 1:
-				display_unit_equipment_icons(unit, unit.weapons[1], combat_ui.get_node("Equipment2"))
-			
-			combat_ui.show()
+			hovered_unit = _units[new_cell] as Unit
+			show_unit_information(hovered_unit)
 		else:
+			hovered_unit = null
 			combat_ui.hide()
 	elif _active_unit.is_selected and !unit_moved:
 		_unit_path.show()
 		_unit_path.draw(_active_unit.cell, new_cell)
 
+
+func show_unit_information(unit: Unit):
+	combat_ui.get_node("HealthBar").frame = 17 - unit.health
+	
+	if unit is PlayerUnit:
+		combat_ui.get_node("Name").text = unit.name
+	else:
+		combat_ui.get_node("Name").text = "Empire Soldier"
+	
+	display_unit_weapons(unit, unit.weapons[0], combat_ui.get_node("Weapon"))
+	
+	display_unit_equipment_icons(unit, unit.weapons[0], combat_ui.get_node("Equipment1"))
+	if unit.weapons.size() > 1:
+		display_unit_equipment_icons(unit, unit.weapons[1], combat_ui.get_node("Equipment2"))
+	else:
+		%Equipment2.texture = null
+	
+	combat_ui.show()
 
 func display_unit_weapons(unit: Unit, weapon: Weapon, image: TextureRect):
 	var weapon_name = "WS_Emprie_" if unit is EnemyUnit else "WS_Troupe_"
@@ -508,6 +548,8 @@ func cancel_action():
 	_unit_overlay.clear()
 	_unit_attack_range.clear()
 	highlight_targets(false)
+	
+	_on_Cursor_moved($Cursor.cell)
 
 
 func end_action():
@@ -569,6 +611,9 @@ func change_turn():
 	unit_moved = false
 	
 	for unit in _units.values():
+		for weapon in unit.weapons:
+			weapon.rest()
+		
 		unit.acted = false
 	
 	if player_turn:
@@ -880,14 +925,24 @@ func spawn_enemy(tier: int, grid_position: Vector2):
 	add_child(enemy)
 
 
+func display_weapon_tooltip(weapon: Weapon):
+	display_unit_weapons(hovered_unit, weapon, combat_ui.get_node("Weapon"))
+	%EquipmentPopup.show()
+	%EquipmentPopup.get_node("Name").text = weapon.name
+	%EquipmentPopup.get_node("Type").text = "Type: " + Equipment_Generator.Weapon_Type.keys()[weapon.weapon_type]
+	%EquipmentPopup.get_node("Range").text = "Range: " + str(weapon.range)
+	%EquipmentPopup.get_node("Damage").text = "DMG: " + str(weapon.damage) + " plus " + str(weapon.damage_roll_multiplier) + "d" + str(weapon.damage_roll)
+	%EquipmentPopup.get_node("Heat").text = "Heat: " + str(weapon.current_heat) + "/" + str(weapon.heat_max)
+
+
 func _on_equipment_1_mouse_entered():
-	if %Equipment1.texture:
-		pass
+	if %Equipment1.texture && hovered_unit:
+		display_weapon_tooltip(hovered_unit.weapons[0])
 
 
 func _on_equipment_2_mouse_entered():
-	if %Equipment2.texture:
-		pass
+	if %Equipment2.texture && hovered_unit:
+		display_weapon_tooltip(hovered_unit.weapons[1])
 
 
 func _on_equipment_3_mouse_entered():

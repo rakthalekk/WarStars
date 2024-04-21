@@ -134,11 +134,16 @@ func _use_gear(unit):
 func _on_weapon_1_button_mouse_entered():
 	$Submenu/SubmenuCursor.position = $Submenu/Weapon1.position + Vector2(1, 6)
 	$Submenu/Weapon1/Weapon1Button.position += Vector2(-2, 0)
+	game_board._active_unit.switch_weapons(0)
+	game_board.draw_attack_range()
 
 
 func _on_weapon_2_button_mouse_entered():
 	$Submenu/SubmenuCursor.position = $Submenu/Weapon2.position + Vector2(1, 6)
 	$Submenu/Weapon2/Weapon2Button.position += Vector2(-2, 0)
+	if game_board._active_unit.weapons.size() > 1:
+		game_board._active_unit.switch_weapons(1)
+	game_board.draw_attack_range()
 
 
 func _on_ability_1_button_mouse_entered():
@@ -153,6 +158,7 @@ func _on_ability_2_button_mouse_entered():
 
 func _on_action_cancel_pressed():
 	$Submenu.hide()
+	game_board._unit_attack_range.clear()
 	action_button.grab_focus()
 	button_click.play()
 
