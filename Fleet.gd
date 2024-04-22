@@ -9,6 +9,7 @@ extends Control
 @export var healing_vats_menu: Fleet_Structure_UI
 @export var black_market_menu: Fleet_Structure_UI
 @export var mothership_menu: Fleet_Structure_UI
+@export var inventory_menu: Inventory_Menu
 
 var last_menu: Fleet_Structure_UI = null
 
@@ -59,3 +60,17 @@ func menu_closed():
 	if(last_menu != null):
 		last_menu.visible = false
 		last_menu = null
+
+func refresh():
+	quick_menu.visible = false
+	quick_menu.on_close_mini_menu()
+	inventory_menu.close_inventory()
+	reserves.refresh()
+	fleet_manager.refresh()
+
+func add_funds(money: int):
+	reserves.add_money(money)
+
+func end_mission(reward: int):
+	add_funds(reward)
+	refresh()

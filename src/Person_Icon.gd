@@ -108,3 +108,10 @@ func _on_gui_input(event):
 
 
 
+
+
+func _on_mouse_entered():
+	MouseDrag.display_person_tooltip(person)
+
+func _on_mouse_exited():
+	MouseDrag.hide_person_tooltip(person)

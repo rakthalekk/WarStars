@@ -1,9 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://dni6dqbhv11a6"]
+[gd_scene load_steps=4 format=3 uid="uid://dni6dqbhv11a6"]
 
 [ext_resource type="Script" path="res://src/MouseDrag.gd" id="1_nok7j"]
+[ext_resource type="Texture2D" uid="uid://c4krptset4ydb" path="res://assets/CombatUI/Popup.png" id="2_tkn08"]
+[ext_resource type="FontFile" uid="uid://bv4wc7c2ird3k" path="res://assets/fonts/warstarsfont.ttf" id="3_m6w0r"]
 
 [node name="MouseDrag" type="Control"]
-clip_contents = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 3
 anchors_preset = 8
@@ -16,3 +17,180 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_nok7j")
+
+[node name="EquipmentPopup" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+offset_right = 80.0
+offset_bottom = 75.0
+mouse_filter = 2
+texture = ExtResource("2_tkn08")
+stretch_mode = 2
+
+[node name="Name" type="Label" parent="EquipmentPopup"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 15.0
+offset_right = 77.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("3_m6w0r")
+theme_override_font_sizes/font_size = 8
+text = "hunting shotgun"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Type" type="Label" parent="EquipmentPopup"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 29.0
+offset_right = 77.0
+offset_bottom = 47.0
+theme_override_fonts/font = ExtResource("3_m6w0r")
+theme_override_font_sizes/font_size = 8
+text = "type: shotgun"
+autowrap_mode = 2
+
+[node name="Range" type="Label" parent="EquipmentPopup"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 39.0
+offset_right = 77.0
+offset_bottom = 57.0
+theme_override_fonts/font = ExtResource("3_m6w0r")
+theme_override_font_sizes/font_size = 8
+text = "range: 1-4"
+autowrap_mode = 2
+
+[node name="Damage" type="Label" parent="EquipmentPopup"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 49.0
+offset_right = 77.0
+offset_bottom = 67.0
+theme_override_fonts/font = ExtResource("3_m6w0r")
+theme_override_font_sizes/font_size = 8
+text = "dmg: 2 plus 1d3"
+autowrap_mode = 2
+
+[node name="Heat" type="Label" parent="EquipmentPopup"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 59.0
+offset_right = 77.0
+offset_bottom = 77.0
+theme_override_fonts/font = ExtResource("3_m6w0r")
+theme_override_font_sizes/font_size = 8
+text = "Heat: 0/6"
+autowrap_mode = 2
+
+[node name="Unit Popup" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -80.0
+offset_bottom = 75.0
+grow_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("2_tkn08")
+stretch_mode = 2
+
+[node name="Name" type="Label" parent="Unit Popup"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 15.0
+offset_right = 77.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("3_m6w0r")
+theme_override_font_sizes/font_size = 8
+text = "Unit Name"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Tier" type="Label" parent="Unit Popup"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 29.0
+offset_right = 77.0
+offset_bottom = 47.0
+theme_override_fonts/font = ExtResource("3_m6w0r")
+theme_override_font_sizes/font_size = 8
+text = "Tier: 3"
+autowrap_mode = 2
+
+[node name="HP" type="Label" parent="Unit Popup"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 39.0
+offset_right = 77.0
+offset_bottom = 57.0
+theme_override_fonts/font = ExtResource("3_m6w0r")
+theme_override_font_sizes/font_size = 8
+text = "HP: 5/5"
+autowrap_mode = 2
+
+[node name="Movement" type="Label" parent="Unit Popup"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 49.0
+offset_right = 77.0
+offset_bottom = 67.0
+theme_override_fonts/font = ExtResource("3_m6w0r")
+theme_override_font_sizes/font_size = 8
+text = "Move: 6"
+autowrap_mode = 2
+
+[node name="Heat" type="Label" parent="Unit Popup"]
+visible = false
+layout_mode = 0
+offset_left = 6.0
+offset_top = 59.0
+offset_right = 77.0
+offset_bottom = 77.0
+theme_override_fonts/font = ExtResource("3_m6w0r")
+theme_override_font_sizes/font_size = 8
+text = "Heat: 0/6"
+autowrap_mode = 2
+
+[node name="Gear Popup" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -75.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("2_tkn08")
+stretch_mode = 2
+
+[node name="Name" type="Label" parent="Gear Popup"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 15.0
+offset_right = 77.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("3_m6w0r")
+theme_override_font_sizes/font_size = 8
+text = "Gear Name"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Description" type="Label" parent="Gear Popup"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 29.0
+offset_right = 77.0
+offset_bottom = 66.0
+theme_override_fonts/font = ExtResource("3_m6w0r")
+theme_override_font_sizes/font_size = 8
+text = "description goes here"
+horizontal_alignment = 1
+autowrap_mode = 2

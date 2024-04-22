@@ -17,8 +17,9 @@ func _ready():
 func try_purchase(id: int):
 	if(black_market_script.purchase(id)):
 		update_money_text()
+		return true
 		#purchase_panels[id].visible = false
-		
+	return false
 
 func refresh():
 	print("refreshing black market ui ", black_market_script.capacity)

@@ -15,8 +15,9 @@ func open_ui():
 func try_summon(id: int):
 	if(rift_script.summon(id)):
 		update_money_text()
+		return true
 		#summon_panels[id].visible = false
-		
+	return false
 
 func refresh():
 	print("refreshing ui")

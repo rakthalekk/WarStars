@@ -68,3 +68,11 @@ func _on_gui_input(event):
 
 
 
+
+
+func _on_mouse_entered():
+	MouseDrag.display_gear_tooltip(equip)
+
+
+func _on_mouse_exited():
+	MouseDrag.hide_gear_tooltip(equip)
