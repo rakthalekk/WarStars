@@ -55,6 +55,7 @@ func purchase(id: int) -> bool:
 	items_to_purchase.remove_at(id)
 	items_to_purchase.insert(id, null)
 	ui.refresh()
+	AudioManager.play_purchase()
 	return true
 
 func upgrade_capacity():

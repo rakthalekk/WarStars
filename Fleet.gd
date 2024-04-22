@@ -20,6 +20,9 @@ func _ready():
 	for person in GameManager.reserve_list:
 		reserves.add_unit_to_army(person)
 	#reserves.add_money(GameManager.currentContract.reward)
+	
+	if InventoryMenuListener.inventory == null:
+		InventoryMenuListener.inventory = $FleetUI/Background/Inventory_Menu
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -28,16 +31,20 @@ func _process(delta):
 	
 
 func open_rift_menu():
+	AudioManager.play_click()
 	menu_opened(rift_menu)
 
 func open_black_market_menu():
 	#print("button")
+	AudioManager.play_click()
 	menu_opened(black_market_menu)
 
 func open_healing_vats_menu():
+	AudioManager.play_click()
 	menu_opened(healing_vats_menu)
 	
 func open_mothership_menu():
+	AudioManager.play_click()
 	menu_opened(mothership_menu)
 
 func menu_opened(new_menu: Fleet_Structure_UI):

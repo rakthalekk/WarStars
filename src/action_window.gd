@@ -18,6 +18,8 @@ func display():
 	show()
 	$MenuCursor.hide()
 	$Submenu.hide()
+	$Submenu/Ability1.hide()
+	$Submenu/Ability2.hide()
 	$WeaponInfo.hide()
 	action_button.grab_focus()
 
@@ -34,6 +36,17 @@ func update_buttons():
 func _on_action_pressed():
 	$Submenu.show()
 	$Submenu/Weapon1/Weapon1Button.grab_focus()
+	
+	if game_board._active_unit.weapons.size() > 2:
+		var equipment = game_board._active_unit.weapons[2] as Gear
+		if equipment.is_consumable && equipment._uses_left > 0:
+			$Submenu/Ability1.show()
+	
+	if game_board._active_unit.weapons.size() > 3:
+		var equipment = game_board._active_unit.weapons[3] as Gear
+		if equipment.is_consumable && equipment._uses_left > 0:
+			$Submenu/Ability2.show()
+	
 	button_click.play()
 
 
@@ -154,15 +167,12 @@ func _use_gear(unit):
 
 
 func display_weapon_info(weapon: Weapon):
-	$WeaponInfo.show()
-	$WeaponInfo.get_node("Name").text = weapon.name
-	$WeaponInfo.get_node("Type").text = "Type: " + Equipment_Generator.Weapon_Type.keys()[weapon.weapon_type]
-	$WeaponInfo.get_node("Range").text = "Range: " + str(weapon.range)
-	$WeaponInfo.get_node("Damage").text = "DMG: " + str(weapon.damage) + " plus " + str(weapon.damage_roll_multiplier) + "d" + str(weapon.damage_roll)
-	if weapon.weapon_type == Equipment_Generator.Weapon_Type.MELEE:
-		$WeaponInfo.get_node("Heat").text = ""
-	else:
-		$WeaponInfo.get_node("Heat").text = "Heat: " + str(weapon.current_heat) + "/" + str(weapon.heat_max)
+	game_board.display_weapon_tooltip(weapon, $WeaponInfo)
+
+
+func display_gear_info(gear: Gear):
+	game_board.display_gear_tooltip(gear, $WeaponInfo)
+
 
 
 func _on_weapon_1_button_mouse_entered():
@@ -185,11 +195,15 @@ func _on_weapon_2_button_mouse_entered():
 func _on_ability_1_button_mouse_entered():
 	$Submenu/SubmenuCursor.position = $Submenu/Ability1.position + Vector2(1, 6)
 	$Submenu/Ability1/Ability1Button.position += Vector2(-2, 0)
+	game_board._unit_attack_range.clear()
+	display_gear_info(game_board._active_unit.weapons[2])
 
 
 func _on_ability_2_button_mouse_entered():
 	$Submenu/SubmenuCursor.position = $Submenu/Ability2.position + Vector2(1, 6)
 	$Submenu/Ability2/Ability2Button.position += Vector2(-2, 0)
+	game_board._unit_attack_range.clear()
+	display_gear_info(game_board._active_unit.weapons[3])
 
 
 func _on_action_cancel_pressed():

@@ -82,6 +82,10 @@ func _process(delta):
 		_on_equipment_1_mouse_entered()
 	elif Input.is_action_just_pressed("2"):
 		_on_equipment_2_mouse_entered()
+	elif Input.is_action_just_pressed("3"):
+		_on_equipment_3_mouse_entered()
+	elif Input.is_action_just_pressed("4"):
+		_on_equipment_4_mouse_entered()
 	
 	if GameManager.controller:
 		var cursor_to_camera = $Cursor.position - camera.position
@@ -127,6 +131,9 @@ func _reinitialize() -> void:
 		var unit := child as Unit
 		if not unit:
 			continue
+		
+		for equipment in unit.weapons:
+			equipment.prep_for_battle()
 		
 		if unit is PlayerUnit:
 			player_units.append(unit)
@@ -501,11 +508,13 @@ func show_unit_information(unit: Unit):
 	
 	display_unit_weapons(unit, unit.weapons[0], combat_ui.get_node("Weapon"))
 	
-	display_unit_equipment_icons(unit, unit.weapons[0], combat_ui.get_node("Equipment1"))
-	if unit.weapons.size() > 1:
-		display_unit_equipment_icons(unit, unit.weapons[1], combat_ui.get_node("Equipment2"))
-	else:
-		%Equipment2.texture = null
+	%Equipment1.texture = null
+	%Equipment2.texture = null
+	%Equipment3.texture = null
+	%Equipment4.texture = null
+	
+	for i in range(0, unit.weapons.size()):
+		display_unit_equipment_icons(unit, unit.weapons[i], combat_ui.get_node("Equipment" + str(i + 1)))
 	
 	combat_ui.show()
 
@@ -529,23 +538,40 @@ func display_unit_weapons(unit: Unit, weapon: Weapon, image: TextureRect):
 	image.texture = load("res://assets/Weapons & Gear/" + weapon_name)
 
 
-func display_unit_equipment_icons(unit: Unit, weapon: Weapon, image: TextureRect):
+func display_unit_gear(unit: Unit, gear: Gear, image: TextureRect):
+	var weapon_name = "WS_Gear_"
+	if gear.name.contains("Med Kit"):
+		weapon_name += "Medkit.png"
+	elif gear.name.contains("Stim"):
+		weapon_name += "Stim"
+	elif gear.name.contains("Armor"):
+		weapon_name += "Armor"
+	elif gear.name.contains("Accelerant"):
+		weapon_name += "Accelerant"
+	
+	image.texture = load("res://assets/Weapons & Gear/" + weapon_name)
+
+
+func display_unit_equipment_icons(unit: Unit, equipment: Equipment, image: TextureRect):
 	var weapon_name = ""
 	
-	match weapon.weapon_type:
-		Equipment_Generator.Weapon_Type.MELEE:
-			if weapon.name.contains("Spear"):
-				weapon_name += "Spear"
-			else:
-				weapon_name += "Sword"
-		Equipment_Generator.Weapon_Type.PISTOL:
-			weapon_name += "Pistol"
-		Equipment_Generator.Weapon_Type.SHOTGUN:
-			weapon_name += "Shotty"
-		Equipment_Generator.Weapon_Type.RIFLE:
-			weapon_name += "Rifle"
-		_:
-			weapon_name += weapon.name + ".png"
+	if equipment is Weapon:
+		match equipment.weapon_type:
+			Equipment_Generator.Weapon_Type.MELEE:
+				if equipment.name.contains("Spear"):
+					weapon_name += "Spear"
+				else:
+					weapon_name += "Sword"
+			Equipment_Generator.Weapon_Type.PISTOL:
+				weapon_name += "Pistol"
+			Equipment_Generator.Weapon_Type.SHOTGUN:
+				weapon_name += "Shotty"
+			Equipment_Generator.Weapon_Type.RIFLE:
+				weapon_name += "Rifle"
+			_:
+				weapon_name += "Special"
+	else:
+		weapon_name += "Special"
 	
 	image.texture = load("res://assets/CombatUI/" + weapon_name + "Icon.png")
 
@@ -952,37 +978,79 @@ func spawn_enemy(tier: int, grid_position: Vector2):
 	add_child(enemy)
 
 
-func display_weapon_tooltip(weapon: Weapon):
-	display_unit_weapons(hovered_unit, weapon, combat_ui.get_node("Weapon"))
-	%EquipmentPopup.show()
-	%EquipmentPopup.get_node("Name").text = weapon.name
-	%EquipmentPopup.get_node("Type").text = "Type: " + Equipment_Generator.Weapon_Type.keys()[weapon.weapon_type]
-	%EquipmentPopup.get_node("Range").text = "Range: " + str(weapon.range)
-	%EquipmentPopup.get_node("Damage").text = "DMG: " + str(weapon.damage) + " plus " + str(weapon.damage_roll_multiplier) + "d" + str(weapon.damage_roll)
+func display_equipment_tooltip(equipment: Equipment):
+	if equipment is Weapon:
+		display_weapon_tooltip(equipment)
+	elif equipment is Gear:
+		display_gear_tooltip(equipment)
+
+
+func display_weapon_tooltip(weapon: Weapon, popup = %EquipmentPopup):
+	if popup == %EquipmentPopup:
+		display_unit_weapons(hovered_unit, weapon, combat_ui.get_node("Weapon"))
+	popup.show()
+	popup.get_node("Name").text = weapon.name
+	popup.get_node("Type").text = "Type: " + Equipment_Generator.Weapon_Type.keys()[weapon.weapon_type]
+	popup.get_node("Range").text = "Range: " + str(weapon.range)
+	popup.get_node("Damage").text = "DMG: " + str(weapon.damage) + " plus " + str(weapon.damage_roll_multiplier) + "d" + str(weapon.damage_roll)
 	if weapon.weapon_type == Equipment_Generator.Weapon_Type.MELEE:
-		%EquipmentPopup.get_node("Heat").text = ""
+		popup.get_node("Heat").text = ""
 	else:
-		%EquipmentPopup.get_node("Heat").text = "Heat: " + str(weapon.current_heat) + "/" + str(weapon.heat_max)
+		popup.get_node("Heat").text = "Heat: " + str(weapon.current_heat) + "/" + str(weapon.heat_max)
+
+
+func display_gear_tooltip(gear: Gear, popup = %EquipmentPopup):
+	popup.show()
+	popup.get_node("Name").text = gear.name
+	if gear.is_consumable:
+		popup.get_node("Type").text = "Uses: " + str(gear._uses_left) + "/" + str(gear.num_uses)
+	else:
+		popup.get_node("Type").text = ""
+	
+	match gear.name:
+		"Stim Pack":
+			popup.get_node("Range").text = "Grants another action after use"
+		"Small Med Kit":
+			popup.get_node("Range").text = "Heals 4HP"
+		"Med Kit":
+			popup.get_node("Range").text = "Heals 8HP"
+		"Large Med Kit":
+			popup.get_node("Range").text = "Heals 12HP"
+		"Common Armor":
+			popup.get_node("Range").text = "No effect"
+		"Rare Armor":
+			popup.get_node("Range").text = "No effect"
+		"Light Accelerants":
+			popup.get_node("Range").text = "No effect"
+		"Accelerants":
+			popup.get_node("Range").text = "No effect"
+		"Heaavy Accelerant":
+			popup.get_node("Range").text = "No effect"
+		_:
+			popup.get_node("Range").text = "Missing Equipment Description"
+	
+	popup.get_node("Damage").text = ""
+	popup.get_node("Heat").text = ""
 
 
 func _on_equipment_1_mouse_entered():
 	if %Equipment1.texture && hovered_unit:
-		display_weapon_tooltip(hovered_unit.weapons[0])
+		display_equipment_tooltip(hovered_unit.weapons[0])
 
 
 func _on_equipment_2_mouse_entered():
 	if %Equipment2.texture && hovered_unit:
-		display_weapon_tooltip(hovered_unit.weapons[1])
+		display_equipment_tooltip(hovered_unit.weapons[1])
 
 
 func _on_equipment_3_mouse_entered():
 	if %Equipment3.texture:
-		pass
+		display_equipment_tooltip(hovered_unit.weapons[2])
 
 
 func _on_equipment_4_mouse_entered():
 	if %Equipment4.texture:
-		pass
+		display_equipment_tooltip(hovered_unit.weapons[3])
 
 
 func _on_chapter_end_button_pressed():

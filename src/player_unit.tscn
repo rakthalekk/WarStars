@@ -316,7 +316,6 @@ move_speed = 300.0
 max_health = null
 tier = null
 color = null
-weapon_names = Array[String](["Weapons/Combat Rifle", "Weapons/Cool Sword", "Gear/Stim Pack"])
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
 rotates = false
