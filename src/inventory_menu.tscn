@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cfl04oknyy6x8"]
+[gd_scene load_steps=10 format=3 uid="uid://cfl04oknyy6x8"]
 
 [ext_resource type="Script" path="res://src/inventory_menu.gd" id="1_y4dkt"]
 [ext_resource type="Texture2D" uid="uid://h7nsqdept6f0" path="res://assets/FleetUI/FleetSubmenu_smallcontainer.png" id="2_mg3se"]
+[ext_resource type="Script" path="res://src/Weapon_Display_Area.gd" id="3_5yi6c"]
 [ext_resource type="Script" path="res://src/Inventory_Drop_Area.gd" id="3_l6wur"]
 [ext_resource type="PackedScene" uid="uid://cc0g3v21wxmc" path="res://src/equip_icon.tscn" id="3_u2sp8"]
 [ext_resource type="Texture2D" uid="uid://d0p6c3xmg0jww" path="res://assets/FleetUI/BackButton.png" id="5_b5n2c"]
@@ -13,7 +14,7 @@ font_size = 20
 [sub_resource type="LabelSettings" id="LabelSettings_sdey4"]
 font_size = 10
 
-[node name="Inventory_Menu" type="Control" node_paths=PackedStringArray("base_item_icon", "equip_parent", "person_image", "name_label", "health_label", "speed_label", "weapon_1_image", "weapon_1_label", "weapon_2_image", "weapon_2_label", "equip_1_image", "equip_1_label", "equip_2_image", "equip_2_label")]
+[node name="Inventory_Menu" type="Control" node_paths=PackedStringArray("base_item_icon", "equip_parent", "person_image", "name_label", "health_label", "speed_label", "weapon_1_area", "weapon_1_label", "weapon_2_area", "weapon_2_label", "equip_1_image", "equip_1_area", "equip_1_label", "equip_2_image", "equip_2_area", "equip_2_label")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,14 +32,31 @@ person_image = NodePath("ColorRect/TextureRect")
 name_label = NodePath("ColorRect/Label")
 health_label = NodePath("ColorRect/Label2")
 speed_label = NodePath("ColorRect/Label3")
-weapon_1_image = NodePath("ColorRect/TextureRect2")
-weapon_1_label = NodePath("ColorRect/TextureRect2/Label")
-weapon_2_image = NodePath("ColorRect/TextureRect4")
-weapon_2_label = NodePath("ColorRect/TextureRect4/Label")
-equip_1_image = NodePath("ColorRect/TextureRect3")
-equip_1_label = NodePath("ColorRect/TextureRect3/Label")
-equip_2_image = NodePath("ColorRect/TextureRect5")
-equip_2_label = NodePath("ColorRect/TextureRect5/Label")
+weapon_1_area = NodePath("ColorRect/Weapon 1")
+weapon_1_label = NodePath("ColorRect/Weapon 1/Label")
+weapon_2_area = NodePath("ColorRect/Weapon 2")
+weapon_2_label = NodePath("ColorRect/Weapon 2/Label")
+equip_1_image = NodePath("ColorRect/Gear 1")
+equip_1_area = NodePath("ColorRect/Gear 1")
+equip_1_label = NodePath("ColorRect/Gear 1/Label")
+equip_2_image = NodePath("ColorRect/Gear 2")
+equip_2_area = NodePath("ColorRect/Gear 2")
+equip_2_label = NodePath("ColorRect/Gear 2/Label")
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.5
+offset_top = -152.5
+offset_right = 76.5
+offset_bottom = 152.5
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -73,7 +91,7 @@ offset_bottom = 44.0
 texture = ExtResource("2_mg3se")
 stretch_mode = 2
 
-[node name="TextureRect2" type="TextureRect" parent="ColorRect"]
+[node name="Weapon 1" type="TextureRect" parent="ColorRect"]
 layout_mode = 1
 offset_left = 12.0
 offset_top = 72.0
@@ -81,8 +99,9 @@ offset_right = 44.0
 offset_bottom = 104.0
 texture = ExtResource("2_mg3se")
 stretch_mode = 2
+script = ExtResource("3_5yi6c")
 
-[node name="Label" type="Label" parent="ColorRect/TextureRect2"]
+[node name="Label" type="Label" parent="ColorRect/Weapon 1"]
 layout_mode = 0
 offset_top = 32.0
 offset_right = 40.0
@@ -90,7 +109,12 @@ offset_bottom = 55.0
 text = "Gun 1"
 label_settings = SubResource("LabelSettings_sdey4")
 
-[node name="TextureRect3" type="TextureRect" parent="ColorRect" node_paths=PackedStringArray("main_inventory")]
+[node name="TextureButton" type="TextureButton" parent="ColorRect/Weapon 1"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="Gear 1" type="TextureRect" parent="ColorRect" node_paths=PackedStringArray("main_inventory", "main_image")]
 layout_mode = 1
 offset_left = 12.0
 offset_top = 154.0
@@ -100,8 +124,9 @@ texture = ExtResource("2_mg3se")
 stretch_mode = 2
 script = ExtResource("3_l6wur")
 main_inventory = NodePath("../..")
+main_image = NodePath(".")
 
-[node name="Label" type="Label" parent="ColorRect/TextureRect3"]
+[node name="Label" type="Label" parent="ColorRect/Gear 1"]
 layout_mode = 0
 offset_top = 32.0
 offset_right = 40.0
@@ -110,7 +135,7 @@ text = "Equip 1
 "
 label_settings = SubResource("LabelSettings_sdey4")
 
-[node name="TextureButton" type="TextureButton" parent="ColorRect/TextureRect3"]
+[node name="TextureButton" type="TextureButton" parent="ColorRect/Gear 1"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,7 +143,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect4" type="TextureRect" parent="ColorRect"]
+[node name="Weapon 2" type="TextureRect" parent="ColorRect"]
 layout_mode = 1
 offset_left = 92.0
 offset_top = 72.0
@@ -126,8 +151,9 @@ offset_right = 124.0
 offset_bottom = 104.0
 texture = ExtResource("2_mg3se")
 stretch_mode = 2
+script = ExtResource("3_5yi6c")
 
-[node name="Label" type="Label" parent="ColorRect/TextureRect4"]
+[node name="Label" type="Label" parent="ColorRect/Weapon 2"]
 layout_mode = 0
 offset_top = 32.0
 offset_right = 40.0
@@ -135,7 +161,12 @@ offset_bottom = 55.0
 text = "Gun 2"
 label_settings = SubResource("LabelSettings_sdey4")
 
-[node name="TextureRect5" type="TextureRect" parent="ColorRect" node_paths=PackedStringArray("main_inventory")]
+[node name="TextureButton" type="TextureButton" parent="ColorRect/Weapon 2"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="Gear 2" type="TextureRect" parent="ColorRect" node_paths=PackedStringArray("main_inventory", "main_image")]
 layout_mode = 1
 offset_left = 92.0
 offset_top = 154.0
@@ -146,8 +177,9 @@ stretch_mode = 2
 script = ExtResource("3_l6wur")
 main_inventory = NodePath("../..")
 equip2 = true
+main_image = NodePath(".")
 
-[node name="Label" type="Label" parent="ColorRect/TextureRect5"]
+[node name="Label" type="Label" parent="ColorRect/Gear 2"]
 layout_mode = 0
 offset_top = 32.0
 offset_right = 40.0
@@ -156,7 +188,7 @@ text = "Equip 2
 "
 label_settings = SubResource("LabelSettings_sdey4")
 
-[node name="TextureButton" type="TextureButton" parent="ColorRect/TextureRect5"]
+[node name="TextureButton" type="TextureButton" parent="ColorRect/Gear 2"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -261,12 +293,20 @@ grow_horizontal = 0
 texture_normal = ExtResource("5_b5n2c")
 texture_hover = ExtResource("6_jviyn")
 
-[connection signal="mouse_entered" from="ColorRect/TextureRect3" to="ColorRect/TextureRect3" method="start_overlap"]
-[connection signal="mouse_exited" from="ColorRect/TextureRect3" to="ColorRect/TextureRect3" method="end_overlap"]
-[connection signal="mouse_entered" from="ColorRect/TextureRect3/TextureButton" to="ColorRect/TextureRect3" method="start_overlap"]
-[connection signal="mouse_exited" from="ColorRect/TextureRect3/TextureButton" to="ColorRect/TextureRect3" method="end_overlap"]
-[connection signal="mouse_entered" from="ColorRect/TextureRect5" to="ColorRect/TextureRect5" method="start_overlap"]
-[connection signal="mouse_exited" from="ColorRect/TextureRect5" to="ColorRect/TextureRect5" method="end_overlap"]
-[connection signal="mouse_entered" from="ColorRect/TextureRect5/TextureButton" to="ColorRect/TextureRect5" method="start_overlap"]
-[connection signal="mouse_exited" from="ColorRect/TextureRect5/TextureButton" to="ColorRect/TextureRect5" method="end_overlap"]
+[connection signal="mouse_entered" from="ColorRect/Weapon 1" to="ColorRect/Weapon 1" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect/Weapon 1" to="ColorRect/Weapon 1" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="ColorRect/Weapon 1/TextureButton" to="ColorRect/Weapon 1" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect/Weapon 1/TextureButton" to="ColorRect/Weapon 1" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="ColorRect/Gear 1" to="ColorRect/Gear 1" method="start_overlap"]
+[connection signal="mouse_exited" from="ColorRect/Gear 1" to="ColorRect/Gear 1" method="end_overlap"]
+[connection signal="mouse_entered" from="ColorRect/Gear 1/TextureButton" to="ColorRect/Gear 1" method="start_overlap"]
+[connection signal="mouse_exited" from="ColorRect/Gear 1/TextureButton" to="ColorRect/Gear 1" method="end_overlap"]
+[connection signal="mouse_entered" from="ColorRect/Weapon 2" to="ColorRect/Weapon 2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect/Weapon 2" to="ColorRect/Weapon 2" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="ColorRect/Weapon 2/TextureButton" to="ColorRect/Weapon 2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect/Weapon 2/TextureButton" to="ColorRect/Weapon 2" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="ColorRect/Gear 2" to="ColorRect/Gear 2" method="start_overlap"]
+[connection signal="mouse_exited" from="ColorRect/Gear 2" to="ColorRect/Gear 2" method="end_overlap"]
+[connection signal="mouse_entered" from="ColorRect/Gear 2/TextureButton" to="ColorRect/Gear 2" method="start_overlap"]
+[connection signal="mouse_exited" from="ColorRect/Gear 2/TextureButton" to="ColorRect/Gear 2" method="end_overlap"]
 [connection signal="pressed" from="TextureButton" to="." method="close_inventory"]

@@ -10,8 +10,7 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for structure: Fleet_Structure in structures:
-		structure.refresh()
+	refresh()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -42,3 +41,6 @@ func add_new_item(new_item: Equipment):
 	reserves.add_equipment_to_stockpile(new_item)
 
 
+func refresh():
+	for structure: Fleet_Structure in structures:
+		structure.refresh()

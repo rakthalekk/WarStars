@@ -9,12 +9,15 @@ func get_structure()->Fleet_Structure:
 	return rift_script
 
 func open_ui():
+	super.open_ui()
 	refresh()
 
 func try_summon(id: int):
 	if(rift_script.summon(id)):
-		pass#summon_panels[id].visible = false
-		
+		update_money_text()
+		return true
+		#summon_panels[id].visible = false
+	return false
 
 func refresh():
 	print("refreshing ui")

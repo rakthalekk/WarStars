@@ -38,6 +38,8 @@ func _ready():
 
 func press_button():
 	print("button pressed: ",ship.get_structure().can_upgrade())
+	AudioManager.play_click()
 	if(ship.get_structure().can_upgrade()):
 		ship.get_structure().upgrade_capacity()
 		refresh()
+		AudioManager.play_purchase()

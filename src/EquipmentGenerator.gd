@@ -4,10 +4,11 @@ extends Node2D
 enum Weapon_Type{NONE, MELEE, PISTOL, SHOTGUN, RIFLE}
 
 @export var base_melee: Equipment
+@export var base_spear: Equipment
 @export var base_pistol: Equipment
 @export var base_shotgun: Equipment
 @export var base_rifle: Equipment
-@onready var base_weapons: Array[Weapon] = [base_melee, base_pistol, base_shotgun, base_rifle]
+@onready var base_weapons: Array[Weapon] = [base_melee, base_spear, base_pistol, base_shotgun, base_rifle]
 @export var tier_1_weapons: Dictionary = {Weapon_Type.MELEE: [], Weapon_Type.PISTOL: [], Weapon_Type.SHOTGUN: [], Weapon_Type.RIFLE: []}
 @export var tier_2_weapons: Dictionary = {Weapon_Type.MELEE: [], Weapon_Type.PISTOL: [], Weapon_Type.SHOTGUN: [], Weapon_Type.RIFLE: []}
 @export var tier_3_weapons: Dictionary = {Weapon_Type.MELEE: [], Weapon_Type.PISTOL: [], Weapon_Type.SHOTGUN: [], Weapon_Type.RIFLE: []}
@@ -37,15 +38,13 @@ func _ready():
 				(2): tier_2_gear.append(node)
 				(3): tier_3_gear.append(node)
 
-func spawn_random_weapon_at_tier(tier: int, disallowed_type: Weapon_Type = Weapon_Type.NONE) -> Weapon:
-	var valid_weapons
-	if(disallowed_type == Weapon_Type.NONE):
-		valid_weapons = base_weapons
-	else:
-		valid_weapons = base_weapons.duplicate()
+func spawn_random_weapon_at_tier(tier: int, disallowed_types: Array[Weapon_Type] = []) -> Weapon:
+	var valid_weapons = base_weapons.duplicate()
+	for disallowed_type in disallowed_types: 
 		match(disallowed_type):
 			Weapon_Type.MELEE:
 				valid_weapons.erase(base_melee)
+				valid_weapons.erase(base_spear)
 			Weapon_Type.PISTOL:
 				valid_weapons.erase(base_pistol)
 			Weapon_Type.SHOTGUN:
@@ -76,22 +75,22 @@ func spawn_weapon(tier: int, type: Weapon_Type)->Weapon:
 	new_weapon.generate_from_scratch(tier)
 	return new_weapon
 
-func spawn_random_weapon(disallowed_type: Weapon_Type = Weapon_Type.NONE)-> Weapon:
+func spawn_random_weapon(disallowed_types: Array[Weapon_Type] = [])-> Weapon:
 	
-	return spawn_random_weapon_at_tier(get_tier(), disallowed_type)
+	return spawn_random_weapon_at_tier(get_tier(), disallowed_types)
 	
 
-func spawn_random_weapon_up_to_tier(max_tier: int, disallowed_type: Weapon_Type = Weapon_Type.NONE):
+func spawn_random_weapon_up_to_tier(max_tier: int, disallowed_types: Array[Weapon_Type] = []):
 	if(max_tier == 1):
-		return spawn_random_weapon_at_tier(1, disallowed_type)
+		return spawn_random_weapon_at_tier(1, disallowed_types)
 	if(max_tier == 2):
 		var rand = randf() * 0.9;
 		if rand <= tier_1_chance:
-			return spawn_random_weapon_at_tier(1, disallowed_type)
+			return spawn_random_weapon_at_tier(1, disallowed_types)
 		else:
-			return spawn_random_weapon_at_tier(2, disallowed_type)
+			return spawn_random_weapon_at_tier(2, disallowed_types)
 	else:
-		spawn_random_weapon(disallowed_type)
+		spawn_random_weapon(disallowed_types)
 
 func get_tier(max_tier: int = 3)->int:
 	if max_tier == 1:

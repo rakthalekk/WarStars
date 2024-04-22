@@ -8,6 +8,7 @@ func get_structure()->Fleet_Structure:
 	return black_market_script
 
 func open_ui():
+	super.open_ui()
 	refresh()
 
 func _ready():
@@ -15,8 +16,10 @@ func _ready():
 
 func try_purchase(id: int):
 	if(black_market_script.purchase(id)):
-		pass#purchase_panels[id].visible = false
-		
+		update_money_text()
+		return true
+		#purchase_panels[id].visible = false
+	return false
 
 func refresh():
 	print("refreshing black market ui ", black_market_script.capacity)

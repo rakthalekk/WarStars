@@ -83,9 +83,11 @@ func _can_drop(pos,data):
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton && event.is_double_click():
+		AudioManager.play_click()
 		InventoryMenuListener.open_inventory(person)
 		return
 	elif event is InputEventMouseButton && event.is_pressed():
+		AudioManager.play_click()
 		InventoryMenuListener.open_inventory(person, true)
 		return
 	#print("input recieved")
@@ -106,3 +108,10 @@ func _on_gui_input(event):
 
 
 
+
+
+func _on_mouse_entered():
+	MouseDrag.display_person_tooltip(person)
+
+func _on_mouse_exited():
+	MouseDrag.hide_person_tooltip(person)

@@ -11,13 +11,17 @@ extends Control
 @export var name_label: Label
 @export var health_label: Label
 @export var speed_label: Label
-@export var weapon_1_image: TextureRect
+#@export var weapon_1_image: TextureRect
+@export var weapon_1_area: Weapon_Display_Area
 @export var weapon_1_label: Label
-@export var weapon_2_image: TextureRect
+#@export var weapon_2_image: TextureRect
+@export var weapon_2_area: Weapon_Display_Area
 @export var weapon_2_label: Label
 @export var equip_1_image: TextureRect
+@export var equip_1_area: Inventory_Drop_Area
 @export var equip_1_label: Label
 @export var equip_2_image: TextureRect
+@export var equip_2_area: Inventory_Drop_Area
 @export var equip_2_label: Label
 var default_color: Color = Color.WHITE
 var highlight_color: Color = Color.BLUE
@@ -27,13 +31,17 @@ func refresh():
 	name_label.text = ""
 	health_label.text = ""
 	speed_label.text = ""
-	weapon_1_image.texture = default_texture
+	#weapon_1_image.texture = default_texture
+	weapon_1_area.clear_weapon(default_texture)
 	weapon_1_label.text = ""
-	weapon_2_image.texture = default_texture
+	#weapon_2_image.texture = default_texture
+	weapon_2_area.clear_weapon(default_texture)
 	weapon_2_label.text = ""
-	equip_1_image.texture = default_texture
+	#equip_1_image.texture = default_texture
+	equip_1_area.clear_gear(default_texture)
 	equip_1_label.text = ""
-	equip_2_image.texture = default_texture
+	#equip_2_image.texture = default_texture
+	equip_2_area.clear_gear(default_texture)
 	equip_2_label.text = ""
 
 # Called when the node enters the scene tree for the first time.
@@ -56,21 +64,27 @@ func display_person(new_person:Person):
 	name_label.text = person.name
 	health_label.text = "HP: " + str(person.health) + "/" + str(person.max_health)
 	speed_label.text = "Move: " + str(person.speed)
-	weapon_1_image.texture = person.weapon1.image
+	#weapon_1_image.texture = person.weapon1.image
+	weapon_1_area.set_weapon(person.weapon1)
 	weapon_1_label.text = person.weapon1.name
-	weapon_2_image.texture = person.weapon2.image
+	#weapon_2_image.texture = person.weapon2.image
+	weapon_2_area.set_weapon(person.weapon2)
 	weapon_2_label.text = person.weapon2.name
 	if(person.equip1 != null):
-		equip_1_image.texture = person.equip1.image
+		#equip_1_image.texture = person.equip1.image
+		equip_1_area.assign_gear(person.equip1)
 		equip_1_label.text = person.equip1.name
 	else:
-		equip_1_image.texture = default_texture
+		#equip_1_image.texture = default_texture
+		equip_1_area.clear_gear(default_texture)
 		equip_1_label.text = "NONE"
 	if(person.equip2 != null):
-		equip_2_image.texture = person.equip2.image
+		#equip_2_image.texture = person.equip2.image
+		equip_2_area.assign_gear(person.equip2)
 		equip_2_label.text = person.equip2.name
 	else:
-		equip_2_image.texture = default_texture
+		#equip_2_image.texture = default_texture
+		equip_2_area.clear_gear(default_texture)
 		equip_2_label.text = "NONE"
 	
 	if(!visible):
@@ -108,7 +122,8 @@ func try_give_equipment_1(new_equip: Gear):
 		return
 	person.equip1 = new_equip
 	reserves.remove_equipment(new_equip)
-	equip_1_image.texture = person.equip1.image
+	equip_1_area.assign_gear(person.equip1)
+	#equip_1_image.texture = person.equip1.image
 	equip_1_label.text = person.equip1.name
 	delete_object(new_equip)
 	
@@ -118,7 +133,8 @@ func try_give_equipment_2(new_equip: Gear):
 		return
 	person.equip2 = new_equip
 	reserves.remove_equipment(new_equip)
-	equip_2_image.texture = person.equip2.image
+	equip_2_area.assign_gear(person.equip2)
+	#equip_2_image.texture = person.equip2.image
 	equip_2_label.text = person.equip2.name
 	delete_object(new_equip)
 
@@ -136,6 +152,7 @@ func display_inventory():
 		spawn_new_equip(i)
 
 func close_inventory():
+	AudioManager.play_click()
 	refresh()
 	visible = false
 

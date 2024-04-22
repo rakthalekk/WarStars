@@ -29,7 +29,8 @@ const max_tier = 3
 @export var resting: bool
 @export var fighting: bool
 
-const unit_scene = preload("res://src/player_unit.tscn")
+const player_unit_scene = preload("res://src/player_unit.tscn")
+const enemy_unit_scene = preload("res://src/enemy_unit.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -83,8 +84,7 @@ func equip(slot : int, equipment : Equipment):
 			else: return
 	equipment.apply_stat_changes(self)
 
-func construct_unit() -> PlayerUnit:
-	var unit = unit_scene.instantiate()
+func construct_unit(unit: Unit) -> Unit:
 	unit.max_health = max_health
 	unit.health = health
 	unit.move_range = speed
@@ -95,7 +95,11 @@ func construct_unit() -> PlayerUnit:
 	unit.set_sprites(image, color)
 	
 	unit.weapons.append(weapon1)
-	unit.weapons.append(weapon2)
+	weapon1.user = unit
+	
+	if weapon2:
+		unit.weapons.append(weapon2)
+		weapon2.user = unit
 	
 	if equip1 != null:
 		unit.weapons.append(equip1)
@@ -105,6 +109,19 @@ func construct_unit() -> PlayerUnit:
 	unit.name = name
 	
 	return unit
+
+
+func construct_player_unit() -> PlayerUnit:
+	var unit = player_unit_scene.instantiate()
+	unit = construct_unit(unit)
+	return unit
+
+
+func construct_enemy_unit() -> EnemyUnit:
+	var unit = enemy_unit_scene.instantiate()
+	unit = construct_unit(unit)
+	return unit
+
 
 func update_from_unit(unit: Unit):
 	health = unit.health
