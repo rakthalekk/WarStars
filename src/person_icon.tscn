@@ -25,6 +25,13 @@ icon = NodePath("Icon")
 drag_icon = NodePath("Drag_Icon")
 sleep_icon = NodePath("Sleep_Label")
 
+[node name="Highlight" type="TextureRect" parent="."]
+modulate = Color(0.298039, 0.298039, 0.298039, 0.313726)
+layout_mode = 1
+texture = ExtResource("3_ho36m")
+expand_mode = 1
+stretch_mode = 2
+
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -36,13 +43,6 @@ mouse_filter = 2
 texture = ExtResource("2_ghpid")
 expand_mode = 1
 script = ExtResource("3_ytu4x")
-
-[node name="Highlight" type="TextureRect" parent="."]
-modulate = Color(0.298039, 0.298039, 0.298039, 0.313726)
-layout_mode = 1
-texture = ExtResource("3_ho36m")
-expand_mode = 1
-stretch_mode = 2
 
 [node name="Drag_Icon" parent="." instance=ExtResource("5_eg77c")]
 visible = false
@@ -70,6 +70,12 @@ text = "ZZZ"
 label_settings = SubResource("LabelSettings_6xfqd")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
-[connection signal="gui_input" from="Icon" to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="gui_input" from="Highlight" to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="Highlight" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Highlight" to="." method="_on_mouse_exited"]
+[connection signal="gui_input" from="Icon" to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="Icon" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Icon" to="." method="_on_mouse_exited"]
 [connection signal="gui_input" from="Drag_Icon" to="." method="_on_gui_input"]

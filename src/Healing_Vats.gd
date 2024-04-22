@@ -36,10 +36,10 @@ func can_afford_heal():
 func refresh():
 	for id in vats.size():
 		if(vats[id] != null):
-			#restore all health and ensure is no longer resting
-			vats[id] = null
 			vats[id].health = vats[id].max_health
 			vats[id].resting = false
+			manager.reserves.update_unit_visual(vats[id])
+			vats[id] = null
 	vats_ui.refresh()
 
 func try_add_person(id: int, person: Person)-> bool:

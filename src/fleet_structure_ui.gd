@@ -24,3 +24,4 @@ func update_money_text():
 	gold_ui.text = str(main_ui.reserves.money)
 
 
+

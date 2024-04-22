@@ -118,4 +118,6 @@ expand_mode = 2
 stretch_mode = 2
 
 [connection signal="pressed" from="Button" to="." method="on_button_click"]
+[connection signal="mouse_entered" from="TextureButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="TextureButton" to="." method="_on_mouse_exited"]
 [connection signal="pressed" from="TextureButton" to="." method="on_button_click"]

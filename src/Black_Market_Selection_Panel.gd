@@ -8,7 +8,12 @@ extends UI_Selection_Panel
 func on_button_click():
 	AudioManager.play_click()
 	if(market_UI.try_purchase(id)):
-		AudioManager.play_purchase()
+		#AudioManager.play_purchase()
+		MouseDrag.hide_gear_tooltip(equipment)
+		equipment = null
+		gold_text.modulate = insufficient_gold_color
+		set_button_active(false)
+		
 
 	
 func setup(new_equip):
@@ -34,7 +39,10 @@ func set_button_active(active: bool):
 func setup_money(current_money: int, set_active: bool = false):
 	if(equipment == null):
 		print("no equipment could be found found for ", id)
-	
+		gold_text.modulate = insufficient_gold_color
+		if(set_active):
+			set_button_active(false)
+		return
 	#print("checking current money: ", current_money," against price ", equipment.get_cost())
 	if(current_money >= equipment.get_cost()):
 		gold_text.modulate = normal_gold_color
@@ -45,3 +53,10 @@ func setup_money(current_money: int, set_active: bool = false):
 	if(set_active):
 		set_button_active(current_money >= equipment.get_cost())
 	
+func _on_mouse_entered():
+	if(equipment != null):
+		MouseDrag.display_gear_tooltip(equipment)
+
+func _on_mouse_exited():
+	if(equipment != null):
+		MouseDrag.hide_gear_tooltip(equipment)
