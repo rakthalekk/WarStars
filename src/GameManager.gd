@@ -91,6 +91,8 @@ func load_fleet(units: Array[Unit] = []):
 		unit.person_source.update_from_unit(unit)
 	var main = get_tree().root.get_node("Main")
 	get_tree().root.remove_child(combat_scene)
+	combat_scene.queue_free()
+	combat_scene = null
 	get_tree().root.add_child(fleet)
 		
 func enter_combat(platoon: Array[Person_Icon]):

@@ -47,7 +47,7 @@ func can_use_active():
 
 #make this take a player parameter
 func apply_stat_changes(person: Person):
-	person.speed -= weight
+	person.speed = max(3, person.speed - weight)
 
 func rest():
 	pass

@@ -21,6 +21,9 @@ func _ready():
 	for person in GameManager.reserve_list:
 		reserves.add_unit_to_army(person)
 	#reserves.add_money(GameManager.currentContract.reward)
+	
+	if InventoryMenuListener.inventory == null:
+		InventoryMenuListener.inventory = $FleetUI/Background/Inventory_Menu
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

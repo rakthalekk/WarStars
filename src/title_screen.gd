@@ -14,5 +14,5 @@ func _process(delta):
 
 func _on_p_lay_button_pressed():
 	GameManager.currentContract = GameManager.ContractData.new()
-	GameManager.currentContract.initialize_by_field(GameManager.Contract_Type.ROUTE, 1, 500, 0)
+	GameManager.currentContract.initialize_by_field(GameManager.Contract_Type.DEFEND, 1, 500, 1)
 	GameManager.enter_combat_title(GameManager.reserve_list)

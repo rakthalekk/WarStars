@@ -92,6 +92,7 @@ func construct_unit(unit: Unit) -> Unit:
 	unit.person_source = self
 	unit.texture = image
 	unit.color = color
+	unit.armor = armor
 	unit.set_sprites(image, color)
 	
 	unit.weapons.append(weapon1)

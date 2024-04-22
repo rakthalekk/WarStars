@@ -10,21 +10,21 @@ func _ready():
 
 func _on_capture_contract_pressed():
 	GameManager.currentContract = GameManager.ContractData.new()
-	GameManager.currentContract.initialize_by_contract($MarginContainer/HBoxContainer/CaptureContract)
+	GameManager.currentContract.initialize_by_contract($MarginContainer/HBoxContainer/Capture)
 	print("Contract Type: " + GameManager.Contract_Type.find_key(GameManager.currentContract.type) + "\nDifficulty: " + str(GameManager.currentContract.difficulty_stars) + "\nReward: " + str(GameManager.currentContract.reward) + "\n")
 	GameManager.enter_combat(mothership_ui.current_platoon)
 
 
 func _on_defend_contract_pressed():
 	GameManager.currentContract = GameManager.ContractData.new()
-	GameManager.currentContract.initialize_by_contract($MarginContainer/HBoxContainer/DefendContract)
+	GameManager.currentContract.initialize_by_contract($MarginContainer/HBoxContainer/Defend)
 	print("Contract Type: " + GameManager.Contract_Type.find_key(GameManager.currentContract.type) + "\nDifficulty: " + str(GameManager.currentContract.difficulty_stars) + "\nReward: " + str(GameManager.currentContract.reward) + "\n")
 	GameManager.enter_combat(mothership_ui.current_platoon)
 
 
 func _on_route_contract_pressed():
 	GameManager.currentContract = GameManager.ContractData.new()
-	GameManager.currentContract.initialize_by_contract($MarginContainer/HBoxContainer/RouteContract)
+	GameManager.currentContract.initialize_by_contract($MarginContainer/HBoxContainer/Route)
 	print("Contract Type: " + GameManager.Contract_Type.find_key(GameManager.currentContract.type) + "\nDifficulty: " + str(GameManager.currentContract.difficulty_stars) + "\nReward: " + str(GameManager.currentContract.reward) + "\n")
 	GameManager.enter_combat(mothership_ui.current_platoon)
 
