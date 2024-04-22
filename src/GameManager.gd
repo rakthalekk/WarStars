@@ -104,8 +104,6 @@ func enter_combat(platoon: Array[Person_Icon]):
 		get_combat_scene().get_node("GameBoard").add_child(unit)
 		
 	get_tree().root.remove_child(fleet)
-	fleet.queue_free()
-	fleet = null
 	get_tree().root.add_child(combat_scene)
 
 

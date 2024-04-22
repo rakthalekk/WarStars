@@ -499,7 +499,7 @@ func _on_Cursor_moved(new_cell: Vector2) -> void:
 
 
 func show_unit_information(unit: Unit):
-	combat_ui.get_node("HealthBar").frame = 16 - unit.health
+	combat_ui.get_node("HealthBar").frame = max(0, 16 - unit.health)
 	
 	if unit is PlayerUnit:
 		combat_ui.get_node("Name").text = unit.name
@@ -1017,15 +1017,15 @@ func display_gear_tooltip(gear: Gear, popup = %EquipmentPopup):
 		"Large Med Kit":
 			popup.get_node("Range").text = "Heals 12HP"
 		"Common Armor":
-			popup.get_node("Range").text = "No effect"
+			popup.get_node("Range").text = "Reduces damage taken by 2"
 		"Rare Armor":
-			popup.get_node("Range").text = "No effect"
-		"Light Accelerants":
-			popup.get_node("Range").text = "No effect"
+			popup.get_node("Range").text = "Reduces damage taken by 3"
+		"L Accelerants":
+			popup.get_node("Range").text = "Plus 2 movement for one turn"
 		"Accelerants":
-			popup.get_node("Range").text = "No effect"
-		"Heaavy Accelerant":
-			popup.get_node("Range").text = "No effect"
+			popup.get_node("Range").text = "Plus 4 movement for one turn"
+		"H Accelerant":
+			popup.get_node("Range").text = "Plus 6 movement for one turn"
 		_:
 			popup.get_node("Range").text = "Missing Equipment Description"
 	
