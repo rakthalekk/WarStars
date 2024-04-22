@@ -58,7 +58,11 @@ func use_active(target = null) -> bool:
 	used_this_turn = true
 	
 	#use weapon
-	await target.damage(damage + damage_roll_multiplier * randi_range(1, damage_roll))
+	var dmg = damage
+	for i in range(damage_roll_multiplier):
+		dmg += randi_range(1, damage_roll)
+	
+	await target.damage(dmg)
 	perform_specialty(target)
 	
 	increment_heat()

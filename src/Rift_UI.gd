@@ -10,6 +10,8 @@ func get_structure()->Fleet_Structure:
 
 func open_ui():
 	super.open_ui()
+	GameManager.help_menu_title = "The Rift"
+	GameManager.help_menu_description = "New warriors may be summoned for a fee. These will be added to your reserves on the right. Double-click a warrior to look at their information."
 	refresh()
 
 func try_summon(id: int):

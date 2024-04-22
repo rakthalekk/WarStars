@@ -34,20 +34,20 @@ func _ready():
 				1:
 					defend_turns = rng.randi_range(10, 12)
 				2:
-					defend_turns = rng.randi_range(13, 15)
+					defend_turns = rng.randi_range(12, 14)
 				3:
-					defend_turns = rng.randi_range(16, 18)
+					defend_turns = rng.randi_range(14, 16)
 				4:
-					defend_turns = rng.randi_range(19, 21)
+					defend_turns = rng.randi_range(16, 18)
 				5:
-					defend_turns = rng.randi_range(22, 24)
+					defend_turns = rng.randi_range(18, 20)
 	match difficulty_stars:
 		1:
-			reward = rng.randi_range(20, 30) * 10
+			reward = rng.randi_range(40, 50) * 10
 		2:
-			reward = rng.randi_range(40, 55) * 10
+			reward = rng.randi_range(60, 80) * 10
 		3:
-			reward = rng.randi_range(70, 110) * 10
+			reward = rng.randi_range(90, 110) * 10
 		4:
 			reward = rng.randi_range(120, 160) * 10
 		5:

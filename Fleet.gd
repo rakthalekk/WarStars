@@ -63,8 +63,12 @@ func menu_closed():
 	if(last_menu != null):
 		last_menu.visible = false
 		last_menu = null
+	
+	GameManager.help_menu_title = "Fleet"
+	GameManager.help_menu_description = "The fleet allows you to manage your army between battles. Click on any of the icons to access another menu. Double click a unit on the right to access their info."
 
 func refresh():
+	mothership_menu.hide()
 	quick_menu.visible = false
 	quick_menu.on_close_mini_menu()
 	inventory_menu.close_inventory()

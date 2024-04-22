@@ -49,6 +49,11 @@ var fleet: Node = null
 
 var reserve_list: Array[Person]
 
+var tutorial = true
+
+var help_menu_title = "Fleet"
+var help_menu_description = "The fleet allows you to manage your army between battles. Click on any of the icons to access another menu. Double click a unit on the right to access their info."
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if FileAccess.file_exists("res://assets/AlienNames.txt"):
@@ -82,9 +87,6 @@ func get_combat_scene():
 	return combat_scene
 
 func load_fleet(units: Array[Unit] = []):
-	if units.size() == 0:
-		return
-	
 	get_fleet()
 	
 	for unit in units:
@@ -94,6 +96,8 @@ func load_fleet(units: Array[Unit] = []):
 	combat_scene.queue_free()
 	combat_scene = null
 	get_tree().root.add_child(fleet)
+	
+	fleet.end_mission(currentContract.reward)
 		
 func enter_combat(platoon: Array[Person_Icon]):
 	if platoon.size() == 0:

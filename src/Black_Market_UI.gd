@@ -9,6 +9,8 @@ func get_structure()->Fleet_Structure:
 
 func open_ui():
 	super.open_ui()
+	GameManager.help_menu_title = "Black Market"
+	GameManager.help_menu_description = "Click on any item to purchase it. Items can be equipped through the inventory and accessed in battle. Double click a unit on the right to open their inventory."
 	refresh()
 
 func _ready():

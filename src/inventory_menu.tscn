@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cfl04oknyy6x8"]
+[gd_scene load_steps=11 format=3 uid="uid://cfl04oknyy6x8"]
 
 [ext_resource type="Script" path="res://src/inventory_menu.gd" id="1_y4dkt"]
 [ext_resource type="Texture2D" uid="uid://h7nsqdept6f0" path="res://assets/FleetUI/FleetSubmenu_smallcontainer.png" id="2_mg3se"]
 [ext_resource type="Script" path="res://src/Weapon_Display_Area.gd" id="3_5yi6c"]
 [ext_resource type="Script" path="res://src/Inventory_Drop_Area.gd" id="3_l6wur"]
+[ext_resource type="FontFile" uid="uid://bv4wc7c2ird3k" path="res://assets/fonts/warstarsfont.ttf" id="3_m7042"]
 [ext_resource type="PackedScene" uid="uid://cc0g3v21wxmc" path="res://src/equip_icon.tscn" id="3_u2sp8"]
 [ext_resource type="Texture2D" uid="uid://d0p6c3xmg0jww" path="res://assets/FleetUI/BackButton.png" id="5_b5n2c"]
 [ext_resource type="Texture2D" uid="uid://crm8k14ei2hgm" path="res://assets/FleetUI/BackButtonHover.png" id="6_jviyn"]
@@ -12,7 +13,8 @@
 font_size = 20
 
 [sub_resource type="LabelSettings" id="LabelSettings_sdey4"]
-font_size = 10
+font = ExtResource("3_m7042")
+font_size = 8
 
 [node name="Inventory_Menu" type="Control" node_paths=PackedStringArray("base_item_icon", "equip_parent", "person_image", "name_label", "health_label", "speed_label", "weapon_1_area", "weapon_1_label", "weapon_2_area", "weapon_2_label", "equip_1_image", "equip_1_area", "equip_1_label", "equip_2_image", "equip_2_area", "equip_2_label")]
 layout_mode = 3
@@ -74,11 +76,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -28.0
-offset_top = 11.0
-offset_right = 66.0
-offset_bottom = 43.0
+offset_left = -28.5
+offset_top = 20.0
+offset_right = 65.5
+offset_bottom = 52.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_m7042")
 text = "Name"
 label_settings = SubResource("LabelSettings_rbiq1")
 
@@ -103,9 +106,9 @@ script = ExtResource("3_5yi6c")
 
 [node name="Label" type="Label" parent="ColorRect/Weapon 1"]
 layout_mode = 0
-offset_top = 32.0
+offset_top = 38.0
 offset_right = 40.0
-offset_bottom = 55.0
+offset_bottom = 61.0
 text = "Gun 1"
 label_settings = SubResource("LabelSettings_sdey4")
 
@@ -128,9 +131,9 @@ main_image = NodePath(".")
 
 [node name="Label" type="Label" parent="ColorRect/Gear 1"]
 layout_mode = 0
-offset_top = 32.0
+offset_top = 38.0
 offset_right = 40.0
-offset_bottom = 55.0
+offset_bottom = 61.0
 text = "Equip 1
 "
 label_settings = SubResource("LabelSettings_sdey4")
@@ -155,9 +158,9 @@ script = ExtResource("3_5yi6c")
 
 [node name="Label" type="Label" parent="ColorRect/Weapon 2"]
 layout_mode = 0
-offset_top = 32.0
+offset_top = 38.0
 offset_right = 40.0
-offset_bottom = 55.0
+offset_bottom = 61.0
 text = "Gun 2"
 label_settings = SubResource("LabelSettings_sdey4")
 
@@ -181,9 +184,9 @@ main_image = NodePath(".")
 
 [node name="Label" type="Label" parent="ColorRect/Gear 2"]
 layout_mode = 0
-offset_top = 32.0
+offset_top = 38.0
 offset_right = 40.0
-offset_bottom = 55.0
+offset_bottom = 61.0
 text = "Equip 2
 "
 label_settings = SubResource("LabelSettings_sdey4")
@@ -199,18 +202,19 @@ grow_vertical = 2
 [node name="Label2" type="Label" parent="ColorRect"]
 layout_mode = 0
 offset_left = 12.0
-offset_top = 44.0
-offset_right = 52.0
-offset_bottom = 67.0
+offset_top = 49.0
+offset_right = 55.0
+offset_bottom = 72.0
+theme_override_fonts/font = ExtResource("3_m7042")
 text = "hp: 3/10"
 label_settings = SubResource("LabelSettings_sdey4")
 
 [node name="Label3" type="Label" parent="ColorRect"]
 layout_mode = 0
 offset_left = 63.0
-offset_top = 43.0
+offset_top = 49.0
 offset_right = 104.0
-offset_bottom = 66.0
+offset_bottom = 72.0
 text = "Speed: 6"
 label_settings = SubResource("LabelSettings_sdey4")
 
@@ -230,11 +234,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -37.5
-offset_top = 30.0
-offset_right = 37.5
-offset_bottom = 53.0
+offset_left = -46.0
+offset_top = 49.0
+offset_right = 46.0
+offset_bottom = 72.0
 grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_m7042")
 text = "Inventory"
 
 [node name="ColorRect" type="ColorRect" parent="ColorRect2"]

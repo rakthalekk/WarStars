@@ -58,6 +58,10 @@ func _ready() -> void:
 	chapter_end_ui.hide()
 	combat_ui.hide()
 	display_danger_area()
+	
+	if GameManager.tutorial:
+		%TutorialText.show()
+		GameManager.tutorial = false
 
 
 func _process(delta):
@@ -86,6 +90,9 @@ func _process(delta):
 		_on_equipment_3_mouse_entered()
 	elif Input.is_action_just_pressed("4"):
 		_on_equipment_4_mouse_entered()
+	
+	if Input.is_action_just_pressed("help"):
+		%TutorialText.show()
 	
 	if GameManager.controller:
 		var cursor_to_camera = $Cursor.position - camera.position
@@ -142,6 +149,7 @@ func _reinitialize() -> void:
 			while is_occupied(random_tile):
 				random_tile = Vector2(randi_range(0, 4), randi_range(0, 4))
 			unit.set_grid_position(random_tile)
+			
 		elif unit is EnemyUnit:
 			enemy_units.append(unit)
 			
@@ -442,6 +450,16 @@ func remove_unit(unit: Unit):
 	if unit in player_units:
 		player_units.erase(unit)
 		GameManager.alienList.append(unit.name + " 2")
+		
+		# Remove this unit from the reserves
+		for person in GameManager.reserve_list:
+			if person.name == unit.name:
+				GameManager.reserve_list.erase(person)
+				break
+		
+		if player_units.size() == 0:
+			%ChapterLoss.show()
+		
 	elif unit in enemy_units:
 		enemy_units.erase(unit)
 		# Completes level if all enemies are defeated if either the defend or route contracts are selected
@@ -1007,27 +1025,7 @@ func display_gear_tooltip(gear: Gear, popup = %EquipmentPopup):
 	else:
 		popup.get_node("Type").text = ""
 	
-	match gear.name:
-		"Stim Pack":
-			popup.get_node("Range").text = "Grants another action after use"
-		"Small Med Kit":
-			popup.get_node("Range").text = "Heals 4HP"
-		"Med Kit":
-			popup.get_node("Range").text = "Heals 8HP"
-		"Large Med Kit":
-			popup.get_node("Range").text = "Heals 12HP"
-		"Common Armor":
-			popup.get_node("Range").text = "Reduces damage taken by 2"
-		"Rare Armor":
-			popup.get_node("Range").text = "Reduces damage taken by 3"
-		"L Accelerants":
-			popup.get_node("Range").text = "Plus 2 movement for one turn"
-		"Accelerants":
-			popup.get_node("Range").text = "Plus 4 movement for one turn"
-		"H Accelerant":
-			popup.get_node("Range").text = "Plus 6 movement for one turn"
-		_:
-			popup.get_node("Range").text = "Missing Equipment Description"
+	popup.get_node("Range").text = gear.equipment_description
 	
 	popup.get_node("Damage").text = ""
 	popup.get_node("Heat").text = ""

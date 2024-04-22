@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://bvxj0pfbkkljm"]
+[gd_scene load_steps=63 format=3 uid="uid://bvxj0pfbkkljm"]
 
 [ext_resource type="PackedScene" uid="uid://dr28wheto1jnr" path="res://src/grid/map.tscn" id="1_0bs38"]
 [ext_resource type="Script" path="res://src/grid/map_generator.gd" id="1_8koai"]
@@ -43,7 +43,9 @@
 [ext_resource type="Texture2D" uid="uid://1lx83s6o28hm" path="res://assets/CombatUI/QuitButton-hover.png" id="25_otu72"]
 [ext_resource type="Texture2D" uid="uid://d0u5yfqobfn7i" path="res://assets/CombatUI/ActionSubmenu-Ability1.png" id="25_tqihv"]
 [ext_resource type="Texture2D" uid="uid://cg3qu1or3ivk4" path="res://assets/CombatUI/ActionSubmenu-Ability1Pressed.png" id="26_3lmln"]
+[ext_resource type="Texture2D" uid="uid://4uecagewmed0" path="res://assets/CombatUI/BlankBG.png" id="26_ofvev"]
 [ext_resource type="Texture2D" uid="uid://dc3wm4y1difi" path="res://assets/CombatUI/ActionSubmenu-Ability2.png" id="27_cjq8j"]
+[ext_resource type="Script" path="res://src/TutorialText.gd" id="27_lkdfy"]
 [ext_resource type="Texture2D" uid="uid://clskc05y6hwge" path="res://assets/CombatUI/ActionSubmenu-Ability2Pressed.png" id="28_1iphq"]
 [ext_resource type="AudioStream" uid="uid://crvo4l4oep8yr" path="res://assets/sounds/Button Click.mp3" id="47_eopig"]
 [ext_resource type="AudioStream" uid="uid://4jxwy16te545" path="res://assets/sounds/The Rift (Battle Music).mp3" id="48_70qu1"]
@@ -431,6 +433,58 @@ texture_normal = ExtResource("19_8d3qr")
 texture_hover = ExtResource("20_eux28")
 texture_focused = ExtResource("20_eux28")
 
+[node name="ChapterLoss" type="TextureRect" parent="UI"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -87.5
+offset_right = 150.0
+offset_bottom = 87.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("18_utp6f")
+
+[node name="ChapterEndButton" type="TextureButton" parent="UI/ChapterLoss"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = 6.5
+offset_right = 32.0
+offset_bottom = 19.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("19_8d3qr")
+texture_hover = ExtResource("20_eux28")
+texture_focused = ExtResource("20_eux28")
+
+[node name="ColorRect" type="ColorRect" parent="UI/ChapterLoss"]
+layout_mode = 0
+offset_left = 69.0
+offset_top = 27.0
+offset_right = 233.0
+offset_bottom = 65.0
+color = Color(1, 0, 0, 0.509804)
+
+[node name="Label" type="Label" parent="UI/ChapterLoss/ColorRect"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 17.0
+offset_right = 163.0
+offset_bottom = 49.0
+theme_override_fonts/font = ExtResource("13_a2tqg")
+theme_override_font_sizes/font_size = 32
+text = "Defeat"
+horizontal_alignment = 1
+
 [node name="PauseMenu" type="TextureRect" parent="UI"]
 process_mode = 3
 visible = false
@@ -481,6 +535,99 @@ grow_vertical = 2
 texture_normal = ExtResource("24_g3tfl")
 texture_hover = ExtResource("25_otu72")
 texture_focused = ExtResource("25_otu72")
+
+[node name="TutorialText" type="TextureRect" parent="UI"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.0
+offset_top = -55.5
+offset_right = 106.0
+offset_bottom = 55.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("26_ofvev")
+script = ExtResource("27_lkdfy")
+
+[node name="ColorRect" type="ColorRect" parent="UI/TutorialText"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -151.0
+offset_top = -78.0
+offset_right = 147.0
+offset_bottom = 93.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.376471, 0.376471, 0.376471, 0.513726)
+
+[node name="Label" type="Label" parent="UI/TutorialText"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 16.0
+offset_right = 205.0
+offset_bottom = 99.0
+theme_override_fonts/font = ExtResource("13_a2tqg")
+theme_override_font_sizes/font_size = 8
+text = "The darker red squares on the map indicate the danger area where enemies can attack. Individual enemies can be highlighted by selecting them with space to see their move and attack range. one enemy can be highighted at a time."
+autowrap_mode = 2
+
+[node name="Next" type="Button" parent="UI/TutorialText"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -37.0
+offset_top = -26.0
+offset_right = -8.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("13_a2tqg")
+theme_override_font_sizes/font_size = 8
+text = "Next"
+
+[node name="Previous" type="Button" parent="UI/TutorialText"]
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -207.0
+offset_top = -26.0
+offset_right = -159.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("13_a2tqg")
+theme_override_font_sizes/font_size = 8
+text = "Previous"
+
+[node name="Close" type="Button" parent="UI/TutorialText"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -26.0
+offset_right = -79.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("13_a2tqg")
+theme_override_font_sizes/font_size = 8
+text = "close"
 
 [node name="ActionWindow" type="Control" parent="."]
 layout_mode = 3
@@ -706,8 +853,12 @@ autoplay = true
 [connection signal="mouse_entered" from="UI/CombatUI/Equipment4" to="GameBoard" method="_on_equipment_4_mouse_entered"]
 [connection signal="timeout" from="UI/UITimer" to="GameBoard" method="_on_ui_timer_timeout"]
 [connection signal="pressed" from="UI/ChapterEndControl/ChapterEndButton" to="GameBoard" method="_on_chapter_end_button_pressed"]
+[connection signal="pressed" from="UI/ChapterLoss/ChapterEndButton" to="GameBoard" method="_on_chapter_end_button_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/BackToGame" to="UI/PauseMenu" method="_on_back_to_game_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/Quit" to="UI/PauseMenu" method="_on_quit_pressed"]
+[connection signal="pressed" from="UI/TutorialText/Next" to="UI/TutorialText" method="_on_next_pressed"]
+[connection signal="pressed" from="UI/TutorialText/Previous" to="UI/TutorialText" method="_on_previous_pressed"]
+[connection signal="pressed" from="UI/TutorialText/Close" to="UI/TutorialText" method="_on_close_pressed"]
 [connection signal="focus_entered" from="ActionWindow/Buttons/Action" to="ActionWindow" method="_on_action_mouse_entered"]
 [connection signal="focus_exited" from="ActionWindow/Buttons/Action" to="ActionWindow" method="_on_action_mouse_exited"]
 [connection signal="mouse_entered" from="ActionWindow/Buttons/Action" to="ActionWindow" method="_on_action_mouse_entered"]

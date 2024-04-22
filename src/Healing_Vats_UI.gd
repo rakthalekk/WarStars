@@ -9,6 +9,8 @@ func get_structure()->Fleet_Structure:
 
 func open_ui():
 	super.open_ui()
+	GameManager.help_menu_title = "Med Bay"
+	GameManager.help_menu_description = "Drag warriors from your reserves to place them in the medbay. Units will recover health after the next contract but they cannot be used in the next battle."
 	refresh()
 
 func _ready():

@@ -55,6 +55,9 @@ func _process(delta):
 
 func open_inventory():
 	display_inventory()
+	GameManager.help_menu_title = "Inventory"
+	GameManager.help_menu_description = "Drag items from your inventory to equip onto units. Once an item is placed in a unit's inventory it cannot be removed."
+	
 	visible = true
 
 func display_person(new_person:Person):

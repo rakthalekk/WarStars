@@ -22,6 +22,8 @@ func set_tier(new_tier: int):
 
 func open_ui():
 	super.open_ui()
+	GameManager.help_menu_title = "Mothership"
+	GameManager.help_menu_description = "Drag units from the right to add them to your army. Then select a contract to begin the next battle. Your rewards will be greater for more difficult contracts."
 	refresh_visuals()
 
 func refresh():
